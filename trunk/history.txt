@@ -1,0 +1,161 @@
+++++++++++++++++++++++++++++++++++++++++++++++++++
+product name:                    Ideapad DY515
+project name (TDMS):             RESCUER        
+PLM code:                        DY515   
+EC chip /charger IC:             ITE8226 / BQ24780S
+temperature:                     SMBUS(thermistor) 
+base on:                         Y520
+=====================================================================================
+
+=====================================================================================
+8JEC20WW: Base code for Y520.
+=====================================================================================
+    1) XITING0042£ºChange UCSI initial
+    2) XITING0056£ºAdd Fn+Q enable/disable FanCooling function
+=====================================================================================
+=====================================================================================
+8JEC19WW: Base code for Y520.
+=====================================================================================
+    1) XITING0045£ºFix EC init when Press KB interrupt hang up EC
+    2) XITING0057£ºUK/BR KB change
+    3) XITING0054: Check OS status,if S0 enable TP	when lid open
+=====================================================================================
+=====================================================================================
+8JEC18WW: Base code for Y520.
+=====================================================================================
+    1) update Version
+=====================================================================================
+=====================================================================================
+8JEC17WW: Base code for Y520.
+=====================================================================================
+    1) XITING0039£ºFix GPU D state exception with AC + low battery
+    2) XITING0013£ºEnable Hot Key  ¡°Insert¡± when OS before acpi OS
+    3) XITING0015: Disable DC S4 KB Led brightness control still valid.
+	4) XITING0025: Disable TP when OS enter S3  .Fix S3 Leakage
+	5) XITING0028: Fix when OS enter S3/S4/S5 with AC in can`t charging
+	6) XITING0046: Rollback S0 -- S3/S5 sequence to EC V14
+	7) XITING0019: Update fan table by 0404 and remove CPU turbo on/off QEvent 66 & 67
+	8) XITING0029: AddDPTF control for BIOS
+=====================================================================================
+=====================================================================================
+8JEC16WW: Base code for Y520.
+=====================================================================================
+    1) XITING0038£ºChange get external temperature by thermal IC
+    2) XITING0043£ºUpdate fantable_0324
+=====================================================================================
+=====================================================================================
+8JEC15WW: Base code for Y520.
+=====================================================================================
+	1) XITING0046£ºChange when slpS3 falling go S3 immediatel,when slps3, slp s4 falling,VDDQ_LOW wait 35ms sys_ON low
+	2) XITING0038£ºAdd batt temp control,when temp > 65 shutdown
+	3) XITING0044£ºFix when battgasgauge <10 can`t close TurboBoost
+	4) XITING0040£ºUpdate fan table by fantable_0321
+	5) XITING0018£ºAdd UCSI function
+	6) XITING0047£ºOCP Alam  delay 1S,modify different battery different discharge current limit (0x3D)£¬change default discharge limit (0x3D).when DC only,battery RSOC > 25%,PSYS < 80W,change GPU from D2 to D3.
+=====================================================================================
+=====================================================================================
+8JEC14WW: Base code for Y520.
+=====================================================================================
+    1) XITING0037£ºCheck lid open/close enable/disable touchpad
+    2) XITING0041£ºCheck lid open/close enable/disable touchpad when reboot
+    3) XITING0044£ºCheck Psys when AC in and change turboboost battgasgauge from 45 to 10
+=====================================================================================
+=====================================================================================
+8JEC13WW: Base code for Y520.
+=====================================================================================
+    1) XITING0031£ºAdd Power Led Behavior  battery between 1 and 20  500ms on 500ms off then on
+    2) XITING0032£ºchange battery first use date location to ram4 0x4C & 0x4D
+    3) XITING0033£ºchange 0x3C(3CD4 to 7CD6) & 0x3F(186A to 1880(6.25A)) default value
+    4) XITING0034£ºfix break(Fn + b) not Correct
+    5) XITING0036£ºRemove 30% speed duty for fan at first 20 seconds boot
+    6) XITING0035£ºremove send QEvent(1d) to BIOS
+=====================================================================================
+=====================================================================================
+8JEC12WW: Base code for Y520.
+=====================================================================================
+  1) XITING0026: LID ON/OFF ,EC enable/Disable touchpad
+  2) XITING0021: Fix touchpad enable/disable  can`t change TP status 
+  3) XITING0030: EC first run delay 40MS to default, For EE fix WLAN lost issue
+  4) XITING0020: Fix if 45W and 65W with AC only,can`t boot
+  5) XITING0027: Add CPU turbo control	(enable/disable)
+=====================================================================================
+=====================================================================================
+8JEC11WW: Base code for Y520.
+=====================================================================================
+  1) XITING0022: Fix EC can`t enter deep sleep
+  2) XITING0024: Interrupted wake up EC include any os state
+  3) XITING0023: Change 1% to 0% when AC in charge LED  amber
+=====================================================================================
+=====================================================================================
+8JEC10WW: Base code for Y520.
+=====================================================================================
+  1) XITING0010: Fix DC Mode when OS enter S3/S4/S5 with device in, type 1 and Type 2 can`t charge 
+  2) XITING0012: Fix UNSupport Adapter(45W/65W) plug in,battery icon show error and S5/S4 press power can`t enter to S0
+  3) XITING0002: add psys for adc
+  4) XITING0004: CHGIC_ReadCmd0x3CH change from 0x3C to 0xD4
+=====================================================================================
+=====================================================================================
+8JEC09WW: Base code for Y520.
+=====================================================================================
+  1) XITING0010: Fix DC Mode when OS enter S3/S4/S5 with device in, type 1 and Type 2 can`t charge 
+  2) XITING0012: Fix UNSupport Adapter(45W/65W) plug in,battery icon show error and S5/S4 press power can`t enter to S0
+  3) XITING0002: add psys for adc
+  4) XITING0004: CHGIC_ReadCmd0x3CH change from 0x3C to 0xD4
+=====================================================================================
+=====================================================================================
+8JEC08WW: Base code for Y520.
+=====================================================================================
+  1) XITING0005: Fixed Battery LED not flash amber 3 times when press power button with empty battery
+  2) XITING0007: Fixed Win + video key has the switch display mode function
+  3) XITING0008: Fix Battery LED white flash one time when plug in AC with empty
+  4) XITING0009: add fan table first release
+=====================================================================================
+=====================================================================================
+8JEC07WW: Base code for Y520.
+=====================================================================================
+  1) XITING0003: Fix KeyBoard Fn+F9 Fn+F10 kp7 kp8 kp9 Fn+C Fc+K not Correct Issue
+=====================================================================================
+=====================================================================================
+8JEC06WW: Base code for Y520.
+=====================================================================================
+  1) XITING0001: fix Press the power button can not make it into S3 after we Lid close into s3 and wake up from S3.
+=====================================================================================
+8JEC05WW: Base code for Y520.
+=====================================================================================
+  1) THOMASY018: modify GPIO for SIV phase.
+  2) THOMASY019 COMMON0002: Modify B2 command to support post code debug tool.
+  3) THOMASY020: change RTS5400 SMBus addr to 0xAC for update PDFW.
+  4) THOMASY021: fixed the hang when click the mouse frequently at sleep S3.
+  5) THOMASY022: Modify fan control logic for SIV phase (30% duty at first 20 seconds boot).
+=====================================================================================
+8JEC04WW: Base code for Y520.
+=====================================================================================
+  1) THOMASY014: Add keyboard function follow new UX SPEC.
+  2) THOMASY015: Modify App key to PrtSc.
+  3) THOMASY016: Modify AOU/non-AOU power setting when BIOS has detected the wake up device.
+  4) THOMASY017: Remove NeverCenter key function follow new UX SPEC.
+=====================================================================================
+8JEC03WW: Base code for Y520.
+=====================================================================================
+  1) THOMASY010: change GPCRI5 to ALT when enable 8s reset test.
+  2) THOMASY011: set EC_ON_5V and USB_ON GPIO follow AOU setting.
+  3) THOMASY012: follow UX SPEC to set charger indicator led.
+  4) THOMASY013: support RGB_PWR_EN behavior.
+=====================================================================================
+8JEC02WW: Base code for Y520.
+=====================================================================================
+  1) THOMASY004: disable EN_PwrSeqTest.
+  2) THOMASY005: fixed the issue which don't call AOU function when disable EN_PwrSeqTest.
+  3) THOMASY006: add polling DIMM temp function.
+  4) THOMASY008: fixed the AOU related issue
+  5) THOMASY009: Enable WDT reset
+=====================================================================================
+8JEC01WW: Base code for Y520.
+=====================================================================================
+  1) COMMON0004: Clear F2/F12 flag before S3/S4/S5/restart to S0.
+  2) THOMASY001: Use the S5S0 power sequence to control PBTN_OUT# when resume from in S4/S5.
+  3) THOMASY002: Enable AOU function.
+  4) THOMASY003: Enable EC sleep function.
+=====================================================================================
+5XEC00WW: Base code for Y520.
+=====================================================================================
