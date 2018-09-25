@@ -82,8 +82,8 @@
 
 //#define Read_VCCIO_PG()		IS_MASK_SET(GPDRA,BIT(7))	//THOMASY018:remove
 
-#define BAT_CHG_LED_ON()	CLEAR_MASK(GPDRA,BIT(7))	//THOMASY018:add
-#define BAT_CHG_LED_OFF()	SET_MASK(GPDRA,BIT(7))		//THOMASY018:add
+#define BAT_CHG_LED_ON()	CLEAR_MASK(GPDRA,BIT(7))	
+#define BAT_CHG_LED_OFF()	SET_MASK(GPDRA,BIT(7))		
 
 
 //-----------------------------------------------------------------

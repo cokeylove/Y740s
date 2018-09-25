@@ -62,7 +62,6 @@ void OEM_Write_Leds(BYTE data_byte)
 	}
 }
 
-//REJERRY007:Modify Leds behavior follow UI spec.
 void Battery_Charge_Discharge_LED_CONTROL(WORD LED_ON,BYTE LED_OFF)   
 {
 	if(!(BAT_LED_Cnt_OFF|BAT_LED_Cnt_ON))
@@ -70,15 +69,16 @@ void Battery_Charge_Discharge_LED_CONTROL(WORD LED_ON,BYTE LED_OFF)
 		BAT_LED_Cnt_ON = LED_ON;
 		BAT_LED_Cnt_OFF = LED_OFF;
 	}
+	
 	if(BAT_LED_Cnt_ON)
 	{
 		BAT_LED_Cnt_ON = BAT_LED_Cnt_ON - 1;
-		if( (BAT1PERCL >= 0) && (BAT1PERCL < 80) )	//THOMASY012:follow UX SPEC	//XITING0023:change (1 to 0) charge batt level 0-80% amber  >=80 white
+		if( (BAT1PERCL >= 0) && (BAT1PERCL <= 90) )//0%~90%	
 		{     
 			BAT_LOW_LED_ON();
 			BAT_CHG_LED_OFF();
 		}
-		else
+		else //above 90%
 		{
 			BAT_CHG_LED_ON();
 			BAT_LOW_LED_OFF();
@@ -91,6 +91,7 @@ void Battery_Charge_Discharge_LED_CONTROL(WORD LED_ON,BYTE LED_OFF)
 		BAT_LOW_LED_OFF();	
 	}
 }
+
 
 void Battery_LED_CONTROL(WORD LED_ON,BYTE LED_OFF)   
 {
@@ -168,11 +169,11 @@ void Lenovo_LED(void)
 				//change power led follow ux spec  batt<20 500ms on 500ms off then on
 				PWR_LED_OUTPUT;
 				CLEAR_MASK(PWM0LHE,DIMMING_ENABLE);
-				if( BAT1PERCL >= 0x14 )
+				if( BAT1PERCL > 0x14 ) //21%~100%
 				{	
 					PWR_LED_ON();
 				}
-				else
+				else  //0%~20%
 				{					
 					Power_LED_CONTROL(10,10);//White solid on 500ms on/ 500ms off
 				}
@@ -223,15 +224,16 @@ void Lenovo_LED(void)
 			if(IS_MASK_SET(SEL_STATE0,PRESENT_A))
 			{	
 				// Battery IN, Charging mode
-				if( BAT1PERCL >= 0x50 )
+				if( BAT1PERCL >= 0x5A )
 				{	
-					// over 80%
+					// over 90%
 					Battery_Charge_Discharge_LED_CONTROL(1,0);//White solid on
 				}
-				else if( BAT1PERCL >= 0 )		//XITING0023:change (1 to 0) charge batt level 0-80% amber  >=80 white
+				else if( BAT1PERCL >= 0 )		
 				{	
-					// over 1%
-					Battery_Charge_Discharge_LED_CONTROL(1,0);//White 0.1s off/5s on
+					// 0%~90%
+					Battery_Charge_Discharge_LED_CONTROL(1,0);//Amber (solid on)
+					
 				}
 				else
 				{
@@ -245,7 +247,6 @@ void Lenovo_LED(void)
 		}
 		else
 		{
-			//Battery_LED_Reset();	//XITING0005: remove
 			if ( SystemIsS5 ||SystemIsDSX ||(SysPowState==SYSTEM_DSX_S5))
 			{
 				if (LOWBATT_3TIMES ==0)
