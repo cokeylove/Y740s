@@ -287,8 +287,8 @@ const sREG_INIT_DEF reg_init_table[] =
   //{ &DCR7         ,0x00      			},   // Default 
   	{ &GCR15 		,0xC0				},  
 //  	{ &FLHCTRL3R 		,0x00			},  //W013A-  //W013: change 0x01 to 0x00 //Anthony-
-	{ &PWM0LCR1 	,0x35				},  // REJERRY007:add.
-	{ &PWM0LCR2 	,0x50				},  // REJERRY007:add.
+	{ &PWM0LCR1 	,0x35				}, 
+	{ &PWM0LCR2 	,0x50				},  
 };
 
 void Init_Regs(void)

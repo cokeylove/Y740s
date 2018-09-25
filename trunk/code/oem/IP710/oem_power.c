@@ -1681,7 +1681,7 @@ void Write_NOVOS4(void)
 void PulseSBPowerButton(void)
 {
 	PM_PWRBTN_LOW();
-       SBSWReleaseCunt = 20;   // decrease timer base is 10ms total time 200ms
+    SBSWReleaseCunt = 20;   // decrease timer base is 10ms total time 200ms
 }
 
 void CheckSBPowerButton(void)

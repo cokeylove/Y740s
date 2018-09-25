@@ -98,9 +98,9 @@
 #define BatteryOTPHi		                68			// 68 degree
 #define BatteryOTPLow	                66			// 66 degree
 #define FastChgTimeOut		       720 		// 12 * 60 = 720min
-#define SHA1_Support			FALSE  //BROOKEW009:Disable SHA1
-#define SaveP80Support          FALSE //AIUU3_W19:enable Save p80 to CMOS
-#define BatteryECCSupport       TRUE  //REJERRY054:Add BatteryECCSupport function.	//XITING0011 change from false to true
+#define SHA1_Support			FALSE  
+#define SaveP80Support          FALSE //enable Save p80 to CMOS
+#define BatteryECCSupport       TRUE  //Add BatteryECCSupport function.	
 #define INTEL   1
 #define AMD     0
 #define PLATFORM_CHIP         INTEL   // INTEL / AMD

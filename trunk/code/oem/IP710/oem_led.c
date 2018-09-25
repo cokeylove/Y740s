@@ -113,7 +113,6 @@ void Battery_LED_CONTROL(WORD LED_ON,BYTE LED_OFF)
 	}	
 }
 
-//XITING0031:S+  add power led control
 void Power_LED_CONTROL(WORD LED_ON,BYTE LED_OFF)   
 {
 	if(!(PWR_LED_Cnt_OFF|PWR_LED_Cnt_ON))
@@ -133,7 +132,7 @@ void Power_LED_CONTROL(WORD LED_ON,BYTE LED_OFF)
 		PWR_LED_OFF();       
 	}	
 }
-//XITING0031:E+
+
 
 void Battery_LED_Reset(void)
 {
@@ -147,9 +146,8 @@ void Battery_LED_Reset(void)
 
 void Lenovo_LED(void)
 {
-	//if ( SystemIsS5 ) //REJERRY044:remove.
-	//PowerLEDStatus
-	if ( SystemIsS5||SystemIsDSX|| (SysPowState==SYSTEM_DSX_S5) )//REJERRY044:Add DC mode S5 states flag.
+    //Power LED
+	if ( SystemIsS5||SystemIsDSX|| (SysPowState==SYSTEM_DSX_S5) )
 	{ 
 		PWR_LED_OUTPUT;
 		CLEAR_MASK(PWM0LHE,DIMMING_ENABLE);
@@ -167,7 +165,7 @@ void Lenovo_LED(void)
 		{
 			if ( SystemIsS0 || (SysPowState==SYSTEM_S5_S0)) // Check S0 and power on sequence status.
 			{
-				//XITING0031:S+ 	 change power led follow ux spec  batt<20 500ms on 500ms off then on
+				//change power led follow ux spec  batt<20 500ms on 500ms off then on
 				PWR_LED_OUTPUT;
 				CLEAR_MASK(PWM0LHE,DIMMING_ENABLE);
 				if( BAT1PERCL >= 0x14 )
@@ -178,11 +176,6 @@ void Lenovo_LED(void)
 				{					
 					Power_LED_CONTROL(10,10);//White solid on 500ms on/ 500ms off
 				}
-				//XITING0031:E+
-				
-				//PWR_LED_OUTPUT;							//XITING0031:remove
-				//CLEAR_MASK(PWM0LHE,DIMMING_ENABLE);		//XITING0031:remove
-				//PWR_LED_ON();								//XITING0031:remove
 			}
 		}
 	}
@@ -243,22 +236,6 @@ void Lenovo_LED(void)
 				else
 				{
 					Battery_LED_Reset();
-					/*//THOMASY012:remove start, follow UX SPEC
-					// under 20%  Amber 0.25s On/ 0.25s Off for total 1.25s, remain off for 3s
-					BAT_LOW_LED_Cnt = BAT_LOW_LED_Cnt + 1;	 
-						
-					if(BAT_LOW_LED_Cnt <= 25)
-					{
-						Battery_Charge_Discharge_LED_CONTROL(5,5);
-					}
-					else 
-					{
-						Battery_LED_Reset();
-						if(BAT_LOW_LED_Cnt == 65) //REJERRY090:modify from 85 to 65.
-						{
-							BAT_LOW_LED_Cnt=0;
-						}
-					}*////THOMASY012:remove end, follow UX SPEC
 				}
 			}
 			else
@@ -269,7 +246,6 @@ void Lenovo_LED(void)
 		else
 		{
 			//Battery_LED_Reset();	//XITING0005: remove
-			//XITING0005: +S
 			if ( SystemIsS5 ||SystemIsDSX ||(SysPowState==SYSTEM_DSX_S5))
 			{
 				if (LOWBATT_3TIMES ==0)
@@ -309,78 +285,9 @@ void Lenovo_LED(void)
 			{
 				Battery_LED_Reset();
 			}
-			//XITING0005: +E
-			/*//THOMASY012:remove end, follow UX SPEC
-			// Dischage mode
-			//if ( SystemIsS5 )  //REJERRY044:remove.
-			if ( SystemIsS5 ||SystemIsDSX ||(SysPowState==SYSTEM_DSX_S5)) //REJERRY044:Add DC mode S5 states flag.
-			{
-				if (LOWBATT_3TIMES ==0)
-				{
-					Battery_LED_Reset();
-				}
-				else
-				{	//low battery flash 3 times
-					if (LOWBATT_3TIMES > 80)
-					{
-						Battery_LED_CONTROL(1,0);// On Amber
-					}
-					else if (LOWBATT_3TIMES > 60)
-					{
-						Battery_LED_CONTROL(0,1);// Off Amber
-					}
-					else if (LOWBATT_3TIMES > 40)
-					{
-						Battery_LED_CONTROL(1,0);// On Amber
-					}
-					else if (LOWBATT_3TIMES > 20)
-					{
-						Battery_LED_CONTROL(0,1);//// Off Amber
-					}
-					else if (LOWBATT_3TIMES > 0)
-					{
-						Battery_LED_CONTROL(1,0);// On Amber
-					}
-					LOWBATT_3TIMES--;
-					if (LOWBATT_3TIMES==0)
-					{
-						Battery_LED_Reset(); // Off Amber
-					}
-				}
-			}
-			else
-			{
-				if( SystemIsS3 )
-				{	// DC S3 mode
-					Battery_LED_Reset();
-				}
-				else if( BAT1PERCL >= 0x14 )
-				{	//over 20%
-					Battery_LED_Reset();//off
-				}
-				else if( BAT1PERCL >= 0x05 )
-				{	//over 5%
-					Battery_Charge_Discharge_LED_CONTROL(1,0);//Amber solid on
-				}
-				else
-				{	// under 5%
-					Battery_Charge_Discharge_LED_CONTROL(5,5);//Amber 0.25s on/0.25s off
-				}
-			}*////THOMASY012:remove end, follow UX SPEC
+
 		}
 	}
-		
-	/*
-	if ( SystemIsS0 )
-	{
-		if ( (DEVICEMODULE & 0x43) != 0 )
-		{ RF_LED_LOW(); }	// RF LED ON.
-		else
-		{ RF_LED_HI(); }	// RF LED OFF.
-	}
-	else
-		{ RF_LED_HI(); }		// RF LED OFF.
-	*/
 	
 	#if Support_TPLED
 	if ( IS_MASK_SET(pDevStus, pENABLE_TP) )
@@ -393,7 +300,7 @@ void Lenovo_LED(void)
 	}	// TouchPad OFF.
 	#endif	// Support_TPLED
 }
-//REJERRY007:Modify Leds behavior follow UI spec.
+
 
 void MFG_LED(void)
 {

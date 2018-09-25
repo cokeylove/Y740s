@@ -135,11 +135,7 @@ extern void Lenovo_CPU_auto_mode(void) ;
 extern void Lenovo_Auto_Mode_Function(void);
 #endif
 
-extern void Chk_Hybrid_STPP(void); //MARTINH115:add  
-extern void Chk_AC_STPP(void);     //MARTINH115:add  
-
 extern void SetPowerBatteryparameter(void);
-extern void Chk_Wrong_ADP(void);
 
 typedef struct ADCDyInput
 {

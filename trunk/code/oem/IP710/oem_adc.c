@@ -91,6 +91,7 @@ void ScanADCDyChannel1(void)
 		VCH0CTL |= 0x80;        // write clear data vaild flag
 		NTC_V= ((WORD)VCH0DATM << 8) + VCH0DATL; //NTC_V1(GPU) 
 	}
+	
 	if(IS_MASK_SET(VCH1CTL, BIT7))
 	{
 		VCH1CTL |= 0x80;        // write clear data vaild flag
@@ -105,7 +106,6 @@ void ScanADCDyChannel1(void)
 	
     if (SysPowState == SYSTEM_S0)
     {
-		//Chk_ACOP();
 		ADPI2Sec++;
 		for (i=3; i>0; i--)
 		{
@@ -116,115 +116,14 @@ void ScanADCDyChannel1(void)
 		ADP_I_SUM += ADPI_Data[0];
 		ADPI_AvgData = ADP_I_SUM / 4;
 
-		//ADPI_AvgData = (ADP_I + ADPI_AvgData)/2;
 		if (ADPI2Sec > 200)
 		{
 			if (IS_MASK_SET(SEL_STATE0, PRESENT_A))
 			{
-				//RamDebug(0xA2);
-				//A29: disable hybrid mode 20130514 23:48
-				//Chk_Hybrid_STPP();   //MARTINH123:Remove //MARTINH117 : open
-
-				Chk_HybridFORBQ24780_STPP();//JERRYCR069:+Add battery turboboost fuction.
-			}
-			else
-			{
-				//Chk_AC_STPP();     //MARTINH123:Remove //MARTINH117 : open
+				Chk_HybridFORBQ24780_STPP();//battery turboboost fuction.
 			}
 			ADPI2Sec=0;
-		} 
-		/*
-		//XITING0044:S remove
-		//REJERRY042:S+ add ADP_I monitor.
-		if((Read_AC_IN() && (nBattGasgauge < Chk_Hybrid_STPP_min_BattGasgauge))||(Read_AC_IN()&&IS_MASK_CLEAR(SEL_STATE0,PRESENT_A)))
-		{
-    //DAVID00001:S  ADD 90W Adaptor
-		if(AdapterID==AdapterID_135W)//FOR 135W adapter
-			{
-			//DAVID00001:END  ADD 90W Adaptor
-			if(VolDelayCount == 0)
-			{
-				if(ADP_I > 0x1BC)// 0x1BC--> 1.3V 
-				{
-					OverVolCount++;
-					if(ADP_I >= 0x2AA)// 0x2AA ---> 2.0V  //REJERRY064:modify from 1.7V to 2.1V.
-					{
-						SET_MASK(CPUProchotFlag,b0CpuADPI); //REJERRY048:remove. //REJERRY064:add.
-						//VGA_AC_DET_LOW(); //REJERRY048:add. //REJERRY056:remove.
-						//SET_MASK(GPUProchotFlag,b0GpuAdpI); //REJERRY056:add.  //REJERRY077:remove.
-						cGPUACOVPThrottling=4;//MQJERRY003£ºModify power setting follow¡®LBG EC Parameter V1.2_for MAX Q 20170207¡¯.
-						VolDelayCount = 10;
-					}
-					else if(OverVolCount >= 50)
-					{
-						SET_MASK(CPUProchotFlag,b0CpuADPI); //REJERRY048:remove.  //REJERRY064:add.
-						//VGA_AC_DET_LOW(); //REJERRY048:add.  //REJERRY056:remove.
-						//SET_MASK(GPUProchotFlag,b0GpuAdpI); //REJERRY056:add. //REJERRY077:remove.
-						cGPUACOVPThrottling=1;//MQJERRY003£ºModify power setting follow¡®LBG EC Parameter V1.2_for MAX Q 20170207¡¯.
-						VolDelayCount = 10;
-					}
-				}
-				else if (ADP_I < 0x1BC)//  0x1BC --> 1.3V
-				{
-					OverVolCount = 0;
-					CLEAR_MASK(CPUProchotFlag,b0CpuADPI); //REJERRY048:remove.  //REJERRY064:add.
-					//VGA_AC_DET_HIGH(); //REJERRY048:add.  //REJERRY056:remove.
-					//CLEAR_MASK(GPUProchotFlag,b0GpuAdpI); //REJERRY056:add.  //REJERRY077:remove.
-					cGPUACOVPThrottling=0;//MQJERRY003£ºModify power setting follow¡®LBG EC Parameter V1.2_for MAX Q 20170207¡¯.
-				}
-			}
-			else
-			{
-				VolDelayCount--;
-			}	
-			}
-			//DAVID00001:S  ADD 90W Adaptor
-			else if(AdapterID==AdapterID_90W)
-			{
-				if(VolDelayCount == 0)
-				{
-					if(ADP_I >= 0x133)// 0x133--> 0.9V 
-					{
-						OverVolCount++;
-						if(ADP_I >= 0x2CC)// 0x1AB ---> 1.25V  
-						{
-							SET_MASK(CPUProchotFlag,b0CpuADPI); 
-							VolDelayCount = 10;
-						}
-						else if(OverVolCount >= 50)
-						{
-							SET_MASK(CPUProchotFlag,b0CpuADPI); 
-							cGPUACOVPThrottling=4;
-							VolDelayCount = 10;
-						}
-					}
-					else if (ADP_I < 0x133)//  0x133 --> 0.9V
-					{
-						OverVolCount = 0;
-						CLEAR_MASK(CPUProchotFlag,b0CpuADPI); 
-						cGPUACOVPThrottling=0;
-					}
-				}
-				else
-				{
-					VolDelayCount--;
-				}
-			}
-		}
-		//DAVID00001:END  ADD 90W Adaptor
-		else // may ACOFF high with AC in.
-		{
-			CLEAR_MASK(CPUProchotFlag,b0CpuADPI); //REJERRY048:remove.  //REJERRY064:add.
-			//VGA_AC_DET_HIGH(); //REJERRY048:add.  //REJERRY056:remove.
-			cGPUACOVPThrottling=0;
-			//CLEAR_MASK(GPUProchotFlag,b0GpuAdpI); //REJERRY056:add.  //REJERRY077:remove.
-			OverVolCount = 0;
-			VolDelayCount = 0;
-		}
-		//REJERRY042:E+.
-		*/
-		//XITING0044:E remove
-		
+		} 		
 	}
 }
 
@@ -254,123 +153,6 @@ void Init_ADC(void)
 
 //#ifdef Anthony0711
 
-void Chk_Wrong_ADP(void)
-{
-	if( SysPowState == SYSTEM_S0 )
-	{
-		if((ACIN_FallINT_Count > 0) && (Chk_Wrong_ADP_Status == 0))
-		{
-			Chk_Wrong_ADP_Status = Chk_Wrong_ADP_Status_wait_2sec;
-		}
-
-		switch(Chk_Wrong_ADP_Status)
-		{
-			case Chk_Wrong_ADP_Status_wait_2sec:
-				Chk_Wrong_10ms_Count++;
-				if (Chk_Wrong_10ms_Count  > 200)
-				{
-					CLEAR_MASK(ACOFF_SOURCE, ADPOVP);
-					//ACOFF_LOW();
-					CLEAR_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable); //REJERRY051:Modify read addr to write.
-					if (!bRWSMBus(SMbusChB, SMbusWW, Charger_Addr, C_ChargerMode, &CHGIC_WriteCmd0x12L,SMBus_NoPEC)) //REJERRY051:Modify read addr to write.
-					{
-						CHGIC_SMbusFailCnt++;
-						RamDebug(0x14);
-					}
-					//CLEAR_MASK(cBattFlag0,cCmdAcOff); 			//Resume Charger
-					cCmdAcOff=0;//A94:fixed wrong program
-					//CHGIC_ptr = 2;						//reminder: call to write to SmartChg
-					//WriteSmartChgIC();
-					Chk_Wrong_10ms_Count = 0;		//
-					ACIN_FallINT_Count = 0;
-					Chk_Wrong_ADP_Status = Chk_Wrong_ADP_Status_wait_10sec;
-				}
-				else
-				{				
-					//SET_MASK(cBattFlag0,cCmdAcOff); 			//Stop charger
-					cCmdAcOff=1;//A94:fixed wrong program
-					//CHGIC_ptr = 2;						//reminder: call to write to SmartChg
-					//WriteSmartChgIC();
-					SET_MASK(ACOFF_SOURCE, ADPOVP);
-					//	ACOFF_HI();
-				}
-				break;
-			
-			case Chk_Wrong_ADP_Status_wait_10sec:
-				if (Chk_Wrong_10ms_Count > 1000)	//Over 10s not detect 5 times ACIN drop.
-				{
-					Chk_Wrong_10ms_Count = 0; 		//Reset all counter
-					ACIN_FallINT_Count = 0;
-					Chk_Wrong_ADP_Status=0; 			//Reset Status
-				}
-				else
-				{
-					if (ACIN_FallINT_Count >= 5)			//falling 5 times
-					{
-						Chk_Wrong_ADP_Status = Chk_Wrong_ADP_Status_ACOFF_Lock;
-						ACIN_FallINT_Count = 0;
-						Chk_Wrong_10ms_Count = 0;
-						//SET_MASK(cBattFlag0,cCmdAcOff); 			//Stop charger
-						cCmdAcOff=1;//A94:fixed wrong program
-
-						//CHGIC_ptr = 2;					//reminder: call to write to SmartChg
-						//WriteSmartChgIC();
-						SET_MASK(ACOFF_SOURCE, ADPOVP);
-						//		ACOFF_HI();						//Pull High AC off until reset
-						SET_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable); //REJERRY051:Modify read addr to write.
-						if (!bRWSMBus(SMbusChB, SMbusWW, Charger_Addr, C_ChargerMode, &CHGIC_WriteCmd0x12L,SMBus_NoPEC)) //REJERRY051:Modify read addr to write.
-						{
-							CHGIC_SMbusFailCnt++;
-							RamDebug(0x14);
-						}
-					}
-					Chk_Wrong_10ms_Count++;
-				}
-				break;
-
-			case Chk_Wrong_ADP_Status_ACOFF_Lock:
-				//Reset AC OFF Lock after Plug out ACIN 20ms
-				if (!Read_AC_IN())
-				{
-					if (Chk_Wrong_10ms_Count >2)
-					{
-						Chk_Wrong_ADP_Status = 0; 			//Reset Status and counter
-						Chk_Wrong_10ms_Count = 0;
-						ACIN_FallINT_Count =0;
-						CLEAR_MASK(ACOFF_SOURCE, ADPOVP);
-						//ACOFF_LOW();
-						CLEAR_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable); //REJERRY051:Modify read addr to write.
-						if (!bRWSMBus(SMbusChB, SMbusWW, Charger_Addr, C_ChargerMode, &CHGIC_WriteCmd0x12L,SMBus_NoPEC)) //REJERRY051:Modify read addr to write.
-						{
-							CHGIC_SMbusFailCnt++;
-							RamDebug(0x14);
-						}
-						//CLEAR_MASK(cBattFlag0,cCmdAcOff); 			//Stop charger			//Resume Charger
-						cCmdAcOff=0;//A94:fixed wrong program
-						//CHGIC_ptr = 2;						//reminder: call to write to SmartChg
-						//WriteSmartChgIC();
-					}
-					Chk_Wrong_10ms_Count ++;
-				}
-				break;
-
-			default:
-				Chk_Wrong_ADP_Status = 0;
-				Chk_Wrong_10ms_Count = 0;
-				ACIN_FallINT_Count = 0;
-				break;
-		}
-	}
-	else
-	{
-		Chk_Wrong_ADP_Status = 0;
-		Chk_Wrong_10ms_Count = 0;
-		ACIN_FallINT_Count = 0;
-	}
-}
-//MARTINH117:Add start
-
-//MARTINH117:Add end
 //JERRYCR030:S+Setting charge IC.
 void SetPowerBatteryparameter(void)
 {

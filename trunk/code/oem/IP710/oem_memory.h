@@ -281,14 +281,7 @@ typedef enum
 #define	Bat0x0FTempL 					SD_uchar_8(OEMRAM2+0x8E)
 #define	Bat0x0FTempH 					SD_uchar_8(OEMRAM2+0x8F)
 
-typedef enum
-{
-	Chk_Wrong_ADP_Status_Null,
-	Chk_Wrong_ADP_Status_wait_2sec,
-	Chk_Wrong_ADP_Status_wait_10sec,
-	Chk_Wrong_ADP_Status_ACOFF_Lock
-}Chk_Wrong_ADP_Status_Type;
-#define	Chk_Wrong_ADP_Status			SD_uchar_8(OEMRAM2+0x90)
+
 #define   ACIN_FallINT_Count				SD_uchar_8(OEMRAM2+0x91)
 #define Chk_Wrong_10ms_Count				SD_uint_16(OEMRAM2+0x92)
 typedef enum

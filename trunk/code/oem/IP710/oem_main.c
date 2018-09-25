@@ -84,6 +84,7 @@ void Hook_Timer10msEventA(void)
 	
 #if !RGB_KEYBOARD_SUPPORT
 	Backlight_Control();
+	SetKeyboardLED();
 #endif
 	
 #if SaveP80Support
@@ -92,10 +93,10 @@ void Hook_Timer10msEventA(void)
 		SET_MASK(P80CMOSSts,P80CMOSDis);
 	}
 #endif
-	SetKeyboardLED();
+
 
 #if Support_TYPE_C 
-	if(Read_EC_ON_5V_ON())			//change  check from EC_ON 3V  to EC_ON_5V 
+	if(Read_EC_ON_5V_ON())			//change check from EC_ON 3V  to EC_ON_5V 
 
 	{
 	// Need check Type-C IC is working, HW design the power source is Valw(EC_ON control).
@@ -129,16 +130,6 @@ void Hook_Timer10msEventB(void)
 	CheckSBPowerButton(); 
 	ScanADCDyChannel1();  
 
-	//XITING0028:S  fix when OS enter S3/S4/S5 with AC in can`t charging 
-	/*																			//XITING0063:remove
-	if(SystemNotS0 && Read_AC_IN()){
-		if(IS_MASK_SET(ACOFF_SOURCE,BATTLEARN) && IS_MASK_SET(CHGIC_WriteCmd0x12L,BatLearnEnable)){
-			AdapterIDOn_Flag=1;
-		}
-	}
-	*/																			//XITING0063:remove
-	//XITING0028:E
-
 	if(AdapterIDOn_Flag)
 	{
 		if(ADPIDON10MS_NUM > 0x00)
@@ -151,45 +142,38 @@ void Hook_Timer10msEventB(void)
 	   		AdapterIDOn_Flag = 0;
 			ADPIDON10MS_NUM = 0xFF; 
 
-			//REJERRY036:S+.
 			CHGIC_ptr = 1;
 			WriteSmartChgIC();
 			WriteSmartChgIC();
 	
 			CHGIC_ptr = 3;
 			ReadSmartChgIC();
-			//REJERRY036:E+.
+
 	 	}
 	}
 
-	//XITING0038:S remove  change get temp by thermal IC
+	
 	/*
-	//REJERRY062:S+ add polling CPU and GPU thermistor temp.
+	//add polling CPU and GPU thermistor temp.
 	if(SystemIsS0&& (PwrOnDly5Sec==0))
 	{
 		PollingCPURT();
-		PollingDIMMRT();	//THOMASY006:add
+		PollingDIMMRT();	
 		if(IS_MASK_CLEAR(pProject0,b4VGAType))
 		{
 			PollingGPURT();
 		}
 	}
-	//REJERRY062:E+.
 	*/
-	//XITING0038:E
-	
-	Chk_Wrong_ADP(); 
 	Deal_CLEAR_CMOS(); 
 } 
 
 void Hook_Timer50msEventA(void)
 {
-//Y7JERRY005:s+Modify power LED abnormal.
 	if (IS_MASK_CLEAR(cOsLedCtrl,cOL_CtrlRight) )
 		Lenovo_LED();
 	else
-		MFG_LED();
-//Y7JERRY005:e+Modify power LED abnormal.	
+		MFG_LED();	
 }
 
 //------------------------------------------------------------
@@ -301,16 +285,15 @@ void Hook_Timer100msEventC(void)
 #if !EN_PwrSeqTest
 	Battery100ms();
 	Oem_Fan_Speed();  
-	ThrottlingControl();  //REJERRY048:remove. //REJERRY059:add.
-	GPUThrottlingControl(); //REJERRY048:add.
+	ThrottlingControl();  
+	GPUThrottlingControl(); 
 	IFFSProcess();
 
-	//REJERRY031:S+ add CPU prochot control function.
+	//add CPU prochot control function.
 #if OEMCPUThrottlingCtrl	
 	CPU_Prochot_Ctrl();
-	GPUProchotOnControl(); //REJERRY048:add.
+	GPUProchotOnControl();
 #endif
-	//REJERRY031:E+ add CPU prochot control function.
 
 	if (TouchPadCount !=0)
 	{ 
