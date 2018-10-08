@@ -35,20 +35,16 @@
 void OEM_Write_Leds(BYTE data_byte)
 {
     Led_Data = data_byte;
-	//T031-	if ( uMBID & 0x40 )
-       // if ( uMBID & 0x04 ) //T031+	// Check 15"//JERRYCR009 -Add numlock LED.
-   // {
-	    if ( data_byte & BIT1 )
-	    {
-		   	Hook_NUMLED_ON();
-			SET_MASK(SYS_MISC1, b1Num_LED);
-	    }
-	    else
-	    {
-			Hook_NUMLED_OFF();
-			CLEAR_MASK(SYS_MISC1, b1Num_LED);
-	     }
-   // }
+    if ( data_byte & BIT1 )
+    {
+	   	Hook_NUMLED_ON();
+		SET_MASK(SYS_MISC1, b1Num_LED);
+    }
+    else
+    {
+		Hook_NUMLED_OFF();
+		CLEAR_MASK(SYS_MISC1, b1Num_LED);
+    }
 
     if ( data_byte & BIT2 )
     {
@@ -141,7 +137,7 @@ void Battery_LED_Reset(void)
 	BAT_LED_Cnt_ON = 0;
 	BAT_LED_Cnt_OFF = 0;
 
-	BAT_LOW_LED_OFF();         //LED OFF
+	BAT_LOW_LED_OFF();      
 	BAT_CHG_LED_OFF();	
 }
 
@@ -289,84 +285,66 @@ void Lenovo_LED(void)
 
 		}
 	}
-	
-	#if Support_TPLED
-	if ( IS_MASK_SET(pDevStus, pENABLE_TP) )
-	{
-		//TPLED_OFF();
-	}	// TouchPad ON.
-	else
-	{ 
-		//TPLED_ON();
-	}	// TouchPad OFF.
-	#endif	// Support_TPLED
 }
 
 
 void MFG_LED(void)
 {
 	if(IS_MASK_SET(cOsLedCtrl,cOL_PwrLed))
-		{
+	{
 		PWR_LED_ON();
-		//PWR_LED2_ON();//JERRYCR008:Add power LED2.
-		}
+		//PWR_LED2_ON();//Add power LED2.
+	}
 	else
-		{
+	{
 		PWR_LED_OFF();
-		//PWR_LED2_OFF();//JERRYCR008:Add power LED2.
-		}
+		//PWR_LED2_OFF();//Add power LED2.
+	}
 
 	if(IS_MASK_SET(cOsLedCtrl,cOL_ChgLed))
-		//DCR1=0;  //REJERRY007:remove.
-		BAT_CHG_LED_ON(); //REJERRY007:add.
+    {
+        BAT_CHG_LED_ON(); 
+    }
 	else
-		//DCR1=0xFF;  //REJERRY007:remove.
-		BAT_CHG_LED_OFF(); //REJERRY007:add.
-
+	{
+		BAT_CHG_LED_OFF(); 
+    }
+    
 	if(IS_MASK_SET(cOsLedCtrl,cOL_DisChgLed))
-		//DCR2=0;  //REJERRY007:remove.
-		BAT_LOW_LED_ON(); //REJERRY007:add.
+	{	
+	    BAT_LOW_LED_ON(); 
+	}
 	else
-		//DCR2=0xFF;  //REJERRY007:remove.
-		BAT_LOW_LED_OFF(); //REJERRY007:add.
+    {
+		BAT_LOW_LED_OFF();
+	}
 
-	/*
-	if(cOsLedCtrl.fbit.cOL_WLANLed == 1)
-		RF_LED_LOW();
+	if( IS_MASK_SET(cOsLedCtrl,cOL_NumlockLed) )
+	{
+		NUMLED_ON();
+	}
 	else
-		RF_LED_HI();
-	*/
-	//T031-	if ( uMBID & 0x40 )
-	
-      //  if ( uMBID & 0x04 ) //T031+	// Check 15"//JERRYCR009:-Add numlock LED.
-	//{
-	if( IS_MASK_SET(cOsLedCtrl,cOL_NumlockLed) ) //REJERRY037:modify flag to cOsLedCtrl.
-			NUMLED_ON();
-		else
-			NUMLED_OFF();
-	//}
+	{
+		NUMLED_OFF();
+	}
       
 	if( IS_MASK_SET(cOsLed1Ctrl,cOL1_CapslockLed) )
+	{
 		CAPLED_ON();
+	}
 	else
+	{
 		CAPLED_OFF();
+	}
 
 	if( IS_MASK_SET(cOsLed1Ctrl,cOL1_KBBacklight) )
-		DCR3 = 0xFF; //REJERRY037:add.
-		//EC_KBLED_ON(); 
-		//{}
+	{
+		DCR3 = 0xFF; 
+	}
 	else
-		//{}
-		DCR3 = 0; //REJERRY037:add.
-		//EC_KBLED_OFF(); 
-    //JERRYCR023:s+Add TP LED function.
-	#if Support_TPLED
-	if( IS_MASK_SET(cOsLedCtrl,cOL_TPActLed) )
-		TPLED_ON();
-	else
-		TPLED_OFF();
-	#endif	// Support_TPLED
-      //JERRYCR023:e+Add TP LED function.
+	{
+		DCR3 = 0; 
+    }
 }
 
 /* ----------------------------------------------------------------------------
@@ -379,11 +357,10 @@ void SetKeyboardLED(void)
 	BYTE BKBMax,BKBHalf;
 	if ( (SystemNotS0) || (IS_MASK_SET(cOsLedCtrl,cOL_CtrlRight)) || (!Read_LID_SW_IN()) )
 	{
-		//DCR3 = 0; //REJERRY037:remove.
 		return;
 	}
 	BKBMax = 0xF0;
-	BKBHalf = 0x50;  //REJERRY007:modify step1 backlight.
+	BKBHalf = 0x50;  //modify step1 backlight.
 
 	if(UpdateLEDBL_delay!=0)
 	{
@@ -406,12 +383,12 @@ void SetKeyboardLED(void)
 		}
 	}
 	
-	if ( (LED_KB_PWM_Count & 0x7ff) != 0 ) //REJERRY007:modify backlight control.
+	if ( (LED_KB_PWM_Count & 0x7ff) != 0 ) //modify backlight control.
 	{
 		if ( DCR3 == 0 )
 		{
 		DCR3 = BKBMax;
-		LED_KB_PWM_Count |= 0x800; //REJERRY007:modify backlight control.
+		LED_KB_PWM_Count |= 0x800; //modify backlight control.
 			
 		}
 		
@@ -420,7 +397,7 @@ void SetKeyboardLED(void)
 	}
 	else
 	{
-		if ( IS_MASK_SET(LED_KB_PWM_Count, BIT11) ) //REJERRY007:modify backlight control.
+		if ( IS_MASK_SET(LED_KB_PWM_Count, BIT11) ) //modify backlight control.
 		{
 			DCR3 = 0;
 			LED_KB_PWM_Count = 0;

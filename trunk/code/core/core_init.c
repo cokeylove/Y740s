@@ -109,15 +109,14 @@ void Init_Mouse (void)
  */
 void Core_Initialization(void)
 {
-    //CLEAR_MASK_EXT(CGCTRL3R,BIT5);//MARTINH097:add
-    CheckResetSource();//W128
+    //CLEAR_MASK_EXT(CGCTRL3R,BIT5);
+    CheckResetSource();
     Init_GPIO();
 	CHK_8S_RESET();
-//REJERRY001:s+Add keyboard init feature.
+    //Add keyboard init feature.
 	#if _KEYBOARD_EXIST_
     Init_Kbd();
 	#endif
-	//REJERRY001:e+Add keyboard init feature.
 	cold_reset();
 	common_reset();
 	Init_Mouse();

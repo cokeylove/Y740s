@@ -153,15 +153,15 @@ void Init_ADC(void)
 
 //#ifdef Anthony0711
 
-//JERRYCR030:S+Setting charge IC.
+//Setting charge IC.
 void SetPowerBatteryparameter(void)
 {
-	//REJERRY048:S+ add 230W adapter ID.
+	//add 230W adapter ID.
 	if((API_ID > 0x388) && (API_ID <= 0x3E7))  // >2.651  <=2.929   
 	{
 		AdapterID = AdapterID_230W;
 	}
-	//REJERRY048:E+.
+	//
 	else if((API_ID > 0x2DE) && (API_ID <= 0x374))  // >2.149  <=2.590   
 	{
 		AdapterID = AdapterID_170W;
@@ -187,7 +187,7 @@ void SetPowerBatteryparameter(void)
 		AdapterID = AdapterID_NON_SUPPORT;
 	}
 
-	Chk_Hybrid_STPP_min_BattGasgauge = 10; //JERRYCR069:+Add battery turboboost fuction.		//XITING0044:change turboboost battgasgauge from 45 to 10
+	Chk_Hybrid_STPP_min_BattGasgauge = 10; //Add battery turboboost fuction.	
 
 	//if( AdapterID==AdapterID_135W || AdapterID==AdapterID_170W || AdapterID==AdapterID_230W ) //REJERRY048:add 230W adapter ID.	//XITING0060:remove 135W
 	if(AdapterID==AdapterID_170W || AdapterID==AdapterID_230W ) 			//XITING0060:remove 135W
@@ -238,7 +238,7 @@ void SetPowerBatteryparameter(void)
 		CLEAR_MASK(SYS_STATUS,b5UnSuitAdpPow);
 	}
 }
-//JERRYCR030:E+Setting charge IC.
+//
 
 void AdpID170WAmode(void)
 {

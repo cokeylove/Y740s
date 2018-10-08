@@ -11,7 +11,6 @@
  */
 #include "..\include.h"
 //*****************************************************************************
-//W006+ s
 void SystemAutoOn(void)
 {
 	if( (AutoTimer&0x7F) == 0x01 )
@@ -20,15 +19,16 @@ void SystemAutoOn(void)
 		if( IS_MASK_SET(AutoTimer,b7AutoBootTm) )
 		{
 			AutoTimer = 0;	// Clear Auto timer.
-			//DSxPowState = SYSTEM_DSxOK;
 			PWSeqStep = 1;
           	PowSeqDelay = 0x00;
 			SysPowState=SYSTEM_S5_S0;
 		}
 		else
 		{
-			if ( SystemIsS5 || SystemIsDSX ) //REJERRY039:add DSX condition.
-			{ AutoTimer = 0x83; }
+			if ( SystemIsS5 || SystemIsDSX ) //add DSX condition.
+			{ 
+			    AutoTimer = 0x83; 
+			}
 			else
 			{
 			    SET_MASK(SysStatus,ERR_ShuntDownFlag);
@@ -46,8 +46,10 @@ void SystemAutoOn(void)
 		{
 			if( IS_MASK_SET(AutoTimer,b7AutoBootTm) )
 			{
-				if ( SystemIsS5 || SystemIsDSX) //REJERRY039:add DSX condition.
-				{ AutoTimer--; }
+				if ( SystemIsS5 || SystemIsDSX) //add DSX condition.
+				{ 
+				    AutoTimer--; 
+				}
 			}
 			else
 			{ 	
@@ -57,8 +59,6 @@ void SystemAutoOn(void)
 	}
 }
 
-//W006+ e
-//MARTINH060: add start
 /* ========================================================================
  * Function Name : ChkTimeScale
  * Time count for 1 byte,max 2.55 Second
@@ -78,5 +78,4 @@ FLAG ChkTimeScale(LPUINT8 countadr, BYTE timeout)
 	return(FALSE);
 	#endif	// End of SW_ChkTimeScale
 }
-//MARTINH060: add end
 

@@ -1180,37 +1180,28 @@ void Fan_Init(void)
 /*****************************************************************************/
 void PWM_TimeCount(void)
 {
-	//if (IS_MASK_CLEAR(cReserve07,uACInOutBeep))//A88:for beep can't disable when reboot
-	if(uACInOutBeep==1)  //MARTINH110:change 0 to 1
+	if(uACInOutBeep==1)  
 	{
 		if( PWM_LEDBeep_CNT == 0x00 )
 		{
 			BEEP_INIT;
-			//BEEP_LOW;//W46
 			PWM_BEEP = 0x00;
 			return;
 		}
 
 		BEEP_ALT;
 		PWM_LEDBeep_CNT--;		// decrease timer
-		RamDebug(0xA6);//W085:suddenly beep one time
+		RamDebug(0xA6);//suddenly beep one time
 		// AC IN/OUT beep time
 		if( PWM_LEDBeep_CNT == 0x00 )
 		{
 			BEEP_INIT;
-			//PWM_BEEP = 0x00;
-			//CLEAR_MASK(GPDRA,BIT(6)); //W46
-			//BEEP_LOW;//W46
 		}
 	}
 	else
 	{
 		PWM_LEDBeep_CNT = 0;
-		BEEP_INIT;
-		//PWM_BEEP = 0x00;
-		//CLEAR_MASK(GPDRA,BIT(6));//W46
-		//BEEP_LOW;//W46
-		
+		BEEP_INIT;		
 	}
 }
 
@@ -2590,7 +2581,7 @@ void PollingCPURT(void)
 		}
 		else if(NTC_V2>=RTVTTable[j].VOL)
 		{
-			ThermistorCPU_TEMP=RTVTTable[j].TEM;//JERRYCRZ024:Change fan table follow thermal team.
+			ThermistorCPU_TEMP=RTVTTable[j].TEM;//Change fan table follow thermal team.
 			return;
 		}	
 	}
@@ -2610,13 +2601,12 @@ void PollingGPURT(void)
 		}
 		else if(NTC_V>=RTVTTable[j].VOL)
 		{
-			EXTVGA_TEMP=RTVTTable[j].TEM;//JERRYCRZ024:Change fan table follow thermal team.
+			EXTVGA_TEMP=RTVTTable[j].TEM;//Change fan table follow thermal team.
 			return;
 		}		
 	}
 }
 
-//THOMASY006:S+
 void PollingDIMMRT(void)
 {
 	BYTE i;
@@ -2635,7 +2625,6 @@ void PollingDIMMRT(void)
 		}
 	}
 }
-//THOMASY006:E+
 
 //REJERRY062:E+.
 

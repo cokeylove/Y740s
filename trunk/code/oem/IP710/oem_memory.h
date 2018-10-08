@@ -50,7 +50,7 @@
 #define	PowSeqDelay						SD_uchar_8(OEMRAM2+0x05)
 #define	EC_ON_Delay						SD_uchar_8(OEMRAM2+0x06)	
 
-#define	SBSWReleaseCunt				    SD_uchar_8(OEMRAM2+0x07) //martin0628 add
+#define	SBSWReleaseCunt				    SD_uchar_8(OEMRAM2+0x07) 
 
 //REJERRY076:S+ add win key status define.
 #define	WinKEY_STATE					SD_uchar_8(OEMRAM2+0x09)
@@ -394,7 +394,6 @@ typedef enum
 #define Lid_Act             BIT5                //martin0628B add
 #define DummyFlag           BIT7        		// 1:CRT Sense
 
-#define   	DSxPowState						SD_uchar_8(OEMRAM2+0xE5) 	//(byte)
 #define   	DS3PowSeqDelay					SD_uint_16(OEMRAM2+0xE6) 	//(word)
 #define   	DS3PowSeqStep			    	SD_uchar_8(OEMRAM2+0xE8)
 
@@ -495,15 +494,15 @@ typedef enum
 #define b6SNBTN					BIT6
 #define b7SMartNoiseOn			BIT7 		// Quite mode = power saver
 
-#define OVER_PSYS_COUNT					SD_uchar_8(OEMRAM3+0x12)		//XITING0071:add
-#define UNDER_PSYS_COUNT				SD_uchar_8(OEMRAM3+0x13)		//XITING0071:add
-#define DPTF_PSYS_CONTROL_STATUS		SD_uchar_8(OEMRAM3+0x14)		//XITING0071:add
-	#define DPTS_PSYS_Current_Status		BIT0						//XITING0071:add
-	#define DPTS_PSYS_Set_Status			BIT1						//XITING0071:add
-	#define DPTS_GPU_Temp_Current_Status	BIT2						//XITING0071:add
-	#define DPTS_GPU_Temp_Set_Status		BIT3						//XITING0071:add
-	#define DPTS_PSYS_Under_Status			BIT4						//XITING0071:add	
-	#define DPTS_PSYS_Limit_Flag			BIT5						//XITING0071:add
+#define OVER_PSYS_COUNT					SD_uchar_8(OEMRAM3+0x12)		
+#define UNDER_PSYS_COUNT				SD_uchar_8(OEMRAM3+0x13)		
+#define DPTF_PSYS_CONTROL_STATUS		SD_uchar_8(OEMRAM3+0x14)		
+	#define DPTS_PSYS_Current_Status		BIT0						
+	#define DPTS_PSYS_Set_Status			BIT1						
+	#define DPTS_GPU_Temp_Current_Status	BIT2						
+	#define DPTS_GPU_Temp_Set_Status		BIT3						
+	#define DPTS_PSYS_Under_Status			BIT4							
+	#define DPTS_PSYS_Limit_Flag			BIT5						
 
 
 #define	uMBID						SD_uchar_8(OEMRAM3+0x15)
@@ -732,7 +731,6 @@ typedef enum
 #define	cwyC     	SD_uchar_8(OEMRAM3+0xFC) //(byte)
 #define	cwyD     	SD_uchar_8(OEMRAM3+0xFD) //(byte)
 
-//MARTINH100: end
 #define	AdapterIDOn_Flag     	SD_uchar_8(OEMRAM3+0xFE) //(byte)
 
 
@@ -1883,9 +1881,6 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 	#define	cOL1_PwrLed2		BIT11
 
 	
-#define	initMark				SD_uchar_8(OEMRAM9+0xB9)
-
-#define	TEMP_Error 			SD_uchar_8(OEMRAM9+0xBA)
 #define    EM9_NEWFUN             SD_uchar_8(OEMRAM9+0xBB)    
 	#define   b0_FnPlus	       BIT0
 	#define	  b1_FnMinus	   BIT1
@@ -1896,7 +1891,6 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 	#define   b6_RShiftPress   BIT6
     #define   b7_LShiftPress   BIT7           //A38-H120128 end
 	
-#define  delayEDPTm               SD_uchar_8(OEMRAM9+0xBC)
 	
 #define	cCHIPType				SD_uchar_8(OEMRAM9+0xBC)	// 01: 8586EX
 
@@ -2421,7 +2415,6 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 //#define DCIN_USB_LOWAgain    BIT7    //MARTINH015:remove
 #define USB_ID_N_Now                   SD_uchar_8(OEMRAMC+0xF9)  //MARTINH015:add
 #define USB_ID_N_Former                SD_uchar_8(OEMRAMC+0xFA)  //MARTINH015:add
-#define woodferCount				   SD_uchar_8(OEMRAMC+0xFB) //JERRYCR038:Modify power on has "popo" voice.
 //JERRYCR048: Add read DGPU temperature function.
 #define sdAMDTH0					  SD_uchar_8(OEMRAMC+0xFC) 
 #define sdAMDTH1					  SD_uchar_8(OEMRAMC+0xFD) 

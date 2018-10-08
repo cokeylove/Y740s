@@ -19,37 +19,8 @@ void Check_LPC_Reset(void)
 	{
 		CLEAR_MASK(KBHISR,SYSF);
 		CLEAR_MASK(SYS_MISC1,ACPI_OS);
-		F2_Pressed=0;	 //COMMON0004: ADD
+		F2_Pressed=0;	 
 		OEM_LPC_Reset();	// initial OEM status.
-		//TPCLK_OUTPUT;
-		//TPCLK_HI();
-		//TP_CLK_ALT;
-
-		//XITING0041:S check lid open enable tb else disable tb
-		if(Read_LID_SW_IN())	//lid open enable tb
-		{
-			EC_TP_ON_HI();
-			CLEAR_MASK(pDevStatus1, b7DisableTP);
-			SET_MASK(pDevStus, pENABLE_TP);
-			CLEAR_MASK(GameZoneState, TPdisable);
-		}
-		else
-		{
-			EC_TP_ON_LOW();
-			SET_MASK(pDevStatus1, b7DisableTP);	
-			CLEAR_MASK(pDevStus, pENABLE_TP);
-			SET_MASK(GameZoneState, TPdisable);
-		}
-		//XITING0041:E
-
-		//XITING0041:S remove
-		/*
-		EC_TP_ON_HI();		//enable TP
-		CLEAR_MASK(pDevStatus1, b7DisableTP);
-		SET_MASK(pDevStus, pENABLE_TP);							//XITING0021:add
-		CLEAR_MASK(GameZoneState, TPdisable); 					//XITING0021:add
-		*/
-		//XITING0041:E
 	}
 }
 void OEM_LPC_Reset(void)
@@ -60,7 +31,6 @@ void OEM_LPC_Reset(void)
 	CLEAR_MASK(pDevStatus1,b5TPDRIVER_STATUS);
 	CLEAR_MASK(StatusKeeper, BatteryFwUpdate);
 	CLEAR_MASK(cCmd, b3BkOff);		// Turn on backlight.
-	//CLEAR_MASK(OKOStatusBit, b1BkOff); //REJERRY061:add.  //REJERRY080:remove.
 	SMartNoise = 0x04;				// Stop Fan Dust mode.
 	BackLight_En_Delay = 3;			
 	CLEAR_MASK(LENOVOPMFW,BATTERY_MAIN_CAL);
@@ -68,19 +38,18 @@ void OEM_LPC_Reset(void)
 	LENOVOPMFW_Temp = 0;
 	CLEAR_MASK(ACOFF_SOURCE, BATTLEARN);
 
-	//REJERRY074: S+ Add interface to support game zone app.
+	//Add interface to support game zone app.
 	CLEAR_MASK(GameZoneState, winkeydisable);	// Enable win key
 	CLEAR_MASK(Thro_Status2, b4FAN1_FullOn);	//Disable FAN Full on.
-	CLEAR_MASK(GameZoneState1, FanCooling); // CLEAR FAN COOLING FLAG  //REJERRY079:modify flag address.
-	//REJERRY074: E+.
+	CLEAR_MASK(GameZoneState1, FanCooling); // CLEAR FAN COOLING FLAG  
 	
 	if((!Read_AC_IN())&&(nBattGasgauge <=25))
 	{
 		S0CPUProchotONCnt=60;
-	}//REJERRY0978¡êoupdate power setting'LBG EC Parameter V2.1_for Y510IP710 20161210'.
+	}//update power setting'LBG EC Parameter V2.1_for Y510IP710 20161210'.
 
-	//XITING0041:S check lid open enable tb else disable tb
-	if(Read_LID_SW_IN())	//lid open enable tb
+	//check lid open enable tb else disable tP
+	if(Read_LID_SW_IN())	//lid open enable tP
 	{
 		EC_TP_ON_HI();
 		CLEAR_MASK(pDevStatus1, b7DisableTP);
@@ -94,16 +63,6 @@ void OEM_LPC_Reset(void)
 		CLEAR_MASK(pDevStus, pENABLE_TP);
 		SET_MASK(GameZoneState, TPdisable);
 	}
-		//XITING0041:E
-
-	//XITING0041:S remove
-	/*
-	EC_TP_ON_HI();						//enable TP //72JERRY056:Add enable/disable TP function by HW pin.
-	CLEAR_MASK(pDevStatus1, b7DisableTP);//enable TP//72JERRY056:Add enable/disable TP function by HW pin.
-	SET_MASK(pDevStus, pENABLE_TP);					//XITING0021:add
-	CLEAR_MASK(GameZoneState, TPdisable); 			//XITING0021:add
-	*/
-	//XITING0041:E
 }
 
 
@@ -149,14 +108,13 @@ void Oem_SysPowerContrl(void)
 			break;
 	
 		case SYSTEM_S3:
-			//XITING0066:S add S3 when S4 falling go S0 - S5
+			//add S3 when S4 falling go S0 - S5
 			if(!Read_SLPS4())
 			{
 				PWSeqStep = 1;
 				PowSeqDelay = 00;	
 				SysPowState=SYSTEM_S0_S5;
 			}
-			//XITING0066:E
 		
 			if(Read_SLPS3())  //S3 to S0
 			{
@@ -165,6 +123,7 @@ void Oem_SysPowerContrl(void)
 				RamDebug(0x33);         
 				SysPowState=SYSTEM_S3_S0;
 			}
+			
 			if(IS_MASK_SET(SYS_STATUS,b4IllegalAdp)&&Read_AC_IN())
 			{
 				SET_MASK(SYS_STATUS,AC_ADP);	//set AC in  flag
@@ -181,14 +140,12 @@ void Oem_SysPowerContrl(void)
 				SysPowState=SYSTEM_S5_S0;
 			}
 			CheckAutoPowerOn();
-			//HEGANG001:add start
 			if((ShipModeEn==0xA5)||IS_MASK_SET(EMStatusBit2,b0SetBatteryShipMode))
 			{
 				CLEAR_MASK(ACPI_HOTKEY, b7BIOS_NoShut);
 				CLEAR_MASK(ACPI_HOTKEY, b6Cmd_NoShut);
 				CLEAR_MASK(cCmd, bPCHPWR_Keep);
 			}
-			//HEGANG001:add end
 			if(( IS_MASK_CLEAR(ACPI_HOTKEY, b7BIOS_NoShut))&& (IS_MASK_CLEAR(ACPI_HOTKEY, b6Cmd_NoShut))&&(LOWBATT_3TIMES==0)) 
 			{
 				if ((!Read_AC_IN())&&IS_MASK_CLEAR(cCmd, bPCHPWR_Keep)) 
@@ -205,7 +162,7 @@ void Oem_SysPowerContrl(void)
 			break;
 
 		case SYSTEM_DSX:
-			CheckAutoPowerOn(); //REJERRY039:add.
+			CheckAutoPowerOn(); 
 			if((Read_AC_IN())||(LOWBATT_3TIMES!=0))
 			{  
 				PWSeqStep = 1;
@@ -272,7 +229,7 @@ void Oem_SysPowerContrl(void)
 	}
 }
 
-BYTE Sequence_Null(void) //W034:EC ROM Crash 
+BYTE Sequence_Null(void) //EC ROM Crash 
 {
 	RamDebug(0xEE);
 	return 0;
@@ -287,13 +244,10 @@ void SetS0GPIO(void)
 	SCI_HI();			  	//RUNSCI Hi
 	KBRST_OFF();
 
-	//TP_CLK_ALT;			// TP_CLK to alternate pin
-	//TP_DATA_ALT;			// TP_DATA to alternate pin
-
 	SMBus2_CLK_ALT;			// SMBus2 CLK to alternate pin
 	SMBus2_DAT_ALT;			// SMBus2 DATA to alternate pin
 
-//XITING0036:S remove 30% duty at first 20 seconds boot
+//remove 30% duty at first 20 seconds boot
 #if FAN_TABLE_Already
 	FAN_PWM_ALT;
 	FAN2_PWM_ALT; 
@@ -303,29 +257,6 @@ void SetS0GPIO(void)
 	EC_FAN_PWM_HI();
 	EC_FAN2_PWM_HI();
 #endif	// FAN_TABLE_Already
-/*	
-#if FAN_TABLE_Already
-	//FAN_PWM_ALT;			// Set FAN_PWM Alt.	//XITING0009:remove
-	//FAN2_PWM_ALT; 							//XITING0009:remove
-//#else											//XITING0009:remove
-	//THOMASY022: S-
-	//FAN2_PWM_OUT; 
-	//FAN_PWM_OUT;			// Set FAN_PWM OUTPUT.
-	//EC_FAN_PWM_HI();
-	//EC_FAN2_PWM_HI();
-	//THOMASY022: E-
-	
-	//THOMASY022: S+ Modify fan control logic for SIV phase (30% duty at first 20 seconds boot).
-	FAN_PWM_ALT;			// Set FAN_PWM Alt.
-	FAN2_PWM_ALT; 
-	FAN_PWM = FAN_PWM_Max * 30 /100;
-	FAN2_PWM = FAN_PWM_Max * 30 /100;
-	FANTimeCount = 1;							//XITING0009:change 20 to 1
-	//THOMASY022: E+
-#endif	// FAN_TABLE_Already
-*/
-//XITING0036:E
-
 
 	FAN_SPEED_ALT;			// Set FAN Speed Alt.
 	FAN2_SPEED_ALT;          
@@ -338,27 +269,23 @@ void SetS0GPIO(void)
 	BRAM3F =0;
 	PECIDelayCnt = 0x04;
 	Fan_Init();
-	
-#if UCS1022_Support
-	USB_CH_OUTPUT;
-	if ( IS_MASK_CLEAR(EMStatusBit, b1SetUSBChgEn) )
-		{ USB_CH_LOW(); }
-#endif	// UCS1022_Support
 
 	if ( IS_MASK_SET(SYS_MISC1, b1Num_LED) )
-		{ NUMLED_ON(); }
+	{ 
+	    NUMLED_ON(); 
+	}
 	else
-		{ NUMLED_OFF(); }
+    { 
+        NUMLED_OFF(); 
+    }
 
-	RGB_PWR_EN_HI();	//THOMASY013:add RGB_PWR_EN
+	PCH_PWR_EN_HI();	
 }
 
 void SetS5GPIO(void)
 {
 	SCI_LOW();			//RUNSCI Hi
 	KBRST_ON();
-	//TP_CLK_INDW;		// TP_CLK to Input+pull_DW pin
-	//TP_DATA_INDW;		// TP_DATA to Input+pull_DW pin
 	SMBus2_CLK_INDW;	// SMBus2 CLK to Input+pull_DW pin
 	SMBus2_DAT_INDW;	// SMBus2 DATA to Input+pull_DW pin
 	FAN_PWM_INDW;		// Set FAN_PWM input+pull_dw.
@@ -370,7 +297,7 @@ void SetS5GPIO(void)
 	
 	AC_IN_INPUT;
 
-	RGB_PWR_EN_LOW();		//THOMASY013:add RGB_PWR_EN
+	PCH_PWR_EN_LOW();		
 }
 
 //============G3 -> S5==========================================================
@@ -391,13 +318,12 @@ BYTE Enter_ShipMode()
 #if shipmodesupport
 	if((ShipModeEn==0xA5)||IS_MASK_SET(EMStatusBit2,b0SetBatteryShipMode)) 
 	{
-		DisableAllInterrupt(); //REJERRY032:add.                      
-		SET_MASK(BATTUPDATEFW,PriBattInhib); //REJERRY032:add.
-		RamDebug(0xA5); //REJERRY032:add. 
+		DisableAllInterrupt();                   
+		SET_MASK(BATTUPDATEFW,PriBattInhib); 
+		RamDebug(0xA5); 
 		ShipModeEn=0x00;
-		Delay1MS(300); //REJERRY032:add.   
+		Delay1MS(300); 
 		Lock_ShipMode();
-		//REJERRY032:S+. 
 		Delay1MS(120);
 		ProcessSID(0xA6);
 		Delay1MS(10); 
@@ -412,10 +338,9 @@ BYTE Enter_ShipMode()
 		//ProcessSID(0xA8);
 
 		//while(1);
-		//}//REJERRY102: -Modify battery enter ship mode method.
+		//}Modify battery enter ship mode method.
 		CLEAR_MASK(BATTUPDATEFW,PriBattInhib);
 		EnableAllInterrupt();
-		//REJERRY032:E+. 
 	}
 #endif
 	return(0);
@@ -425,7 +350,7 @@ BYTE Enter_ShipMode()
 BYTE S5DSX_EC_ON_LOW()
 {  
 	EC_ON_LOW();
-	if(IS_MASK_CLEAR(EMStatusBit,b1SetUSBChgEn))	//THOMASY011:add
+	if(IS_MASK_CLEAR(EMStatusBit,b1SetUSBChgEn))	
 		EC_ON_5V_OFF();
 	EC_ON_1V_OFF();
 	PM_PWRBTN_LOW();
@@ -435,13 +360,6 @@ BYTE S5DSX_EC_ON_LOW()
 BYTE S5DSX_Init_Status()
 {
 	SysPowState = SYSTEM_DSX;
-
-	//REJERRY020:S+ add set USB charge.
-#if Support_USB_Charge
-	Set_USB_Charger();
-#endif
-	//REJERRY020:E+ add set USB charge.
-
 	return(0);
 }
 
@@ -597,13 +515,13 @@ void Oem_DSXS5Sequence(void)
 //============S5 -> S0==========================================================
 BYTE S5S0_STEP1(void)
 {
-	F2_Pressed=0; 	//COMMON0004: ADD
+	F2_Pressed=0; 	
 	AutoTimer=0x00; 
 	PCIE_WAKE_HI();
 	PM_PWRBTN_HI();
 	EC_ON_HI(); 
 	EC_ON_5V_ON(); 
-	return(0);  //REJERRY012:modify return 1 to 0.
+	return(0);  //modify return 1 to 0.
 }
 
 BYTE S5S0_EC_ON_1_8_EN(void) 
@@ -657,7 +575,7 @@ BYTE S5S0_CHK_S3(void)
 	return(0);
 }
 
-//REJERRY012:S+ add SLP_S3,SLP_S4 failling interrupt enable function.
+//add SLP_S3,SLP_S4 failling interrupt enable function.
 BYTE S5S0_CHK_S3fallingWakeEnable(void)
 {
 	SlpS3fallingWakeEnable();
@@ -669,7 +587,7 @@ BYTE S5S0_CHK_S4fallingWakeEnable(void)
 	SlpS4fallingWakeEnable();
 	return(0);
 }
-//REJERRY012:E+ add SLP_S3,SLP_S4 failling interrupt enable function.
+//add SLP_S3,SLP_S4 failling interrupt enable function.
 
 BYTE S5S0_SYSON_EN(void)
 {
@@ -693,8 +611,6 @@ BYTE S5S0_SUSP(void)
 
 BYTE S5S0_NVDD_PWR(void)
 {
-#if	Support_External_IO
-#endif	// Support_External_IO
 	return(0);
 }
 
@@ -719,12 +635,11 @@ BYTE S5S0_CHK_SA_PWRGOOD(void)
 BYTE S5S0_VR_ON(void)
 {
 	VR_ON_ON();  
-	if (IS_MASK_SET(SYS_STATUS,AC_ADP))   //T07G+
+	if (IS_MASK_SET(SYS_STATUS,AC_ADP)) 
 	{
 		AdapterIDOn_Flag=1;;
 	} 
 	MuteCount = 20;
-	woodferCount= 28;
 	return(0);
 }
 
@@ -732,8 +647,6 @@ BYTE S5S0_CPU_PWRGD(void)
 {
 	if ( Read_CPU_PWRGD())
 	{
-#if Support_KBLED
-#endif  // Support_KBLED
 		return(1);
 	}
 	return(0);
@@ -755,27 +668,23 @@ BYTE S5S0_SYS_PWRGD(void)
 
 void LPC_RST(void)
 {
-#if	Support_External_IO
-#endif	// Support_External_IO
+
 }
 
 BYTE S5S0_Init_Status(void)
 {
 	Fan_ON_Count = FAN_Boot_On;	// Turn on Fan 3 Sec.
-	InitThermalTable1(); //REJERRY050:add
-	InitThermalTable2(); //REJERRY050:add
+	InitThermalTable1(); 
+	InitThermalTable2(); 
 	nBrightValue = 17;			// Default WIN8 brightness 110~130 nit.
-	CLEAR_MASK(ACPI_HOTKEY, b6Cmd_NoShut);//JERRYCR051: Clear flag when power on.
-	LED_KB_PWM_Count = 500; //REJERRY007:modify to 5S.
+	CLEAR_MASK(ACPI_HOTKEY, b6Cmd_NoShut);//Clear flag when power on.
+	LED_KB_PWM_Count = 500; //modify to 5S.
 	ACPI_HOTKEY &= 0x1F;		// Clear bit6,7, can cut power in the battery mode.
 	SYS_STATUS &= 0xF8;			// Clear OS mode.
-	DSxPowState = SYSTEM_S3S4;	// Clear Deep status.
 	CLEAR_MASK(cCmd, b3BkOff);	// Turn on backlight.
-	//CLEAR_MASK(OKOStatusBit, b1BkOff); //REJERRY061:add.  //REJERRY080:remove.
-	BackLight_En_Delay =16;	// Delay 280msec turn on backlight.
-	delayEDPTm = 5;                             // Delay 50ms to initial EDP.   // CMW Temp
+	BackLight_En_Delay =16;	// Delay 280 ms turn on backlight.
 
-	//XITING0037:S check lid open enable tb else disable tb
+	//check lid open enable tb else disable tb
 	if(Read_LID_SW_IN())	//lid open enable tb
 	{
 		SET_MASK(SWI_EVENT,LID);
@@ -792,17 +701,12 @@ BYTE S5S0_Init_Status(void)
 		CLEAR_MASK(pDevStus, pENABLE_TP);
 		SET_MASK(GameZoneState, TPdisable);
 	}
-	//XITING0037:E
+
 	 
 #if SupportReadTPID
 	ReadTPid();
 #endif
 
-#if Support_USB_Charge
-	Set_USB_Charger();
-#endif
-
-	SET_MASK(pDevStus, pENABLE_TP);	// Turn on TouchPad.
 	if(IS_MASK_SET(SEL_STATE0,PRESENT_A))
 	{
 		batteryFirstUsedDateL = batteryFirstUsedDateH = 0x00;
@@ -816,10 +720,9 @@ BYTE S5S0_Init_Status(void)
 		}
 	}		
 	
-	//if((AdapterID==AdapterID_45W)||(AdapterID==AdapterID_65W) || (AdapterID==AdapterID_90W))		//XITING0063:add 90W AC			//XITING0069:remove
-	if(((AdapterID==AdapterID_45W)||(AdapterID==AdapterID_65W) || (AdapterID==AdapterID_90W)) && (Read_AC_IN()))					//XITING0069:add AC in check (90w adapterID is 00 and EC reg default is 00)
+	if(((AdapterID==AdapterID_45W)||(AdapterID==AdapterID_65W) || (AdapterID==AdapterID_90W)) && (Read_AC_IN()))					//AC in check (90w adapterID is 00 and EC reg default is 00)
 	{
-		SET_MASK(ACOFF_SOURCE,BATTLEARN);															//XITING0063:add ACOFF_SOURCE flag
+		SET_MASK(ACOFF_SOURCE,BATTLEARN);															//add ACOFF_SOURCE flag
 		SET_MASK(CHGIC_ReadCmd0x12L,BatLearnEnable);
 		if (!bRWSMBus(SMbusChB, SMbusWW, Charger_Addr, C_ChargerMode, &CHGIC_ReadCmd0x12L,SMBus_NoPEC))
 		{
@@ -827,23 +730,14 @@ BYTE S5S0_Init_Status(void)
 			RamDebug(0x14);
 		}
 	}
-
-	//XITING0037:S remove
-	/*
-	EC_TP_ON_HI();//enable TP //72JERRY056:Add enable/disable TP function by HW pin.
-	CLEAR_MASK(pDevStatus1, b7DisableTP);//enable TP//72JERRY056:Add enable/disable TP function by HW pin.
-	SET_MASK(pDevStus, pENABLE_TP);					//XITING0021:add
-	CLEAR_MASK(GameZoneState, TPdisable); 			//XITING0021:add
-	*/
-	//XITING0037:E
 	
 	Lowpower_DISfunction();
 	if((!Read_AC_IN())&&(nBattGasgauge <=25))
 	{
 		S0CPUProchotONCnt=60;
-	}//REJERRY0978¡êoupdate power setting'LBG EC Parameter V2.1_for Y510IP710 20161210'.
+	}
 
-	AOU_IFG_Debounce_Cnt = 0;				//XITING0010 Reset counter
+	AOU_IFG_Debounce_Cnt = 0;				//Reset counter
 	
 	SysPowState = SYSTEM_S0;	// Set System S0 status.
 	return(0);
@@ -906,7 +800,7 @@ void Oem_S5S0Sequence(void)
 //============S0 -> S5==========================================================
 BYTE S0S5_SYS_PWRGD(void)
 {
-	workaoundhangS5flag=0;//Y7JERRY091: Add workaround for hang S4/cold boot/reboot.
+	workaoundhangS5flag=0;//Add workaround for hang S4/cold boot/reboot.
 	EC_SYS_PWRGD_LOW();
 	return(0);
 }
@@ -920,15 +814,11 @@ BYTE S0S5_PCH_PWR(void)
 BYTE S0S5_VR_ON(void)
 {
 	VR_ON_OFF();	
-#if	Support_External_IO
-#endif	// Support_External_IO
 	return(0);
 }
 
 BYTE S0S5_NVDD_OFF(void)
 {
-#if	Support_External_IO
-#endif	// Support_External_IO
 	return(0);
 }
 
@@ -954,16 +844,14 @@ BYTE S0S5_SYSON_VDDQ_EN(void)
 
 BYTE S0S5_Init_Status(void)
 {
-	//REJERRY074: S+ Add interface to support game zone app.
+	//Add interface to support game zone app.
 	CLEAR_MASK(GameZoneState, winkeydisable);	// Enable win key
-	CLEAR_MASK(GameZoneState1, FanCooling); // CLEAR FAN COOLING FLAG  //REJERRY079:modify flag address.
-	//REJERRY074: E+.
-	//REJERRY091:S+ Add CMD for press power button 4s don't shutdown when flash bios.
+	CLEAR_MASK(GameZoneState1, FanCooling); // CLEAR FAN COOLING FLAG  
+
+	//Add CMD for press power button 4s don't shutdown when flash bios.
 #if chPWSW1WDT
 	CLEAR_MASK(pProject4,pPWSWdisable);
 #endif  //chPWSW1WDT 
-	//REJERRY091:E+.
-	DSxPowState = SYSTEM_S3S4;
 	uNovoVPCCount = 0;				// Clear NOVO VPC status.
 	nCpuTemp = TEMP_Buff_1 = TEMP_Buff_2 = TEMP_Buff_3=0x00; 
 	VGA_TEMP = VGA_TBuff3 = VGA_TBuff2 = VGA_TBuff1 = 0x00;	
@@ -992,10 +880,6 @@ BYTE S0S5_Init_Status(void)
 		WinFlashMark2 = 0x35;
 	}
 
-#if Support_USB_Charge
-	Set_USB_Charger();
-#endif
-
 	CLEAR_MASK(pDevStatus1,b1F6DisableTP);
 	CLEAR_MASK(pDevStatus1,b5TPDRIVER_STATUS);
 	if(IS_MASK_SET(SEL_STATE0,PRESENT_A))
@@ -1019,29 +903,26 @@ BYTE S0S5_Init_Status(void)
 		Unlock_Scan();		// UnLock scanner
 		CLEAR_MASK(SysStatus,LidKBIgnore);
 	}
-	
 	if ( IS_MASK_CLEAR(SysStatus, ERR_ShuntDownFlag) )
 	{ 
 		ProcessSID(S5_ID);
+	
 	}
 	
 	CLEAR_MASK(SysStatus,ERR_ShuntDownFlag);	// Clear Shutdown ID bit.
-	initMark = 0x00;	// CMW 20121203 for PS8625 translator
-	TEMP_Error = 0x00; // CMW 20121203 for PS8625 translator
 	PECI_Err_CNT=0;
 	Lowpower_ENfunction();
 
-	EC_TP_ON_LOW();					//disable tp//72JERRY056:Add enable/disable TP function by HW pin.
-	SET_MASK(pDevStatus1, b7DisableTP);	//72JERRY056:Add enable/disable TP function by HW pin.
-	CLEAR_MASK(pDevStus, pENABLE_TP);				//XITING0021:add
-	SET_MASK(GameZoneState, TPdisable);				//XITING0021:add
+	EC_TP_ON_LOW();					
+	SET_MASK(pDevStatus1, b7DisableTP);	
+	CLEAR_MASK(pDevStus, pENABLE_TP);			
+	SET_MASK(GameZoneState, TPdisable);				
 
-	//if((AdapterID==AdapterID_45W)||(AdapterID==AdapterID_65W) || (AdapterID==AdapterID_90W))		//XITING0063:add 90W AC		//XITING0069:remove
-	if(((AdapterID==AdapterID_45W)||(AdapterID==AdapterID_65W) || (AdapterID==AdapterID_90W)) && (Read_AC_IN()))				//XITING0069:add AC in check (90w adapterID is 00 and EC reg default is 00)
+	if(((AdapterID==AdapterID_45W)||(AdapterID==AdapterID_65W) || (AdapterID==AdapterID_90W)) && (Read_AC_IN()))				//add AC in check (90w adapterID is 00 and EC reg default is 00)
 	{
-		CLEAR_MASK(ACOFF_SOURCE,BATTLEARN);															//XITING0063:remove ACOFF_SOURCE flag
-		CLEAR_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable); //REJERRY051:Modify read addr to write.
-		if (!bRWSMBus(SMbusChB, SMbusWW, Charger_Addr, C_ChargerMode, &CHGIC_WriteCmd0x12L,SMBus_NoPEC)) //REJERRY051:Modify read addr to write.
+		CLEAR_MASK(ACOFF_SOURCE,BATTLEARN);															
+		CLEAR_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable); 
+		if (!bRWSMBus(SMbusChB, SMbusWW, Charger_Addr, C_ChargerMode, &CHGIC_WriteCmd0x12L,SMBus_NoPEC)) 
 		{
 			CHGIC_SMbusFailCnt++;
 			RamDebug(0x14);
@@ -1115,16 +996,12 @@ BYTE S0S3_PCH_PWROK(void)
 BYTE S0S3_VR_ON(void)
 {
 	VR_ON_OFF();
-#if	Support_External_IO	//cwy
-#endif	// Support_External_IO
 	return(0);
 }
 
 BYTE S0S3_SUSP(void)
 {
 	SUSP_OFF();
-#if	Support_External_IO
-#endif	// Support_External_IO
 	SetS5GPIO();	
 	return(0);
 }
@@ -1141,86 +1018,50 @@ BYTE S0S3_GPO7(void)
 
 BYTE S0S3_Init_Status(void)
 {
-	//REJERRY074: S+ Add interface to support game zone app.
+	//Add interface to support game zone app.
 	CLEAR_MASK(GameZoneState, winkeydisable);	 // Enable win key
-	CLEAR_MASK(GameZoneState1, FanCooling); // CLEAR FAN COOLING FLAG  //REJERRY079:modify flag address.
-	//REJERRY074: E+.
-
-#if	Support_External_IO
-#endif	// Support_External_IO
+	CLEAR_MASK(GameZoneState1, FanCooling); // CLEAR FAN COOLING FLAG  
+	//
 	CPU_TYPE &= 0x3f;
 	nCpuTemp = TEMP_Buff_1 = TEMP_Buff_2 = TEMP_Buff_3=0x00; 
 	VGA_TEMP = VGA_TBuff3 = VGA_TBuff2 = VGA_TBuff1 = 0x00;	
 	CLEAR_MASK(StatusKeeper, BatteryFwUpdate);
 	nNBTemp = nRamTemp =0;
-	DSxPowState = SYSTEM_S3S4;
-#if Support_USB_Charge
-	Set_USB_Charger();
-#endif
 #if TouchPad_only
 	PowerOffClearTPPendingData();
 #endif   
 	ERR_THMSTS = 0;					// Clear thermal status fail bit.
 	Thro_Status = Thro_Status2 = 0;	// clear Throttling status.
 	AOAC_STATUS &= 0x10;			// Clear ISCT status.
-	initMark = 0x00;	// CMW 20121203
-	TEMP_Error = 0x00;	// CMW 20121203
 	PECI_Err_CNT=0;
 	CLEAR_MASK(pDevStatus1,b1F6DisableTP);
 	CLEAR_MASK(pDevStatus1,b5TPDRIVER_STATUS);
-	SET_MASK(CHGIC_WriteCmd0x12L,ChargeInhibit); //REJERRY051:Modify read addr to write.
+	SET_MASK(CHGIC_WriteCmd0x12L,ChargeInhibit); 
 	Lowpower_ENfunction();
-
-	//XITING0025:S remove S3 status TP check
-	/*
-	//XITING0037:S check lid open enable tb else disable tb
-	if(Read_LID_SW_IN())	//lid open enable tb
-	{
-		EC_TP_ON_HI();
-		CLEAR_MASK(pDevStatus1, b7DisableTP);
-		SET_MASK(pDevStus, pENABLE_TP);
-		CLEAR_MASK(GameZoneState, TPdisable);
-	}
-	else
-	{
-		EC_TP_ON_LOW();
-		SET_MASK(pDevStatus1, b7DisableTP);	
-		CLEAR_MASK(pDevStus, pENABLE_TP);
-		SET_MASK(GameZoneState, TPdisable);
-	}
-	//XITING0037:E
-	*/
-	//XITING0025:E
-
-	//XITING0025:S add when S3 status TP disable
-	//XITING0037:S remove
-   	EC_TP_ON_LOW();//enable TP//72JERRY056:Add enable/disable TP function by HW pin.
-	SET_MASK(pDevStatus1, b7DisableTP);//enable TP//72JERRY056:Add enable/disable TP function by HW pin.
-	CLEAR_MASK(pDevStus, pENABLE_TP);				//XITING0021:add
-	SET_MASK(GameZoneState, TPdisable);				//XITING0021:add
-	//XITING0037:E remove
-	//XITING0025:E
 	
-	//if((AdapterID==AdapterID_45W)||(AdapterID==AdapterID_65W) || (AdapterID==AdapterID_90W))		//XITING0063:add 90W AC		//XITING0069:remove
-	if(((AdapterID==AdapterID_45W)||(AdapterID==AdapterID_65W) || (AdapterID==AdapterID_90W)) && (Read_AC_IN()))				//XITING0069:add AC in check (90w adapterID is 00 and EC reg default is 00)
+   	EC_TP_ON_LOW();
+	SET_MASK(pDevStatus1, b7DisableTP);
+	CLEAR_MASK(pDevStus, pENABLE_TP);				
+	SET_MASK(GameZoneState, TPdisable);				
+
+	if(((AdapterID==AdapterID_45W)||(AdapterID==AdapterID_65W) || (AdapterID==AdapterID_90W)) && (Read_AC_IN()))				//add AC in check (90w adapterID is 00 and EC reg default is 00)
 	{
-		CLEAR_MASK(ACOFF_SOURCE,BATTLEARN);															//XITING0063:remove ACOFF_SOURCE flag
-		CLEAR_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable); //REJERRY051:Modify read addr to write.
-		if (!bRWSMBus(SMbusChB, SMbusWW, Charger_Addr, C_ChargerMode, &CHGIC_WriteCmd0x12L,SMBus_NoPEC)) //REJERRY051:Modify read addr to write.
+		CLEAR_MASK(ACOFF_SOURCE,BATTLEARN);															
+		CLEAR_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable); 
+		if (!bRWSMBus(SMbusChB, SMbusWW, Charger_Addr, C_ChargerMode, &CHGIC_WriteCmd0x12L,SMBus_NoPEC)) 
 		{
 			CHGIC_SMbusFailCnt++;
 			RamDebug(0x14);
 		}
 	}
 	
-      //REJERRY094:S+Modify the USB mouse can wake up from S3 at DC mode when the LID closed,not follow UI SPEC.
+      //Modify the USB mouse can wake up from S3 at DC mode when the LID closed,not follow UI SPEC.
 	if((!Read_LID_SW_IN())&& !Read_AC_IN())
 	{
 		USB_ON_HI();
 	}
-	
-	//REJERRY094:E+Modify the USB mouse can wake up from S3 at DC mode when the LID closed,not follow UI SPEC.
-	SysPowState=SYSTEM_S3;
+
+	SysPowState = SYSTEM_S3;
 	return(0);
 }
 
@@ -1282,7 +1123,7 @@ BYTE S3S0_PM_PWER_BTN2(void)
 	return(0);
 }
 
-//REJERRY012:S+ add SLP_S3 failling interrupt enable.
+//add SLP_S3 failling interrupt enable.
 BYTE S3S0_CHK_S3fallingWakeEnable(void)
 {
 	SlpS3fallingWakeEnable();
@@ -1294,11 +1135,10 @@ BYTE S3S0_CHK_S4fallingWakeEnable(void)
 	SlpS4fallingWakeEnable();
 	return(0);
 }
-//REJERRY012:E+ add SLP_S3 failling interrupt enable.
-
+//
 BYTE S3S0_SUSP(void)
 {
-	F2_Pressed=0; 		//COMMON0004: ADD
+	F2_Pressed=0; 		
 	PM_PWRBTN_HI();
 	SUSP_ON();
 	SetS0GPIO();
@@ -1315,8 +1155,6 @@ BYTE S3S0_Read_VCCIO_PG(void)
 {
 	if ( Read_VCCIO_PG())
 	{
-#if Support_KBLED
-#endif  // Support_KBLED
 		return(1);
 	}
 	return(0);
@@ -1329,8 +1167,7 @@ BYTE S3S0_VR_ON(void)
 	{
 		AdapterIDOn_Flag=1;;
 	} 
-	MuteCount = 18;  //tony 1208 
-	woodferCount= 28;//
+	MuteCount = 18;  
 	return(0);
 }
 
@@ -1338,8 +1175,6 @@ BYTE S3S0_Read_CPU_PWRGD(void)
 {
 	if ( Read_CPU_PWRGD())
 	{
-#if Support_KBLED
-#endif  // Support_KBLED
 		return(1);
 	}
 	return(0);
@@ -1361,24 +1196,15 @@ BYTE S3S0_SYS_PWRGD(void)
 BYTE S3S0_Init_Status(void)
 {
 	Fan_ON_Count = FAN_Boot_On;	// Turn on Fan 3 Sec.
-	DSxPowState = SYSTEM_S3S4;	// Clear Deep status.
 	RamDebug(0x9B);
-	//LED_KB_PWM_Count = 0X64;  //REJERRY007:remove.
 	CLEAR_MASK(cCmd, b3BkOff);	// Turn on backlight.
-	//CLEAR_MASK(OKOStatusBit, b1BkOff); //REJERRY061:add.  //REJERRY080:remove.
 	BackLight_En_Delay = 3;		// Delay 30msec turn on backlight.
-	delayEDPTm = 40;                           // Delay 100ms to initial EDP. // CMW Temp
 	SET_MASK(pDevStus, pENABLE_TP);	// Turn on TouchPad.
-	CURRENT_STATUS &= 0xC0; 		//(JSN20120614) Clear flags of entering and resuming from S3 & S4 &S5
-	CLEAR_MASK(CHGIC_WriteCmd0x12L,ChargeInhibit); //REJERRY051:Modify read addr to write.
+	CURRENT_STATUS &= 0xC0; 		//Clear flags of entering and resuming from S3 & S4 &S5
+	CLEAR_MASK(CHGIC_WriteCmd0x12L,ChargeInhibit); 
 	Lowpower_DISfunction();
-
-#if Support_USB_Charge
-	Set_USB_Charger();
-#endif
-
-	//XITING0037:S check lid open enable tb else disable tb
-	if(Read_LID_SW_IN())	//lid open enable tb
+	//check lid open enable tp else disable tp
+	if(Read_LID_SW_IN())	
 	{
 		EC_TP_ON_HI();
 		CLEAR_MASK(pDevStatus1, b7DisableTP);
@@ -1392,19 +1218,8 @@ BYTE S3S0_Init_Status(void)
 		CLEAR_MASK(pDevStus, pENABLE_TP);
 		SET_MASK(GameZoneState, TPdisable);
 	}
-	//XITING0037:E
-	//XITING0037:S remove
-	/*
-	EC_TP_ON_HI();					//disable tp//72JERRY056:Add enable/disable TP function by HW pin.
-	CLEAR_MASK(pDevStatus1, b7DisableTP);	//72JERRY056:Add enable/disable TP function by HW pin.
-	SET_MASK(pDevStus, pENABLE_TP);					//XITING0021:add
-	CLEAR_MASK(GameZoneState, TPdisable); 			//XITING0021:add
-	*/
-	//XITING0037:E 
-
-	//XITING0063:S add S3 ~ S0 battery charging setting
-	//if((AdapterID==AdapterID_45W)||(AdapterID==AdapterID_65W) || (AdapterID==AdapterID_90W))							//XITING0069:remove
-	if(((AdapterID==AdapterID_45W)||(AdapterID==AdapterID_65W) || (AdapterID==AdapterID_90W)) && (Read_AC_IN()))		//XITING0069:add AC in check (90w adapterID is 00 and EC reg default is 00)
+	
+	if(((AdapterID==AdapterID_45W)||(AdapterID==AdapterID_65W) || (AdapterID==AdapterID_90W)) && (Read_AC_IN()))		//add AC in check (90w adapterID is 00 and EC reg default is 00)
 	{
 		SET_MASK(ACOFF_SOURCE,BATTLEARN);							
 		SET_MASK(CHGIC_ReadCmd0x12L,BatLearnEnable);
@@ -1414,14 +1229,13 @@ BYTE S3S0_Init_Status(void)
 			RamDebug(0x14);
 		}
 	}
-	//XITING0063:E	
 
 	if((!Read_AC_IN())&&(nBattGasgauge <=25))
 	{
-		S0CPUProchotONCnt=60;
-	}//REJERRY0978¡êoupdate power setting'LBG EC Parameter V2.1_for Y510IP710 20161210'.
+		S0CPUProchotONCnt = 60;
+	}
 
-	AOU_IFG_Debounce_Cnt = 0;			//XITING0010 Reset counter
+	AOU_IFG_Debounce_Cnt = 0;			//Reset counter
 	
 	SysPowState = SYSTEM_S0;
 	return(0);
@@ -1549,61 +1363,6 @@ void ReadTPid()
 	}
 }
 
-#if Support_USB_Charge
-void Set_USB_Charger(void)
-{
-	if(IS_MASK_SET(SYS_STATUS,AC_ADP)||(nBattGasgauge >= 20))
-	{
-		if(IS_MASK_SET(EMStatusBit, b1SetUSBChgEn))
-		{
-			if(SystemIsS5||SystemIsS0S5||SystemIsDSX)
-			{
-				if(IS_MASK_SET(SysStatus,ERR_ShuntDownFlag))// need remove all power supply.
-				{
-					//EC_ON_5V_OFF();	//REJERRY002:Remove power off 5v when disable USB charge under S5.  //REJERRY022:add. //REJERRY025:remove.
-				}
-				else
-				{
-					EC_ON_5V_ON(); //REJERRY022:add.
-				}
-			}
-		}
-		else
-		{
-			if(SystemIsS5||SystemIsS0S5||SystemIsDSX)
-			{
-				EC_ON_5V_OFF();	//REJERRY002:Remove power off 5v when disable USB charge under S5 //REJERRY012:add.
-			}
-		}
-	}
-	// below is DC only and < 20%
-	else 
-	{
-		if(SystemIsDSX)
-		{
-			EC_ON_5V_OFF();	
-		}
-	}
-}
-#endif
-
-#if Support_USB_Charge
-void Set_USBCharger_Variable(void)
-{
-	if(IS_MASK_CLEAR(EMStatusBit, b1SetUSBChgEn)&&IS_MASK_SET(BRAM3A, b0USBChargerState))	 
-	{
-		CLEAR_MASK(EMStatusBit, b6RdUSBChgS45); 
-		CLEAR_MASK(BRAM3A, b0USBChargerState);  
-		Set_USB_Charger();                    
-	}
-	if(IS_MASK_SET(EMStatusBit, b1SetUSBChgEn)&&IS_MASK_CLEAR(BRAM3A, b0USBChargerState))	 
-	{
-		SET_MASK(EMStatusBit, b6RdUSBChgS45); 
-		SET_MASK(BRAM3A, b0USBChargerState);  
-		Set_USB_Charger();                    
-	}
-}
-#endif
 
 void Write_NOVOS4(void)
 {
@@ -1696,32 +1455,9 @@ void CheckSBPowerButton(void)
 	}
 }
 
-/*
-void GC6_FBClamp(void)
-{
-	if( (IS_MASK_SET(SYS_MISC1, ACPI_OS)) && (SystemNotS3) && (SystemNotS5) )
-	{  
-             if(IS_MASK_CLEAR(FBClamp, REQactive))
-             {
-			WUEMR7 |= 0x02;
-			WUESR7 = 0x02;
-			SET_MASK(IER9, Int_WKO71);
-			SET_MASK(FBClamp, REQactive);
-             }
-       }
-	else
-	{
-		if(IS_MASK_SET(FBClamp, REQactive))
-		{
-			CLEAR_MASK(FBClamp, REQactive);
-		}
-	}
-}
-*/
-
 void Lowpower_ENfunction(void)
 {
-	SET_MASK(CHGIC_WriteCmd0x12H,LOWPWR_EN); //REJERRY051:Modify read addr to write.
+	SET_MASK(CHGIC_WriteCmd0x12H,LOWPWR_EN); 
 	if (!bRWSMBus(SMbusChB, SMbusWW, Charger_Addr, C_ChargerMode, &CHGIC_WriteCmd0x12L,SMBus_NoPEC)) //REJERRY051:Modify read addr to write.
 	{
 		CHGIC_SMbusFailCnt++;
@@ -1730,8 +1466,8 @@ void Lowpower_ENfunction(void)
 
 void Lowpower_DISfunction(void)
 {
-	CLEAR_MASK(CHGIC_WriteCmd0x12H,LOWPWR_EN); //REJERRY051:Modify read addr to write.
-	if (!bRWSMBus(SMbusChB, SMbusWW, Charger_Addr, C_ChargerMode, &CHGIC_WriteCmd0x12L,SMBus_NoPEC)) //REJERRY051:Modify read addr to write.
+	CLEAR_MASK(CHGIC_WriteCmd0x12H,LOWPWR_EN); 
+	if (!bRWSMBus(SMbusChB, SMbusWW, Charger_Addr, C_ChargerMode, &CHGIC_WriteCmd0x12L,SMBus_NoPEC)) 
 	{
 		CHGIC_SMbusFailCnt++;
 	}

@@ -35,8 +35,8 @@
 #define Timer_2			2 		//Indicated 2 	count
 #define Timer_1			1		//Indicated 1 	count
 
-extern void SystemAutoOn(void); //W006+
+extern void SystemAutoOn(void); 
 
-extern FLAG ChkTimeScale(LPUINT8 countadr, BYTE timeout);	// Timer center. //MARTINH060:add
+extern FLAG ChkTimeScale(LPUINT8 countadr, BYTE timeout);	// Timer center. 
 #endif
 

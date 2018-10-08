@@ -16,15 +16,14 @@
 //
 //*****************************************************************************
 
-//<<cwy0428
 const sInitGPIOReg asInitGPIOReg[] = 
 {
- 	{ &GCR,		GCR_Init		},	// 
- 	{ &GCR2,	GCR2_Init		},	//  
+ 	{ &GCR,		GCR_Init		},	 
+ 	{ &GCR2,	GCR2_Init		},	 
  	
  	{ &GCR10,	GCR10_Init		},
- 	{ &GCR20,	GCR20_Init		},	// 
- 	{ &GCR23,	GCR23_Init		}, //VCC
+ 	{ &GCR20,	GCR20_Init		},	 
+ 	{ &GCR23,	GCR23_Init		}, 
  	
 	{ &GPDRA,	PortA_Init		},	// Port A Data port Init
 	{ &GPDRB,	PortB_Init		},	// Port B Data port Init
@@ -37,14 +36,14 @@ const sInitGPIOReg asInitGPIOReg[] =
 	{ &GPDRI,	PortI_Init		},	// Port I Data port Init
 	{ &GPDRJ,	PortJ_Init		},	// Port J Data port Init
 
-	{ &GPCRA0,	PortA0_Ctrl		},  // 
-	{ &GPCRA1,	PortA1_Ctrl		},  // 
-	{ &GPCRA2,	PortA2_Ctrl		},  // 
-	{ &GPCRA3,	PortA3_Ctrl		},  // 
-	{ &GPCRA4,	PortA4_Ctrl		},  // 
-	{ &GPCRA5,	PortA5_Ctrl		},  // 
-	{ &GPCRA6,	PortA6_Ctrl		},  // 
-	{ &GPCRA7,	PortA7_Ctrl		},  //
+	{ &GPCRA0,	PortA0_Ctrl		},  
+	{ &GPCRA1,	PortA1_Ctrl		},   
+	{ &GPCRA2,	PortA2_Ctrl		},   
+	{ &GPCRA3,	PortA3_Ctrl		},   
+	{ &GPCRA4,	PortA4_Ctrl		},   
+	{ &GPCRA5,	PortA5_Ctrl		},   
+	{ &GPCRA6,	PortA6_Ctrl		},   
+	{ &GPCRA7,	PortA7_Ctrl		},  
 	
 	{ &GPCRB0,	PortB0_Ctrl		},
 	{ &GPCRB1,	PortB1_Ctrl		},
@@ -77,7 +76,7 @@ const sInitGPIOReg asInitGPIOReg[] =
 	{ &GPCRE1,	PortE1_Ctrl		},
 	{ &GPCRE2,	PortE2_Ctrl		},
 	{ &GPCRE3,	PortE3_Ctrl		},
-	{ &GPCRE4,	PortE4_Ctrl  		},	
+	{ &GPCRE4,	PortE4_Ctrl  	},	
 	{ &GPCRE5,	PortE5_Ctrl		},
 	{ &GPCRE6,	PortE6_Ctrl		},
 	{ &GPCRE7,	PortE7_Ctrl		},
@@ -107,7 +106,7 @@ const sInitGPIOReg asInitGPIOReg[] =
 	{ &GPCRH4,	PortH4_Ctrl		},
 	{ &GPCRH5,	PortH5_Ctrl		},
 	{ &GPCRH6,	PortH6_Ctrl		},
-	{ &GPCRH7,	PortH7_Ctrl		},//Y7JERRY001:Add GPIOH7 define.
+	{ &GPCRH7,	PortH7_Ctrl		},
 
 	{ &GPCRI0,	PortI0_Ctrl		},
 	{ &GPCRI1,	PortI1_Ctrl		},
@@ -141,25 +140,16 @@ void Init_GPIO(void)
 		*asInitGPIOReg[index].reg=asInitGPIOReg[index].value;
 		index++;
 	}
-//BROOKEW005: Remove to table
-    //SET_MASK(GPOTD,BIT(4));  
-	//SET_MASK(GPOTH,BIT(0));
-//BROOKEW005: Remove end
 }
 
-
-//cwy0428
 
 //----------------------------------------------------------------------------
 // Hook function of SCI low
 //----------------------------------------------------------------------------
-//W028:modify bellow function define
+//modify bellow function define
 void Hook_SCION(void)
 {
-   
-    ///CLEAR_MASK(GPDRD, BIT4);
     SCI_ON();
-	//return 0;
 
 }
 
@@ -168,11 +158,7 @@ void Hook_SCION(void)
 //----------------------------------------------------------------------------
 void Hook_SCIOFF(void)
 {
-  //  #ifdef ITE_EVBoard
-    //SET_MASK(GPDRD, BIT4);
-  //  #endif
   	SCI_OFF();
-	//return 0;
 }
 
 //----------------------------------------------------------------------------
@@ -180,11 +166,7 @@ void Hook_SCIOFF(void)
 //----------------------------------------------------------------------------
 void Hook_SMION(void)
 {
- //   #ifdef ITE_EVBoard
-    //CLEAR_MASK(GPDRD, BIT3);
-//    #endif
-	//SMI_ON();
-	//return 0;
+
 }
 
 //----------------------------------------------------------------------------
@@ -192,9 +174,7 @@ void Hook_SMION(void)
 //----------------------------------------------------------------------------
 void Hook_SMIOFF(void)
 {
-    //SET_MASK(GPDRD, BIT3);
-    //SMI_OFF();
-	//return 0;
+
 }
 
 //----------------------------------------------------------------------------
@@ -202,8 +182,7 @@ void Hook_SMIOFF(void)
 //----------------------------------------------------------------------------
 void  Hook_A20ON(void)
 {  
-   // SET_MASK(GPDRB, BIT5);  
-	//return 0;	
+
 }
 
 //----------------------------------------------------------------------------
@@ -211,10 +190,7 @@ void  Hook_A20ON(void)
 //----------------------------------------------------------------------------
 void Hook_A20OFF(void)
 {
-//    #ifdef ITE_EVBoard
-   // CLEAR_MASK(GPDRB, BIT5);
-//    #endif
-	//return 0;
+
 }
 
 //----------------------------------------------------------------------------
@@ -222,10 +198,7 @@ void Hook_A20OFF(void)
 //----------------------------------------------------------------------------
 void Hook_KBRSTON(void)
 {
-   
-    //CLEAR_MASK(GPDRB, BIT6);
     KBRST_ON();
-	//return 0;
 }
 
 //----------------------------------------------------------------------------
@@ -233,20 +206,18 @@ void Hook_KBRSTON(void)
 //----------------------------------------------------------------------------
 void Hook_KBRSTOFF(void)
 {  
-    //SET_MASK(GPDRB, BIT6); 
 	KBRST_OFF();
-	//return 0;
 }
-//W028: end
+
 //----------------------------------------------------------------------------
 // Hook function of NUM LED ON
 //----------------------------------------------------------------------------
 void Hook_NUMLED_ON(void)
 {
-//JERRYCR009:S+Add numlock LED.
-if (IS_MASK_CLEAR(cOsLedCtrl, cOL_CtrlRight))
+    if (IS_MASK_CLEAR(cOsLedCtrl, cOL_CtrlRight))
+    {
 		NUMLED_ON();
-//JERRYCR009:E+Add numlock LED.
+	}
 }
 
 //----------------------------------------------------------------------------
@@ -254,10 +225,10 @@ if (IS_MASK_CLEAR(cOsLedCtrl, cOL_CtrlRight))
 //----------------------------------------------------------------------------
 void Hook_NUMLED_OFF(void)
 {
-//JERRYCR009:S+Add numlock LED.
-if (IS_MASK_CLEAR(cOsLedCtrl, cOL_CtrlRight))
+    if (IS_MASK_CLEAR(cOsLedCtrl, cOL_CtrlRight))
+    {
 		NUMLED_OFF();
-//JERRYCR009:E+Add numlock LED.
+	}
 }
 
 //----------------------------------------------------------------------------
@@ -265,10 +236,10 @@ if (IS_MASK_CLEAR(cOsLedCtrl, cOL_CtrlRight))
 //----------------------------------------------------------------------------
 void Hook_CAPLED_ON(void)
 {
-//W022+ s
 	if (IS_MASK_CLEAR(cOsLedCtrl, cOL_CtrlRight))
+	{
 		CAPLED_ON();
-//W022+ e    
+	}
 }
 
 //----------------------------------------------------------------------------
@@ -276,8 +247,8 @@ void Hook_CAPLED_ON(void)
 //----------------------------------------------------------------------------
 void Hook_CAPLED_OFF(void)
 {
-//W022+ s
 	if (IS_MASK_CLEAR(cOsLedCtrl, cOL_CtrlRight))
+	{
 		CAPLED_OFF();
-//W022+ e 
+	}
 }

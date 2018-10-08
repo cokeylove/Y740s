@@ -614,18 +614,14 @@ void VPC_interface(void)
 				{
 					if( !nVPC_DATA )	// Turn off backlight.
 					{
-						//printf("\nDb");
 						SET_MASK(cCmd, b3BkOff);
-						//SET_MASK(OKOStatusBit, b1BkOff);//REJERRY061:add.  //REJERRY080:remove.
 					}
 				}
 				else
 				{
 					if( nVPC_DATA == 0x01 )	// Turn on backlight.
 					{
-						//printf("\nEb");
 						CLEAR_MASK(cCmd, b3BkOff);
-						//CLEAR_MASK(OKOStatusBit, b1BkOff);//REJERRY061:add.  //REJERRY080:remove.
 					}
 				}
 				break;

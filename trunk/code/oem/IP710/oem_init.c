@@ -22,7 +22,7 @@
 //----------------------------------------------------------------------------
 // Oem_StartUp
 //----------------------------------------------------------------------------
-//AIUU3_W23: enable ec crisis recover and flash LED and CRC >>>>>
+//enable ec crisis recover and flash LED and CRC >>>>>
 void  OEM_RECOVER Oem_StartUp(void)
 {
    #if ECCrisisRecovery
@@ -70,9 +70,6 @@ void Oem_Initialization(void)
 	ECBIOSVersionH = REV0_BYTE0;
 	ECBIOSVersionL = REV0_BYTE1;
 	ECBIOSUbSVersion = REV0_BYTE3;
-	
-	
-	//Init_GPIO();//AIUU3_W07:DC power on move to core_init.C
 
     #ifdef HSPI
 	GPIO_HSPI_INIT();
@@ -128,7 +125,7 @@ void Oem_Initialization(void)
 	Fan_Init();
 	
     //InitSMBus();
-   	InitChargerIC();	//aaaa+
+   	InitChargerIC();	
     ResetSCIEvent();
 	Init_OEMVariable();
 	//MARTINH025:add start
@@ -183,7 +180,6 @@ void Oem_Initialization(void)
 #endif
 
 #ifdef EC8sHWResetSupport 	
-	//RSTStatus1 = SPECTRL4;
 	RSTStatus1 = SPCTRL4;
 	if(IS_MASK_SET(RSTStatus1, BIT1))
 	{

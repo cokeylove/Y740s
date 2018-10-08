@@ -34,7 +34,6 @@ void Backlight_Control(void)
 	if ( SystemIsS0 && (IS_MASK_CLEAR(uISCT, b5ISCT_BKOFF)) )	// Check S0 and ISCT BKOFF status.
 	{
 		if ( (Read_ENBKL_IN()) && (IS_MASK_CLEAR(cCmd, b3BkOff)) && Read_LID_SW_IN())  //REJERRY061:remove.  //REJERRY080:add.
-		//if ( (Read_ENBKL_IN()) && (IS_MASK_CLEAR(cCmd, b3BkOff)) && Read_LID_SW_IN()&&(IS_MASK_CLEAR(OKOStatusBit, b1BkOff))) //REJERRY061:add.  //REJERRY080:remove.
 		{
 			#if EC_Brightness_Ctrl
 			if (DCR7 == 0)

@@ -65,9 +65,6 @@ void AdapterIn(void)
 	// SetPowerBatteryparameter(); JERRYCR031:-Add 45W and 65W adapter not allow power on.
 	Unlock_ShipMode();//W037:
 
-#if Support_USB_Charge
-	Set_USB_Charger();//JERRYCR035:Modify USB charge function follow USB charge SPEC.
-#endif
 	S0CPUProchotONCnt=0;//REJERRY0978:update power setting'LBG EC Parameter V2.1_for Y510IP710 20161210'.
 }
 
@@ -418,7 +415,6 @@ void NOVOPressed(void)
 					BatSMbusFailCount = 0; //W100:end
 					uNovoVPCCount = 1;
 					// AIUU3_W17: Fixed 8s reset can power on again >>>>
-					// DSxPowState = SYSTEM_DSxOK;//A01:smt power on
 					//BatOnlyPWRON=SYSTEM_BATONLY;
 					//#if !EN_PwrSeqTest  //AIUU3_W34: support RTC wake and psw can wake during RTC wake enable in DC mode except ship mode enable
 					//return;//JERRYCR057: Remove error 
@@ -547,7 +543,7 @@ void LanWakeLow(void)
 			break;
 
 		case SYSTEM_S3 :
-			if ( IS_MASK_SET(AOAC_STATUS, ISCT_Enable) )	// Check ISCT enable?
+			if ( IS_MASK_SET(AOAC_STATUS, ISCT_Enable) )	// Check ISCT enable
 			{
 				PM_PWRBTN_LOW();
 				AOAC_STATUS |= 0x80;	// Set PME(LAN) wake function.

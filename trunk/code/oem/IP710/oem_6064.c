@@ -717,7 +717,6 @@ void Cmd_45(BYTE nPort, BYTE sCount)
 				
 				//SET_MASK(EMStatusBit, b6RdUSBChgS45); //MARTINH125: add start  //REJERRY022:remove.
 				//SET_MASK(BRAM3A, b0USBChargerState); //MARTINH025:add  //REJERRY022:remove.
-				//Set_USB_Charger();                   //MARTINH038:add
 			    //MARTINH014: remove start
 			    /*
 				eEEPROMBank= 0x07;
@@ -739,7 +738,6 @@ void Cmd_45(BYTE nPort, BYTE sCount)
 				CLEAR_MASK(EMStatusBit, b1SetUSBChgEn);// USB enable charger.
 				//CLEAR_MASK(EMStatusBit, b6RdUSBChgS45); //MARTINH125: add start  //REJERRY022:remove.
 				//CLEAR_MASK(BRAM3A, b0USBChargerState); //MARTINH025:add  //REJERRY022:remove.
-				//Set_USB_Charger();                   //MARTINH038:add
 				//MARTINH014: remove start
 				/*
 				eEEPROMBank= 0x07;
@@ -1568,12 +1566,10 @@ void Cmd_59(BYTE nPort, BYTE nData, BYTE nData2)
 
 		case 0xE1:
 			CLEAR_MASK(cCmd, b3BkOff);		// Turn on LCD backlight;
-			//CLEAR_MASK(OKOStatusBit, b1BkOff); //REJERRY061:add.  //REJERRY080:remove.
 			break;
 
 		case 0xE2:
 			SET_MASK(cCmd, b3BkOff);		// Turn off LCD backlight
-			//SET_MASK(OKOStatusBit, b1BkOff);  //REJERRY061:add.  //REJERRY080:remove.
 			break;
 
 		case 0xE4: 	// Selection BR matrix

@@ -12,12 +12,10 @@
 
 //*****************************************************************************
 // Include all header file
-#include "stdlib.h" 		// alex copy
+#include "stdlib.h" 		
 #include "..\include.h"
 //
 //*****************************************************************************
-
-//#ifdef Anthony0711
 
 void UpdateNameSpace(void)
 {
@@ -37,7 +35,7 @@ void UpdateNameSpace(void)
 			if(IS_MASK_CLEAR(LENOVOPMFW_Temp,BATTERY_FULLED_100))
 			{
 				SET_MASK(LENOVOPMFW_Temp,BATTERY_FULLED_100);
-				ECQEvent(ACPI_BAT1IN_SCI); //MartinH011:change  // Notify BIOS Update Batt Status
+				ECQEvent(ACPI_BAT1IN_SCI); // Notify BIOS Update Batt Status
 			}
 		}
 	}
@@ -2683,40 +2681,42 @@ void ChkPsys(void)
 	}
 	//XITING0071:E	
 
-	DPTF_Power_Psys_Control();				//XITING0071:add DPTF control	(power and psys)	
+#if DPTF_SUPPORT
+	DPTF_Power_Psys_Control();				//add DPTF control	(power and psys)
+#endif
 	
 }
 //XITING0002:E+
 
 
-//XITING0071:S add DPTF control	(power and psys)
+//add DPTF control	(power and psys)
 void DPTF_Power_Psys_Control(void){
 	if(SystemIsS0 && (Read_AC_IN()))
 	{
 		if((IS_MASK_CLEAR(Thro_Status2, b4FAN1_FullOn) && (nBattGasgauge > 10)) || ((nBattGasgauge <= 40) && (nBattGasgauge > 10)))
 		{
-			if(Psys_AvgData > 546)			//160W 1023/3*1.60 = 545.6
+			if(Psys_AvgData > 546)			//160W 
 			{
-				SET_MASK(DPTF_PSYS_CONTROL_STATUS, DPTS_PSYS_Limit_Flag);		//XITING0071:add RSOC 60% limit
+				SET_MASK(DPTF_PSYS_CONTROL_STATUS, DPTS_PSYS_Limit_Flag);		//add RSOC 60% limit
 				OVER_PSYS_COUNT++;
-				DPTF_OVER_TEMP_COUNT = 0;			//reset fptf_GPU_temp count
-				DPTF_UNDER_TEMP_COUNT = 0;			//reset fptf_GPU_temp count
+				DPTF_OVER_TEMP_COUNT = 0;			
+				DPTF_UNDER_TEMP_COUNT = 0;			
 				if(OVER_PSYS_COUNT >= 5)		
 				{
 					OVER_PSYS_COUNT = 0;
 					SET_MASK(DPTF_PSYS_CONTROL_STATUS, DPTS_PSYS_Set_Status);
 				}			
 			}
-			else if((Psys_AvgData < 529)&&(IS_MASK_SET(DPTF_PSYS_CONTROL_STATUS, DPTS_PSYS_Set_Status)))		//155W 1023/3*1.55 = 528.55
+			else if((Psys_AvgData < 529)&&(IS_MASK_SET(DPTF_PSYS_CONTROL_STATUS, DPTS_PSYS_Set_Status)))		//155W 
 			{
-				CLEAR_MASK(DPTF_PSYS_CONTROL_STATUS, DPTS_PSYS_Limit_Flag);		//XITING0071:clear RSOC 60% limit
+				CLEAR_MASK(DPTF_PSYS_CONTROL_STATUS, DPTS_PSYS_Limit_Flag);		//clear RSOC 60% limit
 				OVER_PSYS_COUNT = 0;
 				SET_MASK(DPTF_PSYS_CONTROL_STATUS, DPTS_PSYS_Under_Status);
 			}
 			else
 			{
 				OVER_PSYS_COUNT = 0;
-				CLEAR_MASK(DPTF_PSYS_CONTROL_STATUS, DPTS_PSYS_Limit_Flag);		//XITING0071:clear RSOC 60% limit
+				CLEAR_MASK(DPTF_PSYS_CONTROL_STATUS, DPTS_PSYS_Limit_Flag);		//clear RSOC 60% limit
 			}
 				
 			if(IS_MASK_SET(DPTF_PSYS_CONTROL_STATUS, DPTS_PSYS_Under_Status))
@@ -2839,5 +2839,4 @@ void DPTF_GPU_Temp_Control(void)
 		}
 	}
 }
-//XITING0071:E
 

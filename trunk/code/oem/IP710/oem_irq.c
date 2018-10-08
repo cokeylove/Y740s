@@ -1923,12 +1923,6 @@ void ISR_CODE_OEM Hook_IRQ_INT106_WKO101(void)
 	//REJERRY031:E+ add AC out protect.
 #endif
 
-//MARTINH141 add start
-#if Support_USB_Charge
-	Set_USB_Charger();//JERRYCR035:Modify USB charge function follow USB charge SPEC.
-#endif
-//MARTINH141 add end	
-
 #if ECSleepModeSupport//W097
 	ACInOutWakeDisable();//JERRYCR036:Enable EC sleep function.
 #endif

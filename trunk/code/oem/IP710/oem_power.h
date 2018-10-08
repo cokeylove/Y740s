@@ -38,11 +38,9 @@
 #define SYSTEM_DSxOK		0x74
 #define SYSTEM_DS3_S3		0x75
 #define	SYSTEM_S3S4			0x34
-#define SYSTEM_BATONLY      0x33  //A13:rewrite power on sequence to match EE requirement 20130507 10:57
 #define SYSTEM_DSX_S5       0x60
 #define SYSTEM_DSX          0x66
 
-#define T_WDTMR_COLD                10  //Default
 //-----------------------------------------------------------------------------
 // Shutdown cause
 //-----------------------------------------------------------------------------
@@ -74,17 +72,17 @@
 #define VGACOMMFAIL_ID		       0x20	// Shutdown ID VGA thermal sensor communication fail
 #define EXTVGACOMMFAIL_ID	       0x21	// Shutdown ID External VGA thermal sensor communication fail
 #define CPUCOMMFAIL_ID		       0x22	// Shutdown ID CPU thermal sensor communication fail
-#define ACPI4SS_ID                0x23  // W114 Shutdown 4s 
+#define ACPI4SS_ID                0x23  // Shutdown 4s 
 
-#define ThermalIClocalOVerTEPM_ID	   0x30	// Shutdown ID thermal sensor local over temp  //MARTINH138:Add
-#define ThermalICremoteOVerTEPM_ID	   0x31	// Shutdown ID thermal sensor remote over temp  //MARTINH138:Add
-#define NTC_V_OVerTEPM_ID	           0x32	// Shutdown ID thermal sensor remote over temp  //MARTINH139:Add
-#define CPUthermistoroverTemp_ID	   0x33	// Shutdown ID CPU thermistor over temp  //REJERRY062:add.
-#define GPUthermistoroverTemp_ID	   0x34	// Shutdown ID GPU thermistor over temp  //REJERRY062:add.
+#define ThermalIClocalOVerTEPM_ID	   0x30	// Shutdown ID thermal sensor local over temp  
+#define ThermalICremoteOVerTEPM_ID	   0x31	// Shutdown ID thermal sensor remote over temp  
+#define NTC_V_OVerTEPM_ID	           0x32	// Shutdown ID thermal sensor remote over temp 
+#define CPUthermistoroverTemp_ID	   0x33	// Shutdown ID CPU thermistor over temp  
+#define GPUthermistoroverTemp_ID	   0x34	// Shutdown ID GPU thermistor over temp  
 
-#define COLDBOOTFAIL_ID                0x3A //REJERRY082:add.
+#define COLDBOOTFAIL_ID                0x3A 
 
-#define RSOC_1Pto0P_ID	               0x40	//XITING0067:Force system shutdown with 5S when RSOC drop to 0%.
+#define RSOC_1Pto0P_ID	               0x40	//Force system shutdown with 5S when RSOC drop to 0%.
 
 //-----------------------------------------------------------------------------
 // System status define
@@ -108,7 +106,7 @@
 #define SystemIsS0S3          SysPowState==SYSTEM_S0_S3
 
 //EC mode setting
-//#ifdef ECPowerDownModeSupport
+
 #define EC_PD_Normal            0x00
 #define EC_PD_Idle              0x01
 #define EC_PD_DeepDoze          0x02
@@ -120,45 +118,7 @@
 //-----------------------------------------------------------------------------
 // Function prototype
 //-----------------------------------------------------------------------------
-#if 0
-extern void CheckPowerState(void);
-extern void Oem_TriggerS3S0(void);
-extern void Oem_TriggerS4S0(void);
-extern void Oem_TriggerS5S0(void);
-extern void Oem_S5S0Sequence(void);
-extern void Oem_S4S0Sequence(void);
-extern void Oem_S3S0Sequence(void);
 
-extern void EnterDeepSleep(void);
-extern BYTE CheckEnterDeepSleep(void);
-extern void EnterDeepDoze(void);
-extern void ETWDT_RESET(void);
-
-extern void Oem_SysPowerContrl(void);
-extern void Oem_TriggerS0S3(BYTE causecode);
-extern void Oem_TriggerS0S4(BYTE causecode);
-extern void Oem_TriggerS0S5(BYTE causecode);
-extern void Oem_S0S3Sequence(void);
-extern void Oem_S0S4Sequence(void);
-extern void Oem_S0S5Sequence(void);
-extern void CheckResetSource(void);
-
-extern BYTE S5_S0Variable(void);
-extern BYTE S4_S0Variable(void);
-extern BYTE S3_S0Variable(void);
-extern BYTE S0_S5Variable(void);
-extern BYTE S0_S4Variable(void);
-extern BYTE S0_S3Variable(void);
-
-extern void CheckSLP_S3(void);
-//extern void CheckSLP_S4(void);
-extern void CheckSLP_S5(void);
-extern void PulseSBPowerButton(void);
-extern void CheckSBPowerButton(void);
-extern void LCFC_BootTester(void); 
-extern void USB_Charger_function(void);
-#endif
-//MARTINH054 + s
 //-----------------------------------------------------------------------------
 // Shutdown cause
 //-----------------------------------------------------------------------------
@@ -166,18 +126,18 @@ extern void USB_Charger_function(void);
 #define SC_ExtWatchDog      0xFF    // external watch-dog
 #define SC_IntWatchDog      0xFE    // internal watch-dog
 #define SC_ECColdBoot       0xFC    // EC VSTBY or WRST reset
-#define SC_EC8SRESET       	0xFD    //8S reset  //REJERRY040:add.
-//MARTINH054 + e
+#define SC_EC8SRESET       	0xFD    //8S reset  
 
 
-extern void PulseSBPowerButton(void); //martin0628B add
-extern void CheckSBPowerButton(void); //martin0628B add
 
-extern void Set_USB_Charger(void); //martin0621 add
+extern void PulseSBPowerButton(void); 
+extern void CheckSBPowerButton(void); 
 
-extern void Set_USBCharger_Variable(void);  //MARTINH125: add 
+extern void Set_USB_Charger(void); 
 
-void Write_NOVOS4(void);
+extern void Set_USBCharger_Variable(void);  
+
+extern void Write_NOVOS4(void);
 extern void CheckResetSource(void);
 extern void OEM_LPC_Reset(void);
 extern void Oem_SysPowerContrl(void);

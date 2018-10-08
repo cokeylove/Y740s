@@ -81,9 +81,10 @@ void Hook_Timer10msEventA(void)
 			RamDebug(0x36);
 		}
 	}
+
+	Backlight_Control();	
 	
 #if !RGB_KEYBOARD_SUPPORT
-	Backlight_Control();
 	SetKeyboardLED();
 #endif
 	
@@ -734,7 +735,7 @@ void Hook_Timer1SecEventC(void)
 
 #endif
 
-	//DPTFControl();		//XITING0029:add			//XITING0071:remove
+//	DPTFControl();		
 
 	//XITING0068:S get PCH temp from BIOS every 5S
 	if(SystemIsS0)

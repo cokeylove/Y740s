@@ -18,7 +18,7 @@
 #define ThermalAddr	        0x98	// thermal sensor address
 #define PCH_Address         0x96    // PCH address
 
-#define FAN_Boot_On			30	// 3 Sec. //MARTINH142:change 0x03 to 30
+#define FAN_Boot_On			30	// 3 Sec. 
 
 // Temperature Data Index
 #define TEMP_TYPE_CPU		0
