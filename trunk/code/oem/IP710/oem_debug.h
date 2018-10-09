@@ -13,7 +13,7 @@
 #define DebugRamAddr 0x00080700
 #define DebugRamRange 0xFF
 
-#define Debug1RamAddr 0x00080800   //W121
+#define Debug1RamAddr 0x00080D00   //W121
 #define Debug1RamRange 0xFF        //W121
 
 extern void RamDebug(unsigned char dbgcode);

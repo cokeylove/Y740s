@@ -74,6 +74,7 @@
  * To include oem header files.
  * ****************************************************************************
  */
+#include "oem/oem_define.h"
 #include "oem/oem_6064.h"
 #include "oem/oem_acpi.h"
 #include "oem/oem_adc.h"
@@ -119,7 +120,7 @@
  * To include ucsi header files.
  * ****************************************************************************
 */
-#include "oem/Oem_RTS5455.h"
+#include "oem/Oem_tps65988.h"
 #include "oem/OEM_Ucsi.h"
 #include "oem/OEM_EcCmd.h"
 

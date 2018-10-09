@@ -89,7 +89,7 @@ OEMFiles=\
         $(OBJ_PATH)\oem_battery_verify.o\
 		$(OBJ_PATH)\oem_timer.o\
         $(OBJ_PATH)\oem_ver.o\
-		$(OBJ_PATH)\Oem_RTS5455.o\
+		$(OBJ_PATH)\OEM_TPS65988.o\
 		$(OBJ_PATH)\OEM_Ucsi.o\
 		$(OBJ_PATH)\OEM_EcCmd.o
 

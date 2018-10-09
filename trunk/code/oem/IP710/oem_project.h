@@ -97,11 +97,8 @@
 #define BatteryOTPHi		                68			// 68 degree
 #define BatteryOTPLow	                66			// 66 degree
 #define FastChgTimeOut		       720 		// 12 * 60 = 720min
-#define SHA1_Support			FALSE  
 #define SaveP80Support          FALSE //enable Save p80 to CMOS
 #define BatteryECCSupport       TRUE  //Add BatteryECCSupport function.	
-#define INTEL   1
-#define AMD     0
 #define PLATFORM_CHIP         INTEL   // INTEL / AMD
 //*****************************************************************************
 // OEM code feature
@@ -255,7 +252,7 @@
 #define DPTF_OVER_PSYS_EVENT        	0x72    								
 #define BIOS_DEBUG		    0x77	   
 
-//XITING0018:S+
+
 /*===========================================================================
  * UCSI support
  *===========================================================================*/
@@ -265,15 +262,27 @@
 #define DEBUG_UCSI        		FALSE    //UCSI UART2 Debug
 
 /*===========================================================================
- * TYPE-C          support chip CCG2 CCG3
+ * TYPE-C         
  *===========================================================================*/
-#define RTS5455   4
-#define Support_TYPE_C    		RTS5455
+#define Support_TYPE_C    		4
+
+#define Support_Lenovo_P2P_V2P0      FALSE  
+
+#define Support_2Port		TRUE
+#define TYPECPort1			1
+#if Support_2Port
+#define TYPECPort2			2
+#endif
+
 
 #define AM_UCSI_EVENT         	0x4F  // UCSI event
 #define AM_SMB_EVENT          	0x35  //SMBus Event
 
-#define TypeC_Addr       		RTS5455_I2C_ADDR    // Type-C CCG2 I2C address
+#define TypeC_Addr       TPS65988_A_I2C_ADDR 
+#define TypeC_01_Addr       TPS65988_A_I2C_ADDR    //  Type-C I2C address
+#define TypeC_02_Addr       TPS65988_B_I2C_ADDR    //  Type-C I2C address
+
+
 #define chSMB_TYPEC				SMbusChA
 
 #define NV_GC6                	FALSE // Set TRUE to support nV VGA GC6 feature
@@ -281,7 +290,6 @@
 #define EC_I2C_ADDR      0x02
 
 #define ACPOWER_ON 0//( Read_AC_IN() && !Read_ACOFF() ) //(JSN)
-//XITING0018:E+
 
 
 
@@ -300,5 +308,11 @@
  * DPTF support
  *===========================================================================*/
 #define DPTF_SUPPORT             TRUE    
+
+/*===========================================================================
+ * Dual Battery support
+ *===========================================================================*/
+#define Support_SecBattery             FALSE    
+
 
 

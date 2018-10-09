@@ -109,7 +109,6 @@ void Hook_Timer10msEventA(void)
 		TypeCIniDelay=0;
 		TypeCStatus=0;
 		TypeCProcessStep=0;
-		RTS5455WaitingPingID = 0;
 	}
 
 
@@ -379,15 +378,7 @@ void Hook_Timer500msEventB(void)
 	Clear_Batt_First_Used_Date();//REJERRY101£º Modify battery clear first user method.
 
 #endif
-#if SHA1_Support//W063: sha1 support
-	if((nDesignCapL !=0 && nPresentVoltH != 0)&&(IS_MASK_CLEAR(StatusKeeper, BatteryFwUpdate)))//W118
-	{
-		if (IS_MASK_SET(SEL_STATE0,PRESENT_A))
-		{
-			LV_BAT_Authentication();
-		}
-	}
-#endif	// SHA1_Support
+
 #if BatteryECCSupport
 	if((nDesignCapL !=0 && nPresentVoltH != 0)&&(IS_MASK_CLEAR(StatusKeeper, BatteryFwUpdate)))//W118
 	{

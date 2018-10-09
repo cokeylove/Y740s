@@ -7,7 +7,11 @@
 #ifndef OEM_EVENT_H
 #define OEM_EVENT_H
 
-extern void PSWPressed(void);			
+extern void PSWPressed(void);		
+extern void LanWakeLow(void);
+extern void PSWReleased(void);
+
+
 //extern void Enable_INTR_ACOUT(void); //REJERRY031:remove.
 //extern void Disable_INTR_ACOUT(void);  //REJERRY031:remove.
 //extern void Enable_INTR_ACIN(void);  //REJERRY031:remove.

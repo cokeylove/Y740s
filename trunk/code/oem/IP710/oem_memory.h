@@ -534,7 +534,7 @@ typedef enum
 
 
 //XITING0018:S+  UCSI
-#define Fsm                         SD_uchar_8(OEMRAM3+0x2E)           	//XITING0018:add
+//#define Fsm                         SD_uchar_8(OEMRAM3+0x2E)           	//XITING0018:add
 
 #define SMB3_DATA					SD_Ptr_uchar_8(OEMRAM3+0x30)		// 30-4F
 #define PriBattSTS					SD_uchar_8(OEMRAM3+0x50)			// 50
@@ -573,7 +573,6 @@ typedef enum
  #define  pEdgeGC6EventHI         BIT7
 #endif // NV_GC6
 
-#define TypeCAdpDetectDelay			SD_uchar_8(OEMRAM3+0x54)		 // 54
 #define uSMBusBcnt					SD_uchar_8(OEMRAM3+0x55)		 // 55
 
 //XITING0018:E+
@@ -1741,8 +1740,109 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 //  OEM RAM 8  
 //-------------------------------------------------------------------------------
 //*******************************************************************************
-//Ramdebug1
-#define Rdbg_index 								SD_uchar_8(OEMRAM8+0xFF)//W121
+
+#define   ACIN_BLINK3						    SD_uchar_8(OEMRAM8+0x00)
+
+
+#define   TYPE_C_RAM0							SD_uchar_8(OEMRAM8+0x50)   //for type-c used 
+#define   TYPE_C_RAM1							SD_uchar_8(OEMRAM8+0x51)   //for type-c used
+#define   TYPE_C_RAM2							SD_uchar_8(OEMRAM8+0x52)   //for type-c used
+#define   TYPE_C_RAM3							SD_uchar_8(OEMRAM8+0x53)  //for type-c used
+#define   TYPE_C_RAM4							SD_uchar_8(OEMRAM8+0x54)   //for type-c used
+#define   TYPE_C_RAM5							SD_uchar_8(OEMRAM8+0x55)    //for type-c used
+#define   TYPE_C_RAM6							SD_uchar_8(OEMRAM8+0x56)   //for type-c used
+#define   TYPE_C_RAM7							SD_uchar_8(OEMRAM8+0x57)    //for type-c used
+#define   TYPE_C_RAM8							SD_uchar_8(OEMRAM8+0x58)    //for type-c used
+#define   TYPE_C_RAM9							SD_uchar_8(OEMRAM8+0x59)    //for type-c used
+#define   TYPE_C_RAM10							SD_uint_16(OEMRAM8+0x5A)   //for type-c used
+#define   TYPE_C_RAM11							SD_uint_16(OEMRAM8+0x5C)    //for type-c used
+#define   TYPE_C_RAM12							SD_uchar_8(OEMRAM8+0x5E)    //for type-c used
+#define   TYPE_C_RAM13							SD_uchar_8(OEMRAM8+0x5F)    //for type-c used
+#define   TYPE_C_RAM14							SD_uchar_8(OEMRAM8+0x60)   //for type-c used
+#define   TYPE_C_RAM15							SD_uchar_8(OEMRAM8+0x61)    //for type-c used
+#define   TYPE_C_RAM17							SD_uchar_8(OEMRAM8+0x62)
+#define   TYPE_C_RAM18							SD_uchar_8(OEMRAM8+0x63)
+#define   TYPE_C_RAM19							SD_uchar_8(OEMRAM8+0x64)    //for type-c used
+#define   TYPE_C_RAM20							SD_uchar_8(OEMRAM8+0x65)    //for type-c used
+#define	  TYPE_C_RAM21							SD_uchar_8(OEMRAM8+0x66)
+#define   TYPE_C_RAM22							SD_uchar_8(OEMRAM8+0x67)
+#define	  TYPE_C_RAM23							SD_uint_16(OEMRAM8+0x68)
+#define	  TYPE_C_RAM24							SD_uint_16(OEMRAM8+0x6A)
+#define	  TYPE_C_RAM25							SD_uchar_8(OEMRAM8+0x6C)
+#define	  TYPE_C_RAM26							SD_uchar_8(OEMRAM8+0x6D)
+#define	  TYPE_C_RAM27							SD_uchar_8(OEMRAM8+0x6E)
+#define	  TYPE_C_RAM28							SD_uchar_8(OEMRAM8+0x6F)
+
+
+
+#define   TYPE_C_DOCKING_RAM0					SD_uchar_8(OEMRAM8+0x70)   		//for type-c used
+#define   TYPE_C_DOCKING_RAM1					SD_uchar_8(OEMRAM8+0x71)    	//for type-c used
+#define   TYPE_C_DOCKING_RAM2					SD_Ptr_uchar_8(OEMRAM8+0x72)    //for type-c used 0x72~0x75
+
+// ADP PDO Data
+#define 	ObjectPosition09V			 			SD_uchar_8(OEMRAM8+0x76)
+#define		ObjectPosition20V			 			SD_uchar_8(OEMRAM8+0x77)
+#define  	PDO09V				     				SD_uint_16(OEMRAM8+0x78)
+#define 	PDO09I				     				SD_uint_16(OEMRAM8+0x7A)
+#define 	PDO20V				     				SD_uint_16(OEMRAM8+0x7C)
+#define  	PDO20I									SD_uint_16(OEMRAM8+0x7E)
+
+#define 	Port2ObjectPosition09V			 		SD_uchar_8(OEMRAM8+0x80)
+#define		Port2ObjectPosition20V			 		SD_uchar_8(OEMRAM8+0x81)
+#define  	Port2PDO09V				     			SD_uint_16(OEMRAM8+0x82)
+#define 	Port2PDO09I				     			SD_uint_16(OEMRAM8+0x84)
+#define 	Port2PDO20V				     			SD_uint_16(OEMRAM8+0x86)
+#define  	Port2PDO20I								SD_uint_16(OEMRAM8+0x88)
+#define 	CurrentRDO								SD_uchar_8(OEMRAM8+0x8A)
+#define 	Port2CurrentRDO							SD_uchar_8(OEMRAM8+0x8B)
+
+#define	  TYPE_C_RAM29							SD_uchar_8(OEMRAM8+0x8C)
+#define	  TYPE_C_RAM30							SD_uchar_8(OEMRAM8+0x8D)
+#define	  TYPE_C_RAM31							SD_uchar_8(OEMRAM8+0x8E)
+#define	  TYPE_C_RAM32							SD_uchar_8(OEMRAM8+0x8F)
+
+#define   u4SenseSTS3								SD_uchar_8(OEMRAM8+0x90)
+#define SomeAcAdapterIn            BIT2
+//Add unsupport adapter process,set flag for bios
+#define UnSupportAdapterPort2            BIT4
+#define UnSupportAdapterPort1            BIT3
+
+
+#define  TYPE_C_RAM33             SD_uchar_8(OEMRAM8+0x91)
+#define  TYPE_C_RAM34              SD_uchar_8(OEMRAM8+0x92)
+#define  TYPE_C_RAM35              SD_Ptr_uchar_8(OEMRAM8+0x93)//for type-c used 0x93~0x94
+#define  TYPE_C_RAM36              SD_Ptr_uchar_8(OEMRAM8+0x95)//for type-c used 0x95~0x96
+#define  TYPE_C_RAM37              SD_uchar_8(OEMRAM8+0x97)
+#define  TYPE_C_RAM38              SD_uchar_8(OEMRAM8+0x98)
+#define  TYPE_C_RAM39              SD_uchar_8(OEMRAM8+0x99)
+
+#define	 TYPE_C_RAM40				SD_uchar_8(OEMRAM8+0x9A)
+#define  TYPE_C_RAM41		SD_uchar_8(OEMRAM8+0xA0)
+#define  TYPE_C_RAM42		SD_uchar_8(OEMRAM8+0xA1)
+#define  TYPE_C_RAM43		SD_uchar_8(OEMRAM8+0xA2)
+#define  TYPE_C_RAM44		SD_uint_16(OEMRAM8+0xA4)
+#define  TYPE_C_RAM45		SD_uint_16(OEMRAM8+0xA6)
+#define  TYPE_C_RAM46		SD_uchar_8(OEMRAM8+0xA8)
+#define  TYPE_C_RAM47		SD_uchar_8(OEMRAM8+0xA9)
+#define  TYPE_C_RAM48           SD_uchar_8(OEMRAM8+0xAA)
+#define  TYPE_C_RAM49           SD_uchar_8(OEMRAM8+0xAB)
+
+
+#define TypeC_LenovoAdaptor         SD_uchar_8(OEMRAM8+0xB2) 
+    #define Port1_IslenovoAdaptor			BIT0
+	#define Port2_IslenovoAdaptor			BIT1
+
+#define TypeC_LenovoAdaptor_P1HWResetTimes         SD_uchar_8(OEMRAM8+0xB3)  
+
+#define TypeC_LenovoAdaptor_P2HWResetTimes         SD_uchar_8(OEMRAM8+0xB4) 
+
+#define  PD4ccCMD_WaitCnt                          SD_uchar_8(OEMRAM8+0xBA)
+
+
+
+
+
+
 //*******************************************************************************
 //-------------------------------------------------------------------------------
 //  OEM RAM 9  
@@ -1750,6 +1850,7 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 //*******************************************************************************
 
 #if 1
+
 #define		cCmd				SD_uchar_8(OEMRAM9+0xA0)
 #define bPCHPWR_Keep			BIT2
 #define b3BkOff 				BIT3
@@ -1980,60 +2081,76 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 #define	Charge_Min_Voltage_HI				SD_uchar_8(OEMRAM9+0xE4) 
 #endif
 
-//XITING0018:S+ UCSI
+
 #if Support_UCSI
-#define  UCSI_RAM0										SD_uint_16(OEMRAM9+0x00)					// 00-01
-#define  UCSI_RAM1										SD_uint_16(OEMRAM9+0x02)   					// 02-03
-#define  UCSI_RAM2										SD_Ptr_uchar_8(OEMRAM9+0x04)   				// 04-07
-#define  UCSI_RAM3										SD_Ptr_uchar_8(OEMRAM9+0x08)   				// 08-0F
-#define  UCSI_RAM4										SD_Ptr_uchar_8(OEMRAM9+0x10)   				// 10-1F
-#define  UCSI_RAM5										SD_Ptr_uchar_8(OEMRAM9+0x20)   				// 20-2F
-#define Usb_Pdc_Power_Status   			    	 		(*((USB_POWER_STATUS *)(OEMRAM9+0x30)))	//30
-#define Usb_Pdc_Status        							(*((USB_STATUS *)(OEMRAM9+0x31)))			//31
-#define  UCSI_RDO1										SD_uchar_8(OEMRAM9+0x32)   					// 32
-#define  UCSI_RDO2            		        	    	SD_uchar_8(OEMRAM9+0x33)   					// 33
-#define  UCSI_RDO3             		         		   	SD_uchar_8(OEMRAM9+0x34)   					// 34
-#define  UCSI_RDO4                   		      		SD_uchar_8(OEMRAM9+0x35)	   				// 35
-#define  UCSI_RTS5455_CMD       			           	SD_uchar_8(OEMRAM9+0x36)	   				// 36
-#define  UCSI_RTS5455_WR_DATA_LEN      			    	SD_uchar_8(OEMRAM9+0x37)	   				// 37
-#define  UCSI_RTS5455_CMD_WAIT         			    	SD_uchar_8(OEMRAM9+0x38)	   				// 38
-#define  UCSI_RTS5455_CMD_WAIT_CNT    				    SD_uchar_8(OEMRAM9+0x39)	   				// 39
-#define  UCSI_RTS5455_CMD_ERROR       				    SD_uchar_8(OEMRAM9+0x3B)	   				// 3B
-#define  UCSI_POWER_SOURCE             				 	SD_uchar_8(OEMRAM9+0x3C)	   				// 3C
-#define  UCSI_POWER_DIRECTION_CHANGE  					SD_uchar_8(OEMRAM9+0x3D)	   				// 3D
-#define  UCSI_DATA_ROLE              					SD_uchar_8(OEMRAM9+0x3E)	   				// 3E
-#define  UCSI_CONNECTOR_PARTNER_CHANGE  				SD_uchar_8(OEMRAM9+0x3F)	   				// 3F
+#define    UCSI_RAM0										SD_uint_16(OEMRAM9+0x00)					// 00-01
+#define    UCSI_RAM1										SD_uint_16(OEMRAM9+0x02)   					// 02-03
+#define    UCSI_RAM2										SD_Ptr_uchar_8(OEMRAM9+0x04)   				// 04-07
+#define    UCSI_RAM3										SD_Ptr_uchar_8(OEMRAM9+0x08)   				// 08-0F
+#define    UCSI_RAM4										SD_Ptr_uchar_8(OEMRAM9+0x10)   				// 10-1F
+#define    UCSI_RAM5										SD_Ptr_uchar_8(OEMRAM9+0x20)   				// 20-2F
+#define    Usb_Pdc_Power_Status   			    	 	    (*((USB_POWER_STATUS *)(OEMRAM9+0x30)))	    // 30
+#define    Usb_Pdc_Status        							(*((USB_STATUS *)(OEMRAM9+0x31)))			// 31
+#define    Usb_Pdc_Power_Status2					        (*((USB_POWER_STATUS *)(OEMRAMC+0x32)))     // 32
+#define    Usb_Pdc_Status2							        (*((USB_STATUS *)(OEMRAMC+0x33)))           // 33
 
-#define  UCSI_BATTERY_CHARGE_STATUS_CHANGE  			SD_uchar_8(OEMRAM9+0x40)				   	// 40
+#define    UCSI_RDO1										SD_uchar_8(OEMRAM9+0x34)   					// 34
+#define    UCSI_RDO2            		        	    	SD_uchar_8(OEMRAM9+0x35)   					// 35
+#define    UCSI_RDO3             		         		   	SD_uchar_8(OEMRAM9+0x36)   					// 36
+#define    UCSI_RDO4                   		      		    SD_uchar_8(OEMRAM9+0x37)	   				// 37
 
-#define UCSI_GET_CONNECTOR_STATUS_RTS5455       		SD_Ptr_uchar_8(OEMRAM9+0x42)		     	// 42-4A
-#define UCSI_NOTIFICATION_ENABLE    					SD_Ptr_uchar_8(OEMRAM9+0x4B)  				// 4B-4C
-#define UCSI_OPTIONAL_FEATURE    						SD_uchar_8(OEMRAM9+0x4D)					// 4D
+#define    UCSI_CONNECTOR_STATE       			            SD_uchar_8(OEMRAM9+0x38)	   				// 38
+#define    UCSI_POWER_SOURCE             				 	SD_uchar_8(OEMRAM9+0x39)	   				// 39
+#define    UCSI_POWER_SOURCE2             				    SD_uchar_8(OEMRAM9+0x3A)	   				// 3A
+#define    UCSI_POWER_DATA_SOURCE_REJECT                    SD_uchar_8(OEMRAM9+0x3B)                    // 3B
+#define    UCSI_POWER_ROLE_SWAP_COMPLETE			        SD_uchar_8(OEMRAM9+0x3C)                    // 3C
+#define    WorkaroundforBIOSSMI                             SD_uchar_8(OEMRAM9+0x3D)                    // 3D
+#define    WorkaroundforBIOSSMIcunt                         SD_uchar_8(OEMRAMC+0x3F)                    // 3F
 
-#define  Ucsi_Connector_Change_Status					SD_Ptr_uint_16(OEMRAM9+0x4E)				// 4E-4F
+#define    UCSI_PDOs_Buffer   		                        SD_Ptr_uchar_8(OEMRAM9+0x40)
+#define    SMB3_DATA_TEMP							        SD_Ptr_uchar_8(OEMRAM9+0x60)                // size 32 bytes
+#define    SMB3_DATA_TEMP1							        SD_Ptr_uchar_8(OEMRAM9+0x80)                // size 32 bytes
+#define    UCSI_NEG_POWER_LEVEL_CHANGE				        SD_uchar_8(OEMRAM9+0xA0)
+#define    UCSI_SUPPORTED_PROVIDER_CAPABILITIES_CHANGE		SD_uchar_8(OEMRAM9+0xA1)
+#define    UCSI_POWER_DIRECTION_CHANGE				        SD_uchar_8(OEMRAM9+0xA2)
+#define    UCSI_CONNECTOR_PARTNER_CHANGE			        SD_uchar_8(OEMRAM9+0xA3)
+#define    UCSI_PDC_REQ_RETRY				                SD_uchar_8(OEMRAM9+0xA4)
+#define    UCSI_4CC_CMD_COMPLETE				            SD_uchar_8(OEMRAM9+0xA5)
+#define    UCSI_4CC_CMD_RETRY				                SD_uchar_8(OEMRAM9+0xA6)
+#define    UCSI_DATA_ROLE_SWAP_COMPLETE				        SD_uchar_8(OEMRAM9+0xA7)
+#define    UCSI_CONNECTOR_RESET_WAIT				        SD_uchar_8(OEMRAM9+0xA8)
+#define    UCSI_CONNECTOR_RESET_WAIT_CNT			        SD_uint_16(OEMRAM9+0xAA)
+#define    UCSI_CONNECTOR_NUMBER_CHANGED    	            SD_Ptr_uchar_8(OEMRAM9+0xAC)                //0xAC~0xAD
+#define    UCSI_NOTIFICATION_ENABLE    	                    SD_uint_16(OEMRAM9+0xAE)                    //0xAE~0xAF
+#define    UCSI_CONNECTOR_CHANGE_STATUS    	                SD_Ptr_uint_16(OEMRAM9+0xB0)                //0xB0~0xB3
+#define    UCSI_OPTIONAL_FEATURE    	                    SD_uchar_8(OEMRAM9+0xB4)
+#define    UCSI_DEVICE_CONNECTED    	                    SD_Ptr_uchar_8(OEMRAM9+0xB5)                //0xB5~0xB6
+#define    UCSI_DATA_ROLE						            SD_uchar_8(OEMRAM9+0xB7)
+#define    UCSI_DATA_ROLE2						            SD_uchar_8(OEMRAM9+0xB8)
+#define    UCSI_RelativeStateOfChg			                SD_uchar_8(OEMRAM9+0xB9)
 
-#define Ucsi_Connector_Number_Changed     				SD_uchar_8(OEMRAM9+0x51)					// 51
-#define UCSI_SUPPORTED_CAM_CHANGE    					SD_uchar_8(OEMRAM9+0x52)	 				// 52
-#define Ucsi_Device_Connected    						SD_uchar_8(OEMRAM9+0x53)					// 53
+#if Support_Lenovo_P2P_V2P0
+#define    UCSI_P2P_Charge_Disable			                SD_uchar_8(OEMRAM9+0xBA)
+#define    UCSI_P2P_Charge_Disable_SINK			            SD_uchar_8(OEMRAM9+0xBB)
+#endif
+#define    UCSI_RDO1_CONNECTOR2						        SD_uchar_8(OEMRAM9+0xC0)
+#define    UCSI_RDO2_CONNECTOR2						        SD_uchar_8(OEMRAM9+0xC1)
+#define    UCSI_RDO3_CONNECTOR2						        SD_uchar_8(OEMRAM9+0xC2)
+#define    UCSI_RDO4_CONNECTOR2						        SD_uchar_8(OEMRAM9+0xC3)
+#define    UCSI_PDOs_Buffer_CONNECTOR2                      SD_Ptr_uchar_8(OEMRAM9+0xD0)
+
 #endif
 
-#define CurrentRDO					 					SD_Ptr_uchar_8(OEMRAM9+0x54)				// 54-57
-#define ObjectPosition09V			 					SD_uchar_8(OEMRAM9+0x58)					// 58
-#define PDO09V				     						SD_uint_16(OEMRAM9+0x59)					// 59-5A
-#define PDO09I				     						SD_uint_16(OEMRAM9+0x5B)					// 5B-5C
-#define ObjectPosition20V			 					SD_uchar_8(OEMRAM9+0x5D)					// 5D
-#define PDO20V				     						SD_uint_16(OEMRAM9+0x5E)					// 5E-5F
-#define PDO20I				     						SD_uint_16(OEMRAM9+0x60)					// 60-61
-#define Adp_retry_cnt              						SD_uchar_8(OEMRAM9+0x62)					// 62
-#define TypeCSMbusDataTemp					 			SD_Ptr_uchar_8(OEMRAM9+0x63)				// 63-68
-#define ClearTemp					 					SD_Ptr_uchar_8(OEMRAM9+0x69)				// 69-6C
-#define u4Cfgspace2       								SD_uchar_8(OEMRAM9+0x6D)					// 6D
- #define  USBALWOn        BIT3
- #define  DockingWOLEn    BIT4
- #define  SMART_NumLock   BIT5
- #define  USBALWONGet     GET_MASK(u4Cfgspace2,USBALWOn)
- #define  SrtNumLockGet   GET_MASK(u4Cfgspace2,SMART_NumLock)
-#define  BattStatusL         							SD_uchar_8(OEMRAM9+0x6E)					// 6E
+#define    Adp_retry_cnt              						SD_uchar_8(OEMRAM9+0xD2)					// D2
+#define    TypeCSMbusDataTemp					 			SD_Ptr_uchar_8(OEMRAM9+0xD3)				// D3-D8
+#define    ClearTemp					 					SD_Ptr_uchar_8(OEMRAM9+0xD9)				// D9-DC
+#define    u4Cfgspace2       								SD_uchar_8(OEMRAM9+0xDD)					// DD
+  #define    USBALWOn        BIT3
+  #define    DockingWOLEn    BIT4
+  #define    SMART_NumLock   BIT5
+  #define    USBALWONGet     GET_MASK(u4Cfgspace2,USBALWOn)
+  #define    SrtNumLockGet   GET_MASK(u4Cfgspace2,SMART_NumLock)
+#define  BattStatusL         							SD_uchar_8(OEMRAM9+0xDE)					    // DE
  #define SMBerror0    BIT0          // error code bit0
  #define SMBerror1    BIT1          // error code bit1
  #define SMBerror2    BIT2          // error code bit2
@@ -2042,34 +2159,11 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
  #define FullyChg     BIT5          // statusfully charged
  #define Dsg          BIT6          // statusdischarging
  #define Initialized  BIT7          // statusgauge initialized
-#define  BattStatusH         							SD_uchar_8(OEMRAM9+0x6F)					// 6F
+#define  BattStatusH         							SD_uchar_8(OEMRAM9+0xDF)					    // DF
 
-#define  TYPE_C_RAM0                       				SD_uchar_8(OEMRAM9+0x70)					// 70
-#define  TYPE_C_RAM1                       				SD_uchar_8(OEMRAM9+0x71)					// 71
-#define  TYPE_C_RAM2                        			SD_uchar_8(OEMRAM9+0x72)					// 72
-#define  TYPE_C_RAM3                        			SD_uchar_8(OEMRAM9+0x73)					// 73
-#define  TYPE_C_RAM4                        			SD_uchar_8(OEMRAM9+0x74)					// 74
-#define  TYPE_C_RAM5                        			SD_uchar_8(OEMRAM9+0x75)					// 75
-#define  TYPE_C_RAM6                        			SD_uchar_8(OEMRAM9+0x76)					// 76
-#define  TYPE_C_RAM7                        			SD_uchar_8(OEMRAM9+0x77)					// 77
-#define  TYPE_C_RAM8                        			SD_uchar_8(OEMRAM9+0x78)					// 78
-#define  TYPE_C_RAM9                        			SD_uchar_8(OEMRAM9+0x79)					// 79
-#define  TYPE_C_RAM10                       			SD_uchar_8(OEMRAM9+0x7A)					// 7A
-#define  TYPE_C_RAM11                       			SD_uchar_8(OEMRAM9+0x7B)					// 7B
-#define  TYPE_C_RAM12                       			SD_uchar_8(OEMRAM9+0x7C)					// 7C
-#define  TYPE_C_RAM13                       			SD_uchar_8(OEMRAM9+0x7D)					// 7D
-#define  TYPE_C_RAM14                       			SD_uchar_8(OEMRAM9+0x7E)					// 7E
-#define  TYPE_C_DOCKING_RAM0                			SD_uchar_8(OEMRAM9+0x7F)					// 7F
-#define  TYPE_C_DOCKING_RAM1                			SD_uchar_8(OEMRAM9+0x80)					// 80
-#define  TYPE_C_DOCKING_RAM2	               			SD_Ptr_uchar_8(OEMRAM9+0x81)					// 81-84
-#define  TYPE_C_RAM15   			      				SD_Ptr_uchar_8(OEMRAM9+0x85)					// 85-86
-#define  TYPE_C_RAM16  									SD_Ptr_uchar_8(OEMRAM9+0x87)				// 87-88
-#define  TYPE_C_RAM17                     				SD_uchar_8(OEMRAM9+0x89)					// 89
-#define  TYPE_C_RAM18   			  					SD_uchar_8(OEMRAM9+0x8A)					// 8A
-#define  TYPE_C_RAM19   			   					SD_uchar_8(OEMRAM9+0x8B)					// 8B
-//XITING0018:E+
 
-#define UCSI_50CMD_WA									SD_uchar_8(OEMRAM9+0x8C)					//XITING0042:add
+
+#define UCSI_50CMD_WA									SD_uchar_8(OEMRAM9+0xE0)					
 
 //*******************************************************************************
 //-------------------------------------------------------------------------------
@@ -2527,13 +2621,33 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 //  OEM RAM D  
 //-------------------------------------------------------------------------------
 //*******************************************************************************
-#define	SHA1_W							SD_Ptr_ulong_32(OEMRAMD+0x00) // 0x0D00 ~ 0x0E3F	//SHA1_W[80]
+//Ramdebug1
+#define Rdbg_index 								SD_uchar_8(OEMRAMD+0xFF)//W121
+
 
 //*******************************************************************************
 //-------------------------------------------------------------------------------
 //  OEM RAM E  
 //-------------------------------------------------------------------------------
 //*******************************************************************************
+
+#define  CHARGE_IC_VOLTAGE_SET_COUNT    SD_uchar_8(OEMRAME+0x1B)
+#define  ChargeIC_InitCnt               SD_uchar_8(OEMRAME+0x1C)
+
+
+#if Support_SecBattery
+#define  SecBattSTS								SD_uchar_8(OEMRAME+0x1D)
+
+#define  SecRemainCapL                  SD_uchar_8(OEMRAME+0x1E)  	// EDGE_BATTERY_INFO+0x1E                                 
+#define  SecRemainCapH                  SD_uchar_8(OEMRAME+0x1F)  	// EDGE_BATTERY_INFO+0x1F
+
+#define  SecFullChgCapL                 SD_uchar_8(OEMRAME+0x22)  	// EDGE_BATTERY_INFO+0x22                   
+#define  SecFullChgCapH                 SD_uchar_8(OEMRAME+0x23)  	// EDGE_BATTERY_INFO+0x23 
+
+#define  SecBattStatusL                 SD_uchar_8(OEMRAME+0x2A)  	// EDGE_BATTERY_INFO+0x2A                   
+#define  SecBattStatusH                 SD_uchar_8(OEMRAME+0x2B)  	// EDGE_BATTERY_INFO+0x2B 
+#endif
+
 
 #define	WS_temp							SD_ulong_32(OEMRAME+0x40) // 0x0E40 ~ 0x0E4F
 

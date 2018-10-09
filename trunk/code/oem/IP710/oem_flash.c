@@ -213,5 +213,14 @@ void Update_OEM_Setting_To_ROM(BYTE *buf,WORD Length)
 }
 
 
+BYTE Read_Eflash_Byte(BYTE FA2,BYTE FA1,BYTE FA0)
+{
+  
+  BYTE tmpRead;
+
+  
+  ECIndirectFastRead(FA2, FA1, FA0, SPI_selection_internal, 1, &tmpRead);
+  return tmpRead;
+}
 
 

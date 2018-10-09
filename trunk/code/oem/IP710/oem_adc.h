@@ -94,7 +94,12 @@
 #define AdapterID_170W          0x03
 #define AdapterID_135W          0x04
 #define AdapterID_45W           0x05
-#define AdapterID_230W          0x06 //REJERRY048:add 230W adapter ID.
+#define AdapterID_230W          0x06 
+
+#define AdapterID_36W           0x09
+#define AdapterID_Lower36W      0x0A
+#define AdapterID_60W           0x0B
+
 // CMW 20121022 +
 #define VC0TriggerValue			400	// 0.8V
 #define VC0RestoreValue			573	// 1.8V
