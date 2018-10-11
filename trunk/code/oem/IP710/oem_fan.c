@@ -16,45 +16,24 @@
 //
 //*****************************************************************************
 
-//REJERRY055:start modify fan table 09/19.  //REJERRY072:start modify fan table 10/09.
-//XITING0068:S remove UMA table Reduce EC stack usage
-/*
-const thermal ThermalTalbe1CPU[]= //UMA  
-{
-    {0,	34,	0,	0,	&Fan1On_Step1,	&Fan1Off_Step1,	&Fan1RPM_Step1	},	// Level 0 	
-    {1,	43,	29,	19,	&Fan1On_Step2,	&Fan1Off_Step2,	&Fan1RPM_Step2	},	// Level 1  //REJERRY078:modify fan speed.	
-    {2,	56,	38,	22,	&Fan1On_Step3,	&Fan1Off_Step3,	&Fan1RPM_Step3	},	// Level 2 	
-    {3,	64,	51,	25,	&Fan1On_Step4,	&Fan1Off_Step4,	&Fan1RPM_Step4	},	// Level 3 	
-    {4,	70,	60,	31,	&Fan1On_Step5,	&Fan1Off_Step5,	&Fan1RPM_Step5	},	// Level 4  
-    {5, 70,	67,	34,	&Fan1On_Step6,	&Fan1Off_Step6,	&Fan1RPM_Step6	},	// Level 5  
-    {6, 85,	80,	38,	&Fan1On_Step7,	&Fan1Off_Step7,	&Fan1RPM_Step7	},	// Level 6 
-    {7, 85,	80,	38,	&Fan1On_Step8,	&Fan1Off_Step8,	&Fan1RPM_Step8	},	// Level 7
-    {8, 85,	80,	38,	&Fan1On_Step9,	&Fan1Off_Step9,	&Fan1RPM_Step9	},	// Level 8			//XITING0068:add update Y530 1060 SDV fan table_0628
-};
-*/
-//XITING0068:E
+//-----------------------------------------------------------------------------
+// Fan table 1
+//-----------------------------------------------------------------------------
 
-//XITING0070:S update Y530 1060 SDV fan table_0704-2
-//XITING0068:S update Y530 1060 SDV fan table_0628
-//XITING0019:S update fan table by 0404
-//XITING0043:S update fan table by 0324
-//XITING0040:S update fan table by 0321
-//XITING0014:S modify table by fantable_0123
-//XITING0009:S+ update fan table first version  fan speed = spec speed+100
 const thermal ThermalTalbe1CPU_DIS[]= //DIS 			//CPU temp - Y530 1060 - board ID-01
 {
     {0,	49,	0,	0,	&Fan1On_Step1,	&Fan1Off_Step1,	&Fan1RPM_Step1	},	// Level 0 	
-    {1,	59,	44,	20,	&Fan1On_Step2,	&Fan1Off_Step2,	&Fan1RPM_Step2	},	// Level 1  //REJERRY078:modify fan speed.	
-    {2,	64,	55,	23,	&Fan1On_Step3,	&Fan1Off_Step3,	&Fan1RPM_Step3	},	// Level 2 //HEGANG008:modify fan speed.	//HEGANG0009:Modify fan table follow'DY520 SIT fan table_0419'.	
+    {1,	59,	44,	20,	&Fan1On_Step2,	&Fan1Off_Step2,	&Fan1RPM_Step2	},	// Level 1  //modify fan speed.	
+    {2,	64,	55,	23,	&Fan1On_Step3,	&Fan1Off_Step3,	&Fan1RPM_Step3	},	// Level 2 
     {3,	69,	60,	25,	&Fan1On_Step4,	&Fan1Off_Step4,	&Fan1RPM_Step4	},	// Level 3 	
     {4,	74,	65,	28,	&Fan1On_Step5,	&Fan1Off_Step5,	&Fan1RPM_Step5	},	// Level 4  
-    {5, 79,	70,	32,	&Fan1On_Step6,	&Fan1Off_Step6,	&Fan1RPM_Step6	},	// Level 5   //HEGANG0010:Modify fan table follow'DY520 SIT fan table_0420'.
+    {5, 79,	70,	32,	&Fan1On_Step6,	&Fan1Off_Step6,	&Fan1RPM_Step6	},	// Level 5  
     {6, 84,	75,	35,	&Fan1On_Step7,	&Fan1Off_Step7,	&Fan1RPM_Step7	},	// Level 6 
     {7, 89, 80,	37,	&Fan1On_Step8,	&Fan1Off_Step8,	&Fan1RPM_Step8	},	// Level 7
     {8, 99, 85,	38,	&Fan1On_Step9,	&Fan1Off_Step9,	&Fan1RPM_Step9	},	// Level 8
 };
 
-const thermal ThermalTalbe1CPU_Sensor[]= 				//CPU銆�sensor temp - Y530 1060 - board ID-01
+const thermal ThermalTalbe1CPU_Sensor[]= 				//CPU sensor temp - Y530 1060 - board ID-01
 {
     {0,	49,	0,	0,	&Fan1OnCPU_Step1,	&Fan1OffCPU_Step1,	&Fan1RPMCPU_Step1	},	// Level 0 	
     {1,	59,	44,	20,	&Fan1OnCPU_Step2,	&Fan1OffCPU_Step2,	&Fan1RPMCPU_Step2	},	// Level 1  
@@ -79,46 +58,17 @@ const thermal ThermalTalbe1VGA[]= 						//GPU temp - Y530 1060 - board ID-01
     {7, 82, 70,	37,	&Fan1OnVGA_Step8,	&Fan1OffVGA_Step8,	&Fan1RPMVGA_Step8	},	// Level 7 
     {8, 99, 78,	38,	&Fan1OnVGA_Step9,	&Fan1OffVGA_Step9,	&Fan1RPMVGA_Step9	},	// Level 8
 };
-//XITING0009:E+
-//XITING0014:E
-//XITING0040:E
-//XITING0043:E
-//XITING0019:E
-//XITING0068:E
-//XITING0070:E
+
 
 //-----------------------------------------------------------------------------
 // Fan table 2
 //-----------------------------------------------------------------------------
-//XITING0068:S remove UMA table Reduce EC stack usage
-/*
-const thermal ThermalTalbe2CPU[]=  //UMA
-{
-	{0,	34,	0,	0,	&Fan2On_Step1,	&Fan2Off_Step1,	&Fan2RPM_Step1	},	// Level 0 	
-    {1,	43,	29,	16,	&Fan2On_Step2,	&Fan2Off_Step2,	&Fan2RPM_Step2	},	// Level 1  //REJERRY078:modify fan speed.
-    {2,	56,	38,	19,	&Fan2On_Step3,	&Fan2Off_Step3,	&Fan2RPM_Step3	},	// Level 2 	
-    {3,	64,	51,	22,	&Fan2On_Step4,	&Fan2Off_Step4,	&Fan2RPM_Step4	},	// Level 3 	
-    {4,	70,	60,	28,	&Fan2On_Step5,	&Fan2Off_Step5,	&Fan2RPM_Step5	},	// Level 4  
-    {5, 70,	67,	31,	&Fan2On_Step6,	&Fan2Off_Step6,	&Fan2RPM_Step6	},	// Level 5  
-    {6, 85,	80,	35,	&Fan2On_Step7,	&Fan2Off_Step7,	&Fan2RPM_Step7	},	// Level 6  	
-    {7, 85,	80,	35,	&Fan2On_Step8,	&Fan2Off_Step8,	&Fan2RPM_Step8	},	// Level 7
-    {8, 85,	80,	35,	&Fan2On_Step9,	&Fan2Off_Step9,	&Fan2RPM_Step9	},	// Level 8 			//XITING0068:add update Y530 1060 SDV fan table_0628
-};
-*/
-//XITING0068:E
 
-//XITING0070:S update Y530 1060 SDV fan table_0704-2
-//XITING0068:S update Y530 1060 SDV fan table_0628
-//XITING0019:S update fan table by 0404
-//XITING0043:S update fan table by 0324
-//XITING0040:S update fan table by 0321
-//XITING0014:S modify table by fantable_0123
-//XITING0009:S+ update fan table first version		fan speed = spec speed+100
 const thermal ThermalTalbe2CPU_DIS[]= //DIS 			//CPU temp - Y530 1060 - board ID-01
 {
 	{0,	49,	0,	0,	&Fan2On_Step1,	&Fan2Off_Step1,	&Fan2RPM_Step1	},	// Level 0 	
-    {1,	59,	44,	17,	&Fan2On_Step2,	&Fan2Off_Step2,	&Fan2RPM_Step2	},	// Level 1  //REJERRY078:modify fan speed.
-    {2,	64,	55,	20,	&Fan2On_Step3,	&Fan2Off_Step3,	&Fan2RPM_Step3	},	// Level 2  //HEGANG008:modify fan speed.//HEGANG0009:Modify fan table follow'DY520 SIT fan table_0419'.	
+    {1,	59,	44,	17,	&Fan2On_Step2,	&Fan2Off_Step2,	&Fan2RPM_Step2	},	// Level 1  
+    {2,	64,	55,	20,	&Fan2On_Step3,	&Fan2Off_Step3,	&Fan2RPM_Step3	},	// Level 2  
     {3,	69,	60,	22,	&Fan2On_Step4,	&Fan2Off_Step4,	&Fan2RPM_Step4	},	// Level 3 	
     {4,	74,	65,	25,	&Fan2On_Step5,	&Fan2Off_Step5,	&Fan2RPM_Step5	},	// Level 4  
     {5, 79,	70,	29,	&Fan2On_Step6,	&Fan2Off_Step6,	&Fan2RPM_Step6	},	// Level 5  
@@ -153,17 +103,7 @@ const thermal ThermalTalbe2VGA[]= 						//GPU temp - Y530 1060 - board ID-01
     {7, 82,	70,	34,	&Fan2OnVGA_Step8,	&Fan2OffVGA_Step8,	&Fan2RPMVGA_Step8	},	// Level 7
     {8, 99,	78,	40,	&Fan2OnVGA_Step9,	&Fan2OffVGA_Step9,	&Fan2RPMVGA_Step9	},	// Level 8
 };
-//REJERRY055:end modify fan table.  //REJERRY072:end modify fan table.
-//XITING0009:E+ 
-//XITING0014:E
-//XITING0040:E
-//XITING0043:E
-//XITING0019:E
-//XITING0068:E
-//XITING0070:E
 
-//XITING0070:S add Y530P 1060 SIT fan table_0703
-//XITING0068:S add Y530P 1060 SDV fan table_0627
 //-----------------------------------------------------------------------------
 // Fan table 1
 //-----------------------------------------------------------------------------
@@ -180,7 +120,7 @@ const thermal ThermalTalbe1CPU_DIS_P[]= //DIS 				//CPU temp - Y530P 1060 - boar
     {8, 99, 83,	40,	&Fan1On_Step9,	&Fan1Off_Step9,	&Fan1RPM_Step9	},	// Level 8
 };
 
-const thermal ThermalTalbe1CPU_Sensor_P[]= 					//CPU銆�sensor temp - Y530P 1060 - board ID-02
+const thermal ThermalTalbe1CPU_Sensor_P[]= 					//CPU sensor temp - Y530P 1060 - board ID-02
 {
     {0,	49,	0,	0,	&Fan1OnCPU_Step1,	&Fan1OffCPU_Step1,	&Fan1RPMCPU_Step1	},	// Level 0 	
     {1,	54,	45,	19,	&Fan1OnCPU_Step2,	&Fan1OffCPU_Step2,	&Fan1RPMCPU_Step2	},	// Level 1  
@@ -247,20 +187,13 @@ const thermal ThermalTalbe2VGA_P[]= 						//GPU temp - Y530 1060 - board ID-02
     {7, 85,	74,	42,	&Fan2OnVGA_Step8,	&Fan2OffVGA_Step8,	&Fan2RPMVGA_Step8	},	// Level 7
     {8, 99,	81,	49,	&Fan2OnVGA_Step9,	&Fan2OffVGA_Step9,	&Fan2RPMVGA_Step9	},	// Level 8
 };
-//XITING0068:E
-//XITING0070:E
 
-
-//REJERRY096:Update fan table "DY512 SIT fan table_1129-取消布织布-1".
-//HEGANG003:Modify fan table follow'DY520 SIT fan table_0329'.
-//HEGANG004:update HEGANG003.
-//MARTINH146:Add start
 //-----------------------------------------------------------------------------
 // Check Fan RPM count used.
 //-----------------------------------------------------------------------------
 void Check_FANRPM_Count(BYTE *BRPM_Cnt, BYTE TempType)
 {
-	if ( *BRPM_Cnt >= Fan_RPM_Cnt )	// Read 500ms*8 times: 4S
+	if ( *BRPM_Cnt >= Fan_RPM_Cnt )	// Read 50ms*100 times: 5S
 	{
 		if ( TempType == TEMP_TYPE_FAN1RPM )
 		{ 
@@ -278,26 +211,22 @@ void Check_FANRPM_Count(BYTE *BRPM_Cnt, BYTE TempType)
 		(*BRPM_Cnt)++; 
 	}
 }
-//MARTINH146:Add end
+
 
 //-----------------------------------------------------------------------------
-// The function of check fan rpm 1  //martin0624A:change this function to meet 2 thermal table 1 fan.
+// The function of check fan rpm 1  //change this function to meet 2 thermal table 1 fan.
 //-----------------------------------------------------------------------------	
 void CheckFanRPM1(void)
 {
 	BYTE FanLevel_tcpu = FanLevelCPU;	
 	BYTE FanLevel_tvga = FanLevelVGA;
-	BYTE FanLevel_tcpu_sensor = Fan1LevelCPU_Sensor;		//XITING0068:add
-	//BYTE Fan1RPM_t = Fan1RPM;
+	BYTE FanLevel_tcpu_sensor = Fan1LevelCPU_Sensor;		
 
 	if((Debugtemperature1==0x00)&&(Debugtemperature2==0x00))
 	{
-		//temperature1 = TCPU_temp;//JERRYCR067: -Modify FAN control and fan table for SIV test.
-		temperature1 = TEMP_Buff_3;//JERRYCR067:+ Modify FAN control and fan table for SIV test.
-		temperature2 =  VGA_TBuff3;//JERRYCR067: +Modify FAN control and fan table for SIV test.
-		//temperature2 = TVGA_temp;//JERRYCR067: -Modify FAN control and fan table for SIV test.
-
-		temperature3 =  ThermistorCPU_TEMP;							//XITING0068:add  CPU sensor temp
+		temperature1 = TEMP_Buff_3;//Modify FAN control and fan table for SIV test.
+		temperature2 =  VGA_TBuff3;//Modify FAN control and fan table for SIV test.
+		temperature3 =  ThermistorCPU_TEMP;							//add  CPU sensor temp
 	}
 	else
 	{
@@ -305,7 +234,7 @@ void CheckFanRPM1(void)
 		temperature2 = Debugtemperature2;
 	}
 
-	if((KeyBoardID == 0x01) || (KeyBoardID == 0x00))							//XITING0068:add change fan table by board id 01 - Y530 ,02 - Y530P
+	if((KeyBoardID == 0x01) || (KeyBoardID == 0x00))							//change fan table by board id 01 - Y530 ,02 - Y530P
 	{
 		// check CPU fan table1:		
 		if(FanLevel_tcpu <((sizeof(ThermalTalbe1CPU_DIS)/sizeof(thermal))-1))
@@ -324,7 +253,7 @@ void CheckFanRPM1(void)
 			}
 		}
 
-		//XITING0068:S add CPU sensor temp check
+		//add CPU sensor temp check
 		if(FanLevel_tcpu_sensor <((sizeof(ThermalTalbe1CPU_Sensor)/sizeof(thermal))-1))
 		{
 			if(temperature3> *ThermalTalbe1CPU_Sensor[FanLevel_tcpu_sensor].FanOn)
@@ -340,8 +269,6 @@ void CheckFanRPM1(void)
 				FanLevel_tcpu_sensor-=1;
 			}
 		}
-		//XITING0068:E
-
 	
 		// check VGA fan table1:
 		if(FanLevel_tvga <((sizeof(ThermalTalbe1VGA)/sizeof(thermal))-1))
@@ -379,7 +306,7 @@ void CheckFanRPM1(void)
 			}
 		}
 	
-		//XITING0068:S add CPU sensor temp check
+		//S add CPU sensor temp check
 		if(FanLevel_tcpu_sensor <((sizeof(ThermalTalbe1CPU_Sensor_P)/sizeof(thermal))-1))
 		{
 			if(temperature3> *ThermalTalbe1CPU_Sensor_P[FanLevel_tcpu_sensor].FanOn)
@@ -395,8 +322,6 @@ void CheckFanRPM1(void)
 				FanLevel_tcpu_sensor-=1;
 			}
 		}
-		//XITING0068:E
-	
 		
 		// check VGA fan table1:
 		if(FanLevel_tvga <((sizeof(ThermalTalbe1VGA_P)/sizeof(thermal))-1))
@@ -420,73 +345,67 @@ void CheckFanRPM1(void)
 	
 	FanLevelCPU = FanLevel_tcpu;	
 	FanLevelVGA = FanLevel_tvga;	
-	Fan1LevelCPU_Sensor = FanLevel_tcpu_sensor;				//XITING0068:add
+	Fan1LevelCPU_Sensor = FanLevel_tcpu_sensor;				
 
-	if((KeyBoardID == 0x01) || (KeyBoardID == 0x00))					//XITING0068:add change fan table by board id 01 - Y530 ,02 - Y530P
+	if((KeyBoardID == 0x01) || (KeyBoardID == 0x00))					//change fan table by board id 01 - Y530 ,02 - Y530P
 	{	
 		if((*ThermalTalbe1CPU_DIS[FanLevel_tcpu].RPM)>(*ThermalTalbe1VGA[FanLevel_tvga].RPM))
 		{
-			Fan1RPMTemp =*ThermalTalbe1CPU_DIS[FanLevel_tcpu].RPM;  //MARTINH146:Change 'Fan1RPM' to 'Fan1RPMTemp'
+			Fan1RPMTemp =*ThermalTalbe1CPU_DIS[FanLevel_tcpu].RPM;  
 		}
 		else
 		{
-			Fan1RPMTemp =*ThermalTalbe1VGA[FanLevel_tvga].RPM;  //MARTINH146:Change 'Fan1RPM' to 'Fan1RPMTemp'
+			Fan1RPMTemp =*ThermalTalbe1VGA[FanLevel_tvga].RPM;  
 		}
 
-		if((*ThermalTalbe1CPU_Sensor[FanLevel_tcpu_sensor].RPM) > Fan1RPMTemp)		//XITING0068:S check CPU sensor fan1RPM faster than fan Fan1RPMTemp
+		if((*ThermalTalbe1CPU_Sensor[FanLevel_tcpu_sensor].RPM) > Fan1RPMTemp)		//check CPU sensor fan1RPM faster than fan Fan1RPMTemp
 		{
 			Fan1RPMTemp = *ThermalTalbe1CPU_Sensor[FanLevel_tcpu_sensor].RPM;
 		}
 	}
-	else if(KeyBoardID == 0x02)				//XITING0068:add change fan table by board id 01 - Y530 ,02 - Y530P
+	else if(KeyBoardID == 0x02)				//change fan table by board id 01 - Y530 ,02 - Y530P
 	{
 		if((*ThermalTalbe1CPU_DIS_P[FanLevel_tcpu].RPM)>(*ThermalTalbe1VGA_P[FanLevel_tvga].RPM))
 		{
-			Fan1RPMTemp =*ThermalTalbe1CPU_DIS_P[FanLevel_tcpu].RPM;  //MARTINH146:Change 'Fan1RPM' to 'Fan1RPMTemp'
+			Fan1RPMTemp =*ThermalTalbe1CPU_DIS_P[FanLevel_tcpu].RPM;  
 		}
 		else
 		{
-			Fan1RPMTemp =*ThermalTalbe1VGA_P[FanLevel_tvga].RPM;  //MARTINH146:Change 'Fan1RPM' to 'Fan1RPMTemp'
+			Fan1RPMTemp =*ThermalTalbe1VGA_P[FanLevel_tvga].RPM;  
 		}
 
-		if((*ThermalTalbe1CPU_Sensor_P[FanLevel_tcpu_sensor].RPM) > Fan1RPMTemp)		//XITING0068:S check CPU sensor fan1RPM faster than fan Fan1RPMTemp
+		if((*ThermalTalbe1CPU_Sensor_P[FanLevel_tcpu_sensor].RPM) > Fan1RPMTemp)		//check CPU sensor fan1RPM faster than fan Fan1RPMTemp
 		{
 			Fan1RPMTemp = *ThermalTalbe1CPU_Sensor_P[FanLevel_tcpu_sensor].RPM;
 		}
 	}
 	   
-	//MARTINH146:Change:Add start
-	//if(Fan1RPMTemp != Fan1RPM)  //MARTINH150:Remove
-	if(Fan1RPMTemp == Fan1RPMBackUp)  //MARTINH150:Add
+	if(Fan1RPMTemp == Fan1RPMBackUp)  
 	{    
 		Check_FANRPM_Count(&Fan1RPMCount,TEMP_TYPE_FAN1RPM);
 	}	
 	else
 	{
-		Fan1RPMBackUp = Fan1RPMTemp;  //MARTINH150:Add
+		Fan1RPMBackUp = Fan1RPMTemp; 
 		Fan1RPMCount = 0x00;
 	}	
-//MARTINH146:Change:Add end	
 }
 
 //-----------------------------------------------------------------------------
-// The function of check fan rpm 2   //martin0624A:change this function to meet 2 thermal table 1 fan.
+// The function of check fan rpm 2   //change this function to meet 2 thermal table 1 fan.
 //-----------------------------------------------------------------------------
 void CheckFanRPM2(void)
 {
 	BYTE FanLevel_tcpu = FanLevel2CPU;
 	BYTE FanLevel_tvga = FanLevel2VGA;
-	BYTE FanLevel_tcpu_sensor = Fan2LevelCPU_Sensor;		//XITING0068:add
-	//BYTE Fan1RPM_t = Fan2RPM;
+	BYTE FanLevel_tcpu_sensor = Fan2LevelCPU_Sensor;		
 
 	if((Debugtemperature1==0x00)&&(Debugtemperature2==0x00))
 	{
-		//temperature1 = TCPU_temp;//JERRYCR067:- Modify FAN control and fan table for SIV test.
-		//temperature2 = TVGA_temp;//JERRYCR067:- Modify FAN control and fan table for SIV test.
-		temperature1 = TEMP_Buff_3;//JERRYCR067:+ Modify FAN control and fan table for SIV test.
-		temperature2 =  VGA_TBuff3;//JERRYCR067: +Modify FAN control and fan table for SIV test.
+		temperature1 = TEMP_Buff_3;
+		temperature2 =  VGA_TBuff3;
 
-		temperature3 =  ThermistorCPU_TEMP;							//XITING0068:add
+		temperature3 =  ThermistorCPU_TEMP;		
 	}
 	else
 	{
@@ -494,7 +413,7 @@ void CheckFanRPM2(void)
 		temperature2 = Debugtemperature2;
 	}
 
-	if((KeyBoardID == 0x01) || (KeyBoardID == 0x00))							//XITING0068:add change fan table by board id 01 - Y530 ,02 - Y530P
+	if((KeyBoardID == 0x01) || (KeyBoardID == 0x00))							//add change fan table by board id 01 - Y530 ,02 - Y530P
 	{
 		// check CPU fan table2:		
 		if(FanLevel_tcpu <((sizeof(ThermalTalbe2CPU_DIS)/sizeof(thermal))-1))
@@ -513,7 +432,7 @@ void CheckFanRPM2(void)
 			}
 		}
 
-		//XITING0068:S add CPU sensor temp check
+		//add CPU sensor temp check
 		if(FanLevel_tcpu_sensor <((sizeof(ThermalTalbe2CPU_Sensor)/sizeof(thermal))-1))
 		{
 			if(temperature3> *ThermalTalbe2CPU_Sensor[FanLevel_tcpu_sensor].FanOn)
@@ -529,7 +448,7 @@ void CheckFanRPM2(void)
 				FanLevel_tcpu_sensor-=1;
 			}
 		}
-		//XITING0068:E
+	
 
 	
 		// check VGA fan table2:
@@ -549,7 +468,7 @@ void CheckFanRPM2(void)
 			}
 		}
 	}
-	else if(KeyBoardID == 0x02)								//XITING0068:add change fan table by board id 01 - Y530 ,02 - Y530P
+	else if(KeyBoardID == 0x02)								//add change fan table by board id 01 - Y530 ,02 - Y530P
 	{
 		// check CPU fan table2:		
 		if(FanLevel_tcpu <((sizeof(ThermalTalbe2CPU_DIS_P)/sizeof(thermal))-1))
@@ -568,7 +487,7 @@ void CheckFanRPM2(void)
 			}
 		}
 
-		//XITING0068:S add CPU sensor temp check
+		//add CPU sensor temp check
 		if(FanLevel_tcpu_sensor <((sizeof(ThermalTalbe2CPU_Sensor_P)/sizeof(thermal))-1))
 		{
 			if(temperature3> *ThermalTalbe2CPU_Sensor_P[FanLevel_tcpu_sensor].FanOn)
@@ -584,7 +503,7 @@ void CheckFanRPM2(void)
 				FanLevel_tcpu_sensor-=1;
 			}
 		}
-		//XITING0068:E
+
 	
 		// check VGA fan table2:
 		if(FanLevel_tvga <((sizeof(ThermalTalbe2VGA_P)/sizeof(thermal))-1))
@@ -606,58 +525,52 @@ void CheckFanRPM2(void)
 
 	FanLevel2CPU = FanLevel_tcpu;	
 	FanLevel2VGA= FanLevel_tvga;	
-	Fan2LevelCPU_Sensor = FanLevel_tcpu_sensor;				//XITING0068:add
+	Fan2LevelCPU_Sensor = FanLevel_tcpu_sensor;			
 
-	if((KeyBoardID == 0x01) || (KeyBoardID == 0x00))					//XITING0068:add change fan table by board id 01 - Y530 ,02 - Y530P
+	if((KeyBoardID == 0x01) || (KeyBoardID == 0x00))					//add change fan table by board id 01 - Y530 ,02 - Y530P
 	{
 		if((*ThermalTalbe2CPU_DIS[FanLevel_tcpu].RPM)>(*ThermalTalbe2VGA[FanLevel_tvga].RPM))
 		{
-			Fan2RPMTemp =*ThermalTalbe2CPU_DIS[FanLevel_tcpu].RPM;    //MARTINH146:Change 'Fan2RPM' to 'Fan2RPMTemp'
+			Fan2RPMTemp =*ThermalTalbe2CPU_DIS[FanLevel_tcpu].RPM;    
 		}
 		else
 		{
-			Fan2RPMTemp =*ThermalTalbe2VGA[FanLevel_tvga].RPM;    //MARTINH146:Change 'Fan2RPM' to 'Fan2RPMTemp'
+			Fan2RPMTemp =*ThermalTalbe2VGA[FanLevel_tvga].RPM;    
 		}
 		
-		//XITING0068:S check CPU sensor fan1RPM faster than fan Fan1RPMTemp
+		//check CPU sensor fan1RPM faster than fan Fan1RPMTemp
 		if((*ThermalTalbe2CPU_Sensor[FanLevel_tcpu_sensor].RPM) > Fan2RPMTemp)
 		{
 			Fan2RPMTemp = *ThermalTalbe2CPU_Sensor[FanLevel_tcpu_sensor].RPM;
 		}
-		//XITING0068:E
 	}
-	else if(KeyBoardID == 0x02)								//XITING0068:add change fan table by board id 01 - Y530 ,02 - Y530P
+	else if(KeyBoardID == 0x02)								//add change fan table by board id 01 - Y530 ,02 - Y530P
 	{
 		if((*ThermalTalbe2CPU_DIS_P[FanLevel_tcpu].RPM)>(*ThermalTalbe2VGA_P[FanLevel_tvga].RPM))
 		{
-			Fan2RPMTemp =*ThermalTalbe2CPU_DIS_P[FanLevel_tcpu].RPM;    //MARTINH146:Change 'Fan2RPM' to 'Fan2RPMTemp'
+			Fan2RPMTemp =*ThermalTalbe2CPU_DIS_P[FanLevel_tcpu].RPM;   
 		}
 		else
 		{
-			Fan2RPMTemp =*ThermalTalbe2VGA_P[FanLevel_tvga].RPM;    //MARTINH146:Change 'Fan2RPM' to 'Fan2RPMTemp'
+			Fan2RPMTemp =*ThermalTalbe2VGA_P[FanLevel_tvga].RPM;   
 		}
 		
-		//XITING0068:S check CPU sensor fan1RPM faster than fan Fan1RPMTemp
+		//check CPU sensor fan1RPM faster than fan Fan1RPMTemp
 		if((*ThermalTalbe2CPU_Sensor_P[FanLevel_tcpu_sensor].RPM) > Fan2RPMTemp)
 		{
 			Fan2RPMTemp = *ThermalTalbe2CPU_Sensor_P[FanLevel_tcpu_sensor].RPM;
 		}
-		//XITING0068:E
 	}
 
-	//MARTINH146:Change:Add start
-	//if(Fan2RPMTemp != Fan2RPM)  //MARTINH150:Remove
-	if(Fan2RPMTemp == Fan2RPMBackUp)  //MARTINH150:Add
+	if(Fan2RPMTemp == Fan2RPMBackUp) 
 	{
 		Check_FANRPM_Count(&Fan2RPMCount,TEMP_TYPE_FAN2RPM); 
 	}
 	else
 	{
-		Fan2RPMBackUp = Fan2RPMTemp;  //MARTINH150:Add
+		Fan2RPMBackUp = Fan2RPMTemp; 
 		Fan2RPMCount = 0x00;
 	}
-	//MARTINH146:Change:Add end
-
 }
 
 void Fan1MainControl(void)
@@ -696,10 +609,9 @@ void FanControl(void)
 	{
 		FanValue = FanInitValue;
 	}
-	Fan1MainControl(); //MARTINH031:add
+	Fan1MainControl(); 
 }
 
-//MARTINH031:add start
 //-----------------------------------------------------------------------------
 // The function of fan rpm control
 //-----------------------------------------------------------------------------
@@ -707,34 +619,31 @@ void Fan2Control(void)
 {
 	if(	RPM2==0x0000)
 	{
-		Fan2Value = Fan2InitValue; //REJERRY055:modify to fan2 start rpm.
+		Fan2Value = Fan2InitValue; //modify to fan2 start rpm.
 	}
 	Fan2MainControl(); 
 }
-//MARTINH031:add end
 
 //-----------------------------------------------------------------------------
 // Init. thermal table 1
 //-----------------------------------------------------------------------------
 void InitThermalTable1(void)
 {
-	if((KeyBoardID == 0x01) || (KeyBoardID == 0x00))				//XITING0068:add change fan table by board id 01 - Y530 ,02 - Y530P
+	if((KeyBoardID == 0x01) || (KeyBoardID == 0x00))				//add change fan table by board id 01 - Y530 ,02 - Y530P
 	{
 		BYTE index;
 		index=0x00;
-		//MARTINH079:add start	
 		if(IS_MASK_CLEAR(pProject0,b4VGAType)) 
 		{
 		     while(index<(sizeof(ThermalTalbe1CPU_DIS)/sizeof(thermal)))
 		    {
-		    	*ThermalTalbe1CPU_DIS[index].FanOn=ThermalTalbe1CPU_DIS[index].CFanOn;
-			    *ThermalTalbe1CPU_DIS[index].FanOff=ThermalTalbe1CPU_DIS[index].CFanOff;
-			    *ThermalTalbe1CPU_DIS[index].RPM=ThermalTalbe1CPU_DIS[index].CRPM;
+		    	*ThermalTalbe1CPU_DIS[index].FanOn = ThermalTalbe1CPU_DIS[index].CFanOn;
+			    *ThermalTalbe1CPU_DIS[index].FanOff = ThermalTalbe1CPU_DIS[index].CFanOff;
+			    *ThermalTalbe1CPU_DIS[index].RPM = ThermalTalbe1CPU_DIS[index].CRPM;
 			    index++;
 		    }
 		}
 		else
-		//MARTINH079: add end		
 		{
 		    while(index<(sizeof(ThermalTalbe1CPU_DIS)/sizeof(thermal)))
 		    {
@@ -745,7 +654,7 @@ void InitThermalTable1(void)
 		    }
 		}
 
-		//XITING0068:S add CPU sensor temp init
+		//add CPU sensor temp init
 		index=0x00;
 		while(index<(sizeof(ThermalTalbe1CPU_Sensor)/sizeof(thermal)))
 		{
@@ -754,9 +663,8 @@ void InitThermalTable1(void)
 			 *ThermalTalbe1CPU_Sensor[index].RPM=ThermalTalbe1CPU_Sensor[index].CRPM;
 			 index++;
 		}
-		//XITING0068:E
+		
 
-		//MARTINH031: add start 
 	    index=0x00;
 	    while(index<(sizeof(ThermalTalbe1VGA)/sizeof(thermal)))
 	    {
@@ -765,13 +673,11 @@ void InitThermalTable1(void)
 		   *ThermalTalbe1VGA[index].RPM=ThermalTalbe1VGA[index].CRPM;
 		   index++;
 	    } 
-		//MARTINH031: add end 
 	}
-	else if(KeyBoardID == 0x02)								//XITING0068:add change fan table by board id 01 - Y530 ,02 - Y530P
+	else if(KeyBoardID == 0x02)								//add change fan table by board id 01 - Y530 ,02 - Y530P
 	{
 		BYTE index;
 		index=0x00;
-		//MARTINH079:add start	
 		if(IS_MASK_CLEAR(pProject0,b4VGAType)) 
 		{
 			 while(index<(sizeof(ThermalTalbe1CPU_DIS_P)/sizeof(thermal)))
@@ -783,7 +689,6 @@ void InitThermalTable1(void)
 			}
 		}
 		else
-		//MARTINH079: add end		
 		{
 			while(index<(sizeof(ThermalTalbe1CPU_DIS_P)/sizeof(thermal)))
 			{
@@ -794,7 +699,7 @@ void InitThermalTable1(void)
 			}
 		}
 
-		//XITING0068:S add CPU sensor temp init
+		//add CPU sensor temp init
 		index=0x00;
 		while(index<(sizeof(ThermalTalbe1CPU_Sensor_P)/sizeof(thermal)))
 		{
@@ -803,9 +708,7 @@ void InitThermalTable1(void)
 			 *ThermalTalbe1CPU_Sensor_P[index].RPM=ThermalTalbe1CPU_Sensor_P[index].CRPM;
 			 index++;
 		}
-		//XITING0068:E
 
-		//MARTINH031: add start 
 		index=0x00;
 		while(index<(sizeof(ThermalTalbe1VGA_P)/sizeof(thermal)))
 		{
@@ -814,7 +717,6 @@ void InitThermalTable1(void)
 			 *ThermalTalbe1VGA_P[index].RPM=ThermalTalbe1VGA_P[index].CRPM;
 			 index++;
 		} 
-		//MARTINH031: add end 
 	}
 }
 
@@ -823,11 +725,10 @@ void InitThermalTable1(void)
 //-----------------------------------------------------------------------------
 void InitThermalTable2(void)
 {
-	if((KeyBoardID == 0x01) || (KeyBoardID == 0x00))			//XITING0068:add change fan table by board id 01 - Y530 ,02 - Y530P
+	if((KeyBoardID == 0x01) || (KeyBoardID == 0x00))			//add change fan table by board id 01 - Y530 ,02 - Y530P
 	{
 		BYTE index;
 		index=0x00;
-		//MARTINH079:add start	
 		if(IS_MASK_CLEAR(pProject0,b4VGAType)) 
 		{
 	    	while(index<(sizeof(ThermalTalbe2CPU_DIS)/sizeof(thermal)))
@@ -839,7 +740,6 @@ void InitThermalTable2(void)
 	    	}
 		}
 		else
-		//MARTINH079: add end
 		{
 	    	while(index<(sizeof(ThermalTalbe2CPU_DIS)/sizeof(thermal)))
 	    	{
@@ -850,7 +750,7 @@ void InitThermalTable2(void)
 	    	}
 		}	
 
-		//XITING0068:S add CPU Sensor temp init
+		//add CPU Sensor temp init
 		index=0x00;
 		while(index<(sizeof(ThermalTalbe2CPU_Sensor)/sizeof(thermal)))
 		{
@@ -859,9 +759,7 @@ void InitThermalTable2(void)
 		 	*ThermalTalbe2CPU_Sensor[index].RPM=ThermalTalbe2CPU_Sensor[index].CRPM;
 		 	index++;
 		}
-		//XITING0068:E
 
-		//MARTINH031: add start 
 	    index=0x00;
 	    while(index<(sizeof(ThermalTalbe2VGA)/sizeof(thermal)))
 	   	{
@@ -870,13 +768,11 @@ void InitThermalTable2(void)
 		   *ThermalTalbe2VGA[index].RPM=ThermalTalbe2VGA[index].CRPM;
 		   index++;
 	   	}
-		//MARTINH031: add end 
 	}
-	else if(KeyBoardID == 0x02)						//XITING0068:add change fan table by board id 01 - Y530 ,02 - Y530P
+	else if(KeyBoardID == 0x02)						//add change fan table by board id 01 - Y530 ,02 - Y530P
 	{
 		BYTE index;
 		index=0x00;
-		//MARTINH079:add start	
 		if(IS_MASK_CLEAR(pProject0,b4VGAType)) 
 		{
 	    	while(index<(sizeof(ThermalTalbe2CPU_DIS_P)/sizeof(thermal)))
@@ -888,7 +784,6 @@ void InitThermalTable2(void)
 	    	}
 		}
 		else
-		//MARTINH079: add end
 		{
 	    	while(index<(sizeof(ThermalTalbe2CPU_DIS_P)/sizeof(thermal)))
 	    	{
@@ -899,7 +794,7 @@ void InitThermalTable2(void)
 	    	}
 		}	
 
-		//XITING0068:S add CPU Sensor temp init
+		//add CPU Sensor temp init
 		index=0x00;
 		while(index<(sizeof(ThermalTalbe2CPU_Sensor_P)/sizeof(thermal)))
 		{
@@ -908,9 +803,7 @@ void InitThermalTable2(void)
 		 	*ThermalTalbe2CPU_Sensor_P[index].RPM=ThermalTalbe2CPU_Sensor_P[index].CRPM;
 		 	index++;
 		}
-		//XITING0068:E
 
-		//MARTINH031: add start 
 	    index=0x00;
 	    while(index<(sizeof(ThermalTalbe2VGA_P)/sizeof(thermal)))
 	   	{
@@ -919,7 +812,6 @@ void InitThermalTable2(void)
 		   *ThermalTalbe2VGA_P[index].RPM=ThermalTalbe2VGA_P[index].CRPM;
 		   index++;
 	   	}
-		//MARTINH031: add end 
 	}	
 }
 
@@ -930,7 +822,6 @@ void FanFullOff(void)
 {
 	FanValue = 0x00;
 }
-//MARTINH031: add start
 //-----------------------------------------------------------------------------
 // Fan full off control
 //-----------------------------------------------------------------------------
@@ -938,7 +829,6 @@ void Fan2FullOff(void)
 {
 	Fan2Value = 0x00;
 }
-//MARTINH031: add end
 //-----------------------------------------------------------------------------
 // The function of get fan RPM
 //-----------------------------------------------------------------------------
@@ -953,7 +843,7 @@ void GetRPM1(void)
 	{
 		if(((tach_H*256) + tach_L)<RPM1Max)
 		{
-			RPM1=(3750000/TACH1P/((tach_H*256) + tach_L)); //MARTINH103:change '4312500' to '3750000'
+			RPM1=(3750000/TACH1P/((tach_H*256) + tach_L)); //change '4312500' to '3750000'
 		}
 		else
 		{
@@ -966,7 +856,6 @@ void GetRPM1(void)
 	}
 }
 
-//MARTINH031:add start
 //-----------------------------------------------------------------------------
 // The function of get fan2 RPM
 //-----------------------------------------------------------------------------
@@ -981,7 +870,7 @@ void GetRPM2(void)
 	{
 		if(((tach_H*256) + tach_L)<RPM2Max)
 		{
-			RPM2=(3750000/TACH1P/((tach_H*256) + tach_L));  //MARTINH103:change '4312500' to '3750000'
+			RPM2=(3750000/TACH1P/((tach_H*256) + tach_L));  //change '4312500' to '3750000'
 		}
 		else
 		{
@@ -1024,11 +913,11 @@ void FanSpeedConWhenFanTableNotReady(void)
 
 	if(DebugFan2RPMT!=0x00) 	
 	{
-		FAN2_PWM_ALT;//JERRYCR018:Add FAN2 control setting.
+		FAN2_PWM_ALT;//Add FAN2 control setting.
 		GetRPM2();
 		if( RPM2==0x0000)
 		{
-			Fan2Value = Fan2InitValue; //REJERRY055:modify to fan2 start rpm.
+			Fan2Value = Fan2InitValue; //modify to fan2 start rpm.
 		}
 		else
 		{
@@ -1045,31 +934,31 @@ void FanSpeedConWhenFanTableNotReady(void)
 		}
 	}
 }
-//MARTINH031:add end
+
 
 //-----------------------------------------------------------------------------
-// The function of smart fan  //martin0624A:change this function to meet 2 fan control.
+// The function of smart fan  //change this function to meet 2 fan control.
 //-----------------------------------------------------------------------------
 void FanManager(void)
 {
 	// Check VGA and CPU Temperature error bit and full on bit.
-	if ( (IS_MASK_SET(ERR_THMSTS, b1VGATempEr)) ||  //MARTINH116:remove "b3PECITempEr of ERR_THMSTS"
+	if ( (IS_MASK_SET(ERR_THMSTS, b1VGATempEr)) ||
 		(IS_MASK_SET(Thro_Status2, b4FAN1_FullOn)) )
 	{
-		FAN_PWM = FAN2_PWM = Target_Duty = FAN_PWM_Max;	// Fan turn on max.//JERRYCR018:Add FAN2 control setting.
+		FAN_PWM = FAN2_PWM = Target_Duty = FAN_PWM_Max;	// Fan turn on max.//Add FAN2 control setting.
 		return;
 	}
 
 	if ( Fan_ON_Count != 0 )					// Turn on Fan x sec.
 	{
 		Fan_ON_Count--;
-		FAN_PWM = FAN2_PWM = Target_Duty = FAN_PWM_Min;	// PWM min. 30%//JERRYCR018:Add FAN2 control setting.
+		FAN_PWM = FAN2_PWM = Target_Duty = FAN_PWM_Min;	// PWM min. 30%//Add FAN2 control setting.
 		return;
 	}
 
 	if( SystemNotS0 )	// Not S0 status.
 	{
-		FAN_PWM = FAN2_PWM = Target_Duty = 0;	// Turn off FAN.//JERRYCR018:Add FAN2 control setting.
+		FAN_PWM = FAN2_PWM = Target_Duty = 0;	// Turn off FAN.//Add FAN2 control setting.
 		return;
 	}
 
@@ -1077,14 +966,13 @@ void FanManager(void)
 	{
 		FanFullOnCont--;
 		GetRPM1();
-		GetRPM2();  //MARTINH031:add
+		GetRPM2();  
 		return;
 	}
 
 	if(DebugFan1RPMT==0x00) 			// In normal control mode
 	{
-		//if((Fan1RPM!=0x00)||(Fan2RPM!=0x00))  //MARTINH031:remove
-		if(Fan1RPM!=0x00)  //MARTINH031:add
+		if(Fan1RPM!=0x00)  
 		{
 			GetRPM1();
 			FanControl();
@@ -1119,7 +1007,7 @@ void FanManager(void)
 			}
 		}
 	}
-	//MARTINH031: add start
+	
 	if(DebugFan2RPMT==0x00) 			// In normal control mode
 	{
 		if(Fan2RPM!=0x00)
@@ -1141,7 +1029,7 @@ void FanManager(void)
 		GetRPM2();
 		if( RPM2==0x0000)
 		{
-			Fan2Value = Fan2InitValue; //REJERRY055:modify to fan2 start rpm.
+			Fan2Value = Fan2InitValue; //modify to fan2 start rpm.
 		}
 		else
 		{
@@ -1157,11 +1045,7 @@ void FanManager(void)
 			}
 		}
 	}
-//MARTINH031: add end
 }
-
-
-//martin0616 add end
 
 void Fan_Init(void)
 {
@@ -1219,23 +1103,23 @@ void ThmIC_Temperature(void)
 	{ return; }
 
 
-	switch( TmlICStep & 0x07 )  //T034: change 0x03 to 0x07
+	switch( TmlICStep & 0x07 )  //change 0x03 to 0x07
 	{
 		case 0:
-			BTmlCmd = VRAM_Temp; //Remote //BROOKEW040		//XITING0038: remote1 :GPU temp
+			BTmlCmd = VRAM_Temp; //Remote 		//remote1 :GPU temp
 			break;
 		case 1:
-			BTmlCmd = TmlIC_CPU_Temp;								//XITING0038: remote2 :CPU temp
+			BTmlCmd = TmlIC_CPU_Temp;								//remote2 :CPU temp
 			break;
 		case 2:
-			BTmlCmd =TmlIC_Temp; //Thermal IC				//XITING0038: dimm temp
+			BTmlCmd =TmlIC_Temp; //Thermal IC				//dimm temp
 			break;
 		default:
 			TmlICStep = 0;
 			return;
 	}
 
-	if(!bRWSMBus(SMbusChD, SMbusRB, TmlIC_Addr, BTmlCmd, &BsData, 0)) //JERRYCR029:Add read thermal IC temperature. 
+	if(!bRWSMBus(SMbusChD, SMbusRB, TmlIC_Addr, BTmlCmd, &BsData, 0)) //Add read thermal IC temperature. 
 	{
 		TMErrCnt++;
 		if( IS_MASK_CLEAR(ERR_THMSTS, b0ThmICError) )// Check bit0 is Error.
@@ -1252,7 +1136,7 @@ void ThmIC_Temperature(void)
 				ProcessSID(THERMALCOMMFAIL_ID);	// 0x0B shutdown ID.//W114
 				TMErrCnt = 0;					// Clear error count.
 				#if !EN_PwrSeqTest 
-				  #if !EN_ThermalSensorTest //MartinH009:add
+				  #if !EN_ThermalSensorTest 
 				 ETWCFG=EWDKEYEN;			 // enable external WDT key
 		    EWDKEYR=0xFF;			// external WDT reset	
 		    while(1);						   // Wait for watch dog time-out
@@ -1260,28 +1144,27 @@ void ThmIC_Temperature(void)
 				#endif
 			}
 		}
-		ResetSMBus(SMbusChD);//JERRYCR029:Add read thermal IC temperature.
+		ResetSMBus(SMbusChD);//Add read thermal IC temperature.
 	}
 	else
 	{
 		switch( TmlICStep & 0x03 )
 		{
-			case 0:																				//XITING0038: remote1 :GPU temp
-				//if ( IS_MASK_CLEAR(Fan_Debug_Temp,b4RemoteSensor_Temp) ) // Debug CPU Temperature, Engineer myself control. //MARTINH138:Add	//XITING0038: remove
-				EXTVGA_TEMP = BsData;	// Save VRAM temperature.//BROOKEW040						//XITING0038: change to to Ram4 0xB5
+			case 0:																				//remote1 :GPU temp
+				EXTVGA_TEMP = BsData;	// Save VRAM temperature.
 				TMErrCnt = 00;		// Clear error count.
 				CLEAR_MASK(ERR_THMSTS,b0ThmICError);	// Clear bit0.
 				TmlICStep++;		// next step 1.
 				break;
 			case 1:		
-				//XITING0038: remote2 :CPU temp
-				ThermistorCPU_TEMP = BsData;	// Save VRAM temperature.//BROOKEW040			//XITING0038: change to to Ram4 0xB3
+				//remote2 :CPU temp
+				ThermistorCPU_TEMP = BsData;	// Save VRAM temperature.
 				TMErrCnt = 00;		// Clear error count.
 				CLEAR_MASK(ERR_THMSTS,b0ThmICError);	// Clear bit0.
 				TmlICStep++;		// next step 2.
 				break;
-			case 2:																				//XITING0038: dimm temp
-				nVramTemp = BsData;	// Save RAM temperature.//BROOKEW040						//XITING0038: change to to Ram4 0x0E
+			case 2:																	//dimm temp
+				nVramTemp = BsData;	// Save RAM temperature.				
 				TMErrCnt = 00;		// Clear error count.
 				CLEAR_MASK(ERR_THMSTS,b0ThmICError);	// Clear bit0.
 				TmlICStep = 0;		// next step 0.
@@ -1292,7 +1175,6 @@ void ThmIC_Temperature(void)
 	}
 }
 
-//martin0624 add start:
 /*****************************************************************************/
 // Procedure: VGA_Temperature								TimeDiv: 1Sec
 // Description: Read VGA temperature(M/B)
@@ -1322,20 +1204,19 @@ void VGA_Temperature(void)
 	
 	if((CPU_TYPE &0xc0)==0x80)	//NV GPU
 	{
-		//if(!bRWSMBus(SMbusChC, SMbusRB, VGA_Addr, 0x00, &sdAMDTH0, 0)) //REJERRY028:remove.
-		if(!bRWSMBus(SMbusChD, SMbusRB, EXTVGA_Addr, 0x00, &sdAMDTH0, 0)) //REJERRY028:add.
+		if(!bRWSMBus(SMbusChD, SMbusRB, EXTVGA_Addr, 0x00, &sdAMDTH0, 0)) 
 		{
 			VGAErrCnt++;
 			if( IS_MASK_CLEAR(ERR_THMSTS, b1VGATempEr) )// Check bit1 is Error.
 			{
-				if ( VGAErrCnt > 7 )	//W003:change 35 to 7    //T076F:change 7 to 35  // 3 Sec.
+				if ( VGAErrCnt > 7 )	//change 35 to 7    //change 7 to 35  // 3 Sec.
 				{
 					SET_MASK(ERR_THMSTS, b1VGATempEr);	// Set bit1 Thermal IC read temperature error.
 				}
 			}
 			else
 			{
-				if ( VGAErrCnt > 68 )	//W003:change 254 to 68;	//T076F: from 68 to 255	// 30 Sec.
+				if ( VGAErrCnt > 68 )	//change 254 to 68;	//from 68 to 255	// 30 Sec.
 				{
 					SET_MASK(SysStatus,ERR_ShuntDownFlag);
 					VGAErrCnt = 00;				// Clear error count.
@@ -1362,7 +1243,7 @@ void VGA_Temperature(void)
 				}  
 				else
 				{
-					VGA_TEMP = sdAMDTH0;   //W037C+
+					VGA_TEMP = sdAMDTH0; 
 					VGA_TBuff3 = VGA_TBuff2;
 					VGA_TBuff2 = VGA_TBuff1;
 					VGA_TBuff1 = VGA_TEMP;
@@ -1568,7 +1449,6 @@ void ReadPCHTemp(void)
 	} 
 }
 
-//martin0616 add start
 /*****************************************************************************/
 // Procedure: Chk_FAN_RPM_Control							TimeDiv: 50mSec
 // Description: Check FAN is AP control.
@@ -1577,7 +1457,6 @@ void ReadPCHTemp(void)
 /*****************************************************************************/
 void Chk_FAN_RPM_Control(void)
 {
-	//BYTE BRPM_Manual;
 	if (nFanManual == 1)
 	{
 
@@ -1600,19 +1479,17 @@ void Chk_FAN_RPM_Control(void)
 					{ FAN_PWM = FAN_PWM_Max; }
 			}
 		}
-		//REJERRY033:S+ add PWM reduce after fan speed up to max.
+		//add PWM reduce after fan speed up to max.
 		if ( (FAN_PWM == FAN_PWM_Max) && (nAtmFanSpeed > ManualFanPRM) ) 
 		{ 
 			if( FAN_PWM > 0 ) 
 				{ FAN_PWM--; } 
 		}
-		//REJERRY033:E+.
 	}
 #if !FAN_TABLE_Already
 	else
 	{
-		//if(DebugFan1RPMT==0x00 && (FANTimeCount==0))  //THOMASY022:add 	//XITING0036: remove 30% duty at first 20 seconds boot
-		if(DebugFan1RPMT==0x00)												//XITING0036: remove 30% duty at first 20 seconds boot
+		if(DebugFan1RPMT==0x00)												//remove 30% duty at first 20 seconds boot
 		{
 			FAN_PWM_OUT;			// Set FAN_PWM OUTPUT.
 			EC_FAN_PWM_HI();
@@ -1655,20 +1532,18 @@ void Chk_FAN2_RPM_Control(void)
 				}
 			}
 		}
-		//REJERRY033:S+ add PWM reduce after fan speed up to max.
+		//dd PWM reduce after fan speed up to max.
 		if ( (FAN2_PWM == FAN_PWM_Max) && (nAtmFan2Speed > ManualFan2PRM) ) 
 		{ 
 			if( FAN2_PWM > 0 ) 
 				{ FAN2_PWM--; } 
 		}
-		//REJERRY033:E+.
 	}
 
 #if !FAN_TABLE_Already
 	else
 	{
-		//if(DebugFan2RPMT==0x00 && (FANTimeCount==0))  //THOMASY022:add	//XITING0036: remove 30% duty at first 20 seconds boot
-		if(DebugFan2RPMT==0x00)												//XITING0036: remove 30% duty at first 20 seconds boot
+		if(DebugFan2RPMT==0x00)												//remove 30% duty at first 20 seconds boot
 		{
 			FAN2_PWM_OUT;			
 			EC_FAN2_PWM_HI();	                       
@@ -1677,7 +1552,6 @@ void Chk_FAN2_RPM_Control(void)
 #endif	// FAN_TABLE_Already
 }	
 
-//martin0616 add end
 /*****************************************************************************/
 // Procedure: Oem_Fan_Speed										TimeDiv: 1 Sec
 // Description: Read Fan RPM
@@ -1756,9 +1630,8 @@ void FAN_Dust_Mode(void)
 				{
 					if( !ChkTimeScale( &FanCleanFull,Timer_8 ) )
 					{
-						//SET_MASK(THERMAL_STATUS, INITOK);
-						FAN_PWM = CTR2;
-						FAN2_PWM = CTR2;//JERRYCR018:Add FAN2 control setting.
+					    FAN_PWM = CTR2;
+						FAN2_PWM = CTR2;//Add FAN2 control setting.
 					}
 					else
 						{ SET_MASK(SMartNoise, b0FanCleanOn); }
@@ -1769,7 +1642,7 @@ void FAN_Dust_Mode(void)
 					{
 						//SET_MASK(THERMAL_STATUS, INITOK);
 						FAN_PWM = 0;
-						FAN2_PWM = 0;//JERRYCR018:Add FAN2 control setting.
+						FAN2_PWM = 0;//Add FAN2 control setting.
 					}
 					else
 						{ CLEAR_MASK(SMartNoise, b0FanCleanOn); }
@@ -1787,8 +1660,7 @@ void FAN_Dust_Mode(void)
 #endif	// Lenovo_FAN_Dust
 }
 
-//XITING0014:S modify throttling table
-//REJERRY055:Modify throttling table start.
+
 const CPUTHRstruct CPUTHRTable[]=  
 {   
 	//  Thr_Off      Thr_On   Turbo_Rem    Turbo_Off   Thr_Shut     Step  Throttling Table
@@ -1797,7 +1669,6 @@ const CPUTHRstruct CPUTHRTable[]=
 	{	92,	 	 97,		65,			72,			100	},  // 2   UMA Standard mode CPU  //REJERRY072:modify turbo off temp.
 	{	92,	     97,		85,		    90,		    100	},  // 3   UMA Standard mode  VGA  
 };
-//XITING0014:E
 
 /*****************************************************************************/
 // Procedure: ThrottlingControl								TimeDiv: 100mSec
@@ -1808,12 +1679,7 @@ const CPUTHRstruct CPUTHRTable[]=
 void ThrottlingControl(void)
 {
 	if ( SystemIsS0 )
-	{
-		//REJERRY059:S-.
-		/*if ( IS_MASK_CLEAR(SYS_STATUS,AC_ADP)&&(0x00==cBATTThrottling) )
-		{ cBATTThrottling = 0x01; }*/
-		//REJERRY059:E-.
-			  
+	{		  
 		cThrottlingSet &= 0xF0;	// Clear Throttling status.
 	
 		if( ( cThrottlingSet & 0x0F ) < cADPThrottling )	// Compare current and ADP Throttling
@@ -1852,30 +1718,22 @@ void ThrottlingControl(void)
 			CLEAR_MASK(cThrottlingSet,cTHRM_SW);
 			if ( IS_MASK_SET(SYS_MISC1, ACPI_OS) )	// Check OS mode.
 			{
-				//XITING0035:S remove  	not send Qevent(1d) to BIOS,Using Qevent(66,67)	
+				//remove  	not send Qevent(1d) to BIOS,Using Qevent(66,67)	
 				//RamDebug(0xEC);
 				//RamDebug(CPU_SLOW_AD);
 				//ECQEvent(CPU_SLOW_AD);	// 0x1D inform bios.
-				//XITING0035:E 
 			}
 		}
 	}
 }
 
-//REJERRY048:S+ add GPU throttling function.
+//add GPU throttling function.
 void GPUThrottlingControl(void)
 {
 	if ( SystemIsS0 && (CPU_TYPE&0xc0) )
 	{
 		cGPUThrottlingSet &= 0xF0;	// Clear Throttling status.
-		/*
-		//XITING0002:remove S using adc get psys
-		
-		if( ( cGPUThrottlingSet & 0x0F ) < cGPUPowerThrottling)	// Compare power Throttling 
-		{
-			cGPUThrottlingSet |= cGPUPowerThrottling;
-		}*/
-		//XITING0002:remove E
+
 		if( ( cGPUThrottlingSet & 0x0F ) < cGPUBattAlarmThrottling)	// Compare battery OCP alarm Throttling 
 		{
 			cGPUThrottlingSet |= cGPUBattAlarmThrottling;
@@ -1901,13 +1759,11 @@ void GPUThrottlingControl(void)
 			cGPUThrottlingSet &= 0xF0;
 			cGPUThrottlingSet |= cGPUACOVPThrottling;
 		}
-		//XITING0002:S+
 		if( ( cGPUThrottlingSet & 0x0F ) < cGPUBattPsysThrottling)	// Compare current and Thermal throttling
 		{
 			cGPUThrottlingSet &= 0xF0;
 			cGPUThrottlingSet |= cGPUBattPsysThrottling;
 		}
-		//XITING0002:E+
 		if( ( cGPUThrottlingSet & 0x0F ) != ( GPU_REAL_THROTTLING_INDEX & 0x0F ) )
 		{	// send GPU throttling event.
 			GPU_REAL_THROTTLING_INDEX = (GPU_REAL_THROTTLING_INDEX & 0xF0) | (cGPUThrottlingSet & 0x0F);
@@ -1917,139 +1773,10 @@ void GPUThrottlingControl(void)
 		}
 	}
 }
-//REJERRY048:E+ add GPU throttling function.
+//
 
 
 #if OEMCPUThrottlingCtrl
-#if 0
-void SaveCPU1Temp(BYTE CpuTemp)
-{
-	CPU1tempn_2 = CPU1tempn_1;
-	CPU1tempn_1 = CPU1tempCurrent;
-	CPU1tempCurrent = nCpuTemp;
-}
-
-BYTE CalcCPU1tempavg(void)
-{
-	//BYTE avg;
-
-	if(CPU1tempn_2!=0 && CPU1tempn_1!=0 && CPU1tempCurrent!= 0)
-	{
-		nCpuTemp= ((WORD)CPU1tempCurrent + (WORD)CPU1tempn_1 + (WORD)CPU1tempn_2)/3;
-	}
-	else
-	{
-		if(CPU1tempCurrent != 0)
-		{
-			if(CPU1tempn_2==0 && CPU1tempn_1==0)
-			{
-				nCpuTemp = CPU1tempCurrent;
-			}
-			else if(CPU1tempn_2==0 && CPU1tempn_1!=0)
-			{
-				nCpuTemp = ((WORD)CPU1tempCurrent + (WORD)CPU1tempn_1)/2;
-			}
-			else if(CPU1tempn_1==0 && CPU1tempn_2!=0)
-			{
-				nCpuTemp = ((WORD)CPU1tempCurrent + (WORD)CPU1tempn_2)/2;
-			}
-				 
-		}
-		else
-		{
-			nCpuTemp = 0;
-		}
-	}
-	return nCpuTemp;	
-}
-
-
-void CPUTurboOn(void)
-{
-	if(IS_MASK_CLEAR(TmlCtrlFlag, CpuTubo_on))	// enable turbo
-	{
-		REAL_THROTTLING_INDEX &= 0xF0; 
-		ECQEvent(CPU_SLOW_AD);
-		RamDebug(0x1D);
-		RamDebug(0x85);
-		//REAL_THROTTLING_INDEX &= 0xF0; 
-		SET_MASK(TmlCtrlFlag, CpuTubo_on);
-	}
-}
-
-
-void CPUTurboOff(void)
-{
-	if(IS_MASK_SET(TmlCtrlFlag, CpuTubo_on))		// set turbo off
-	{
-		REAL_THROTTLING_INDEX &= 0xF0;	// Clear thermal throttling status.
-		REAL_THROTTLING_INDEX += 0x01;	// Set P-State level.
-		ECQEvent(CPU_SLOW_AD);
-		RamDebug(0x1D);
-		RamDebug(0x87);
-		CLEAR_MASK(TmlCtrlFlag, CpuTubo_on);
-	}
-}
-
-void CpuProchotHigh(void)
-{
-	if(IS_MASK_SET(TmlCtrlFlag, CpuProcHot_on))	// set PROCHOT high 
-	{
-		H_PROCHOT_HI();		// set PROCHOT high
-		RamDebug(0x89);
-		CLEAR_MASK(TmlCtrlFlag, CpuProcHot_on);
-	}
-}
-
-void CpuProchotLow(void)
-{
-	if(IS_MASK_CLEAR(TmlCtrlFlag, CpuProcHot_on))		// set PROCHOT low to 
-	{
-		H_PROCHOT_LOW();		// set PROCHOT low to 
-		RamDebug(0x8A);
-		SET_MASK(TmlCtrlFlag, CpuProcHot_on);
-	}
-}
-
-void CpuThrottleDisable(void)
-{
-	if(IS_MASK_CLEAR(TmlCtrlFlag, throttle_off))	// set throttle off 
-	{	
-	       REAL_THROTTLING_INDEX &= 0xF0;	// Clear thermal throttling status.
- 		ECQEvent(CPU_SLOW_AD);
-		RamDebug(0x6B);
-		SET_MASK(TmlCtrlFlag, throttle_off);
-	}
-}
-
-
-void CpuThrottleEnable(void)		// set throttle on
-{
-	if(IS_MASK_SET(TmlCtrlFlag, throttle_off))
-	{
-	      if(REAL_THROTTLING_INDEX !=0x0F) 
-	      	{
-	         REAL_THROTTLING_INDEX++;
-		  REAL_THROTTLING_INDEX &=0x0F;
-  		  ECQEvent(CPU_SLOW_AD);
-		  RamDebug(0x6C);
-	      	}
-		 else{CLEAR_MASK(TmlCtrlFlag,throttle_off);}
-	}
-}
-#endif
-
-void ShutDownOS(void)
-{
-#if !EN_PwrSeqTest  //BROOKEW040
-#if !EN_ThermalSensorTest      //MARTINH023:add judge
-	ETWCFG=EWDKEYEN;			 // enable external WDT key
-	EWDKEYR=0xFF;			// external WDT reset	
-	while(1);						   // Wait for watch dog time-out
-#endif  
-#endif
-}
-
 
 void OEM_Throttling_Ctrl(void)
 {
@@ -2057,8 +1784,8 @@ void OEM_Throttling_Ctrl(void)
 	if( SystemNotS0 )
 	{
 		H_PROCHOT_LOW();
-		VGA_AC_DET_HIGH(); //REJERRY070:add.
-		//GPU_REAL_THROTTLING_INDEX &= 0xF0; //REJERRY070:add.		//XITING0064:remove when OS not S0 keep GPU D state
+		VGA_AC_DET_HIGH(); 
+		//GPU_REAL_THROTTLING_INDEX &= 0xF0; //remove when OS not S0 keep GPU D state
 		CLEAR_MASK(TmlCtrlFlag, CpuProcHot_on);
 		REAL_THROTTLING_INDEX &= 0xF0;
 		CLEAR_MASK(TmlCtrlFlag, CpuTubo_on);
@@ -2066,18 +1793,11 @@ void OEM_Throttling_Ctrl(void)
 		return;
 	}
 
-	//REJERRY058:S- remove UMA/DIS ready check.
-	/*if(IS_MASK_CLEAR(pProject0,b7UMADISReady))
-	{
-		return;
-	}*/
-	//REJERRY058:E-.
-
-	if(IS_MASK_SET(pProject1,b0NvGpuG1))//1050ti//REJERRY0979:Update fan table'DY512 SIT fan table_1212'.
+	if(IS_MASK_SET(pProject1,b0NvGpuG1))
 	{	// UMA.
 		BTbStep = 2;		
 	}
-	else//1050m
+	else
 	{	// DIS.
 		BTbStep = 0;	
 	}
@@ -2095,12 +1815,10 @@ void Thro_Std_Mode(BYTE BMBStep)
 	// Check CPU Turbo function.
 	Thro_Turbo(THR_Turo_Rem,THR_Turo_OFF,TEMP_TYPE_CPU); 
 
-	//REJERRY069:S- remove GPU table for control turbo and shutdown.
 	VTHRTab_ToRAM((1+BMBStep));// VGA Throttle Standard table save to RAM. 
 	Thro_Shut_Status((1+BMBStep),TEMP_TYPE_VGA); // Check Throttle and Shutdown status.  
 	// Check GPU Turbo function.
 	Thro_Turbo(VTHR_Turo_Rem,VTHR_Turo_OFF,TEMP_TYPE_VGA);
-	//REJERRY069:E-.
 
 	Thro_Shut_Status(0,TEMP_TYPE_remote);
 	Thro_Shut_Status(0,TEMP_TYPE_NTC_V);
@@ -2116,24 +1834,8 @@ void Thro_Turbo(BYTE BTurboRem, BYTE BTurboOff, BYTE BTType)
 
 	if ( BTType == TEMP_TYPE_VGA )
 	{
-		//XITING0068:S remove
-		/*
-		// Set Internal VGA.
-		if ( VGA_TBuff3 <= BTurboRem )				// Check turbo resume.
-		{ 
-			//CLEAR_MASK(Thro_Status, b4Turbo_VGA); 
-			cGPUThermalThrottling=0;
-		}
-		else if ( VGA_TBuff3 >= BTurboOff ) 		// Check turbo Off.
-		{ 
-			//SET_MASK(Thro_Status, b4Turbo_VGA); 
-			cGPUThermalThrottling=1;
-		}
-		*/
-		//XITING0068:E
-
-		//XITING0068:add GPU temp and PCH temp control GPU D state by board ID
-		if(KeyBoardID == 0x01)										//XITING0068:add change fan table by board id 01 - Y530 ,02 - Y530P
+		//GPU temp and PCH temp control GPU D state by board ID
+		if(KeyBoardID == 0x01)										//add change fan table by board id 01 - Y530 ,02 - Y530P
 		{
 			if((VGA_TBuff3 <= 90) && (nPCH_Temp <= 100))
 			{
@@ -2144,10 +1846,9 @@ void Thro_Turbo(BYTE BTurboRem, BYTE BTurboOff, BYTE BTType)
 				cGPUThermalThrottling = 2;
 			}
 		}
-		else if(KeyBoardID == 0x02)									//XITING0068:add change fan table by board id 01 - Y530 ,02 - Y530P
-		{
-			//if ( VGA_TBuff3 <= 89 && nPCH_Temp <= 105 )			//XITING0070:change from 89 to 90 Y530P 1060 SIT fan table_0703		
-			if ( VGA_TBuff3 <= 90 && nPCH_Temp <= 105 )				//XITING0070:change from 89 to 90 Y530P 1060 SIT fan table_0703
+		else if(KeyBoardID == 0x02)									//add change fan table by board id 01 - Y530 ,02 - Y530P
+		{	
+			if ( VGA_TBuff3 <= 90 && nPCH_Temp <= 105 )				//change from 89 to 90 Y530P 1060 SIT fan table_0703
 			{ 
 				cGPUThermalThrottling=0;
 			}
@@ -2157,18 +1858,14 @@ void Thro_Turbo(BYTE BTurboRem, BYTE BTurboOff, BYTE BTType)
 				{
 					cGPUThermalThrottling = 1;
 				}
-				//if ( VGA_TBuff3 >= 92 || nPCH_Temp >= 110 )			//XITING0070:change from 92 to 93 Y530P 1060 SIT fan table_0703
-				if ( VGA_TBuff3 >= 93 || nPCH_Temp >= 110 )			//XITING0070:change from 92 to 93 Y530P 1060 SIT fan table_0703
+				if ( VGA_TBuff3 >= 93 || nPCH_Temp >= 110 )			//change from 92 to 93 Y530P 1060 SIT fan table_0703
 				{
 					cGPUThermalThrottling = 2;
 				}
 			}
-		}	
-		//XITING0068:E
-		
+		}			
 	}
 	else
-	//REJERRY0979:s+Update fan table'DY512 SIT fan table_1212'.
 	{	// Set Internal CPU.
 		if(IS_MASK_SET(pProject1,b0NvGpuG1))
 		{
@@ -2176,9 +1873,8 @@ void Thro_Turbo(BYTE BTurboRem, BYTE BTurboOff, BYTE BTType)
 			{ 
 				CLEAR_MASK(Thro_Status, b3Turbo_CPU); 
 			}
-			else if(TEMP_Buff_3 >= BTurboOff) 			// Check turbo Off.  //REJERRY055:remove.		//XITING0040:add
-			//else if (((TEMP_Buff_3 >= BTurboOff)&&(VGA_TBuff3 >= 72)) ||(VGA_TBuff3 >= 80)||(TEMP_Buff_3 >= 88))	//REJERRY055:add. //REJERRY072:modify turbo off temp. //REJERRY075:add CPU temp condition. //REJERRY078:modify CPU condition temp.//HEGANG003:Modify fan table follow'DY520 SIT fan table_0329'.//HEGANG0009:Modify fan table follow'DY520 SIT fan table_0419'.	//XITING0040:remove
-			{ 
+			else if(TEMP_Buff_3 >= BTurboOff) 			// Check turbo Off.  
+            {
 				SET_MASK(Thro_Status, b3Turbo_CPU); 
 			}
 		}
@@ -2188,15 +1884,13 @@ void Thro_Turbo(BYTE BTurboRem, BYTE BTurboOff, BYTE BTType)
 			{ 
 				CLEAR_MASK(Thro_Status, b3Turbo_CPU);
 			}
-			else if(TEMP_Buff_3 >= BTurboOff) 			// Check turbo Off.  //REJERRY055:remove.			//XITING0040:add
-			//else if (((TEMP_Buff_3 >= BTurboOff)&&(VGA_TBuff3 >= 70)) ||(VGA_TBuff3 >= 78)||(TEMP_Buff_3 >= 78))	//REJERRY055:add. //REJERRY072:modify turbo off temp. //REJERRY075:add CPU temp condition. //REJERRY078:modify CPU condition temp.		//XITING0040:remove
-			{ 
+			else if(TEMP_Buff_3 >= BTurboOff) 			// Check turbo Off.
+            {
 				SET_MASK(Thro_Status, b3Turbo_CPU); 
 			}	
 		}
 	}
-	//REJERRY0979:e+Update fan table'DY512 SIT fan table_1212'.
-	//REJERRY104:Update fan table'DY512 SIT fan table_1228'.
+
 	if ( IS_MASK_CLEAR(Thro_Status, b3Turbo_CPU) )	  
 	{ 
 		cTHERMThrottling &= 0xF0; 
@@ -2206,51 +1900,6 @@ void Thro_Turbo(BYTE BTurboRem, BYTE BTurboOff, BYTE BTType)
 		cTHERMThrottling &= 0xF0;	// Clear thermal throttling status.
 		cTHERMThrottling |= 0x02;	// Set P-State level. //MARTINH137:change 0x01 to 0x02
 	}
-
-	//XITING0019:S remove Turbo on and Turbo off 
-	/*
-	//XITING0027:S add CPU turbo control	(enable/disable)
-	if ( IS_MASK_CLEAR(Thro_Status, b3Turbo_CPU ))
-	{
-		if ( IS_MASK_SET(uVGATurboFun,uDisCPUTurboOK) )		
-		{
-			CLEAR_MASK(uVGATurboFun, uDisCPUTurboOK);	
-            ECQEvent(EN_CPUTURBO_67);
-		}
-	}
-	else
-	{
-	 	if ( IS_MASK_CLEAR(uVGATurboFun,uDisCPUTurboOK) )
-	 	{
-			SET_MASK(uVGATurboFun, uDisCPUTurboOK);	
-            ECQEvent(DIS_CPUTURBO_66);
-	 	}
-	}
-	//XITING0027:E
-	*/
-	//XITING0019:E
-
-	//REJERRY055:S- remove GPU turbo on/off.
-	/*if ( IS_MASK_CLEAR(Thro_Status, (b4Turbo_VGA)) )
-	{
-		if ( IS_MASK_SET(uVGATurboFun,uDisVGATurboOK) ) 	// bit2.
-		{
-			CLEAR_MASK(uVGATurboFun, uDisVGATurboOK); 		// Set bit2.
-			RamDebug(0x63);		
-			ECQEvent(DIS_TURBO_63); 						// 0x63 VGA Disable turbo.
-		}
-	}
-	else
-	{
-		if ( IS_MASK_CLEAR(uVGATurboFun,uDisVGATurboOK) )	// bit2.
-		{
-			SET_MASK(uVGATurboFun, uDisVGATurboOK); 		// Set bit2.
-			RamDebug(0x62);		 
-			ECQEvent(EN_TURBO_62);							// 0x62 VGA Enable turbo.
-		}
-	}*/
-	//REJERRY055:E-.
-
 }
 
 
@@ -2300,34 +1949,8 @@ void Thro_Shut_Status(BYTE BStep, BYTE BTType)
 		}
 	}
     else if( BTType == TEMP_TYPE_remote)	  
-	{  // Set CPU thermistor.
-
-		//REJERRY062:S- remove cpu thermal IC temp.
-		/*if(IS_MASK_SET(pProject0,b4VGAType))
-		{
-			 if ( nVramTemp >= nRemoteOverTemp_UMA )	
-			{ 
-				Thro_Count_Shut(&RemoteSensor_Shut_Cnt,TEMP_TYPE_remote); 
-			}   // Check x times for shutdown protection.
-			else
-			{ 
-				RemoteSensor_Shut_Cnt = 0; 
-			}
-		}
-		else
-		{
-			if ( nVramTemp >= nRemoteOverTemp_DIS )	
-			{ 
-				Thro_Count_Shut(&RemoteSensor_Shut_Cnt,TEMP_TYPE_remote); 
-			}   // Check x times for shutdown protection.
-			else
-			{ 
-				RemoteSensor_Shut_Cnt = 0; 
-			}
-		}*/
-		//REJERRY062:E-.
-
-		//REJERRY062:S+ add CPU thermistor temp.
+	{ 
+		//add CPU thermistor temp.
 		if ( ThermistorCPU_TEMP >= nCPUthermistoroverTemp )
 		{ 
 			Thro_Count_Shut(&RemoteSensor_Shut_Cnt,TEMP_TYPE_remote); 
@@ -2336,23 +1959,11 @@ void Thro_Shut_Status(BYTE BStep, BYTE BTType)
 		{ 
 			RemoteSensor_Shut_Cnt = 0; 
 		}
-		//REJERRY062:E+.
 	}
 	else if( BTType == TEMP_TYPE_NTC_V)	   
 	{	// Set GPU thermistor.
 
-		//REJERRY062:S-.
-		/*if ( NTC_V <= nNTC_VOverTemp )	 
-		{ 
-			Thro_Count_Shut(&NTC_V_Shut_Cnt,TEMP_TYPE_NTC_V); 
-		}   // Check x times for shutdown protection.
-		else
-		{ 
-			NTC_V_Shut_Cnt = 0; 
-		}*/
-		//REJERRY062:E-.
-
-		//REJERRY062:S+ add GPU thermistor temp.
+		//add GPU thermistor temp.
 		if ( EXTVGA_TEMP >= nGPUthermistoroverTemp )
 		{
 			Thro_Count_Shut(&NTC_V_Shut_Cnt,TEMP_TYPE_NTC_V); 
@@ -2361,10 +1972,10 @@ void Thro_Shut_Status(BYTE BStep, BYTE BTType)
 		{ 
 			NTC_V_Shut_Cnt = 0; 
 		}
-		//REJERRY062:E+.
+		//
 	}
 
-	CPU_Prochot_Ctrl(); //REJERRY031:add.
+	CPU_Prochot_Ctrl(); 
 			 
 }
 //-----------------------------------------------------------------------------
@@ -2405,40 +2016,33 @@ void Thro_Count_Shut(BYTE *BShut_Cnt, BYTE TempType)
 	}
 }
 
-//REJERRY031:S+ add CPU prochot control function.
+//add CPU prochot control function.
 void CPU_Prochot_Ctrl(void)
 {	
 	if ( IS_MASK_CLEAR(Thro_Status, (b0ProCH_CPU+b1ProCH_VGA+b2ProCH_EXTVGA+b6ProCH_TURBO))
 		&& IS_MASK_CLEAR(nBatteryStatH, CMBS_CRITICALLOW)
-		//&& IS_MASK_CLEAR(CPUProchotFlag,b0CpuADPI+b1CpuBattPmax+b2CpuBattRSOC+b3CpuBattAlarm+b4CpuBattOTP) //REJERRY042:modify bit0 to bit5 flag. 
-		&& IS_MASK_CLEAR(CPUProchotFlag,b0CpuADPI+b1CpuBattPmax+b2CpuBattRSOC+b3CpuBattAlarm+b4CpuBattOTP+b5CpuPsys) //XITING0002:add psys flag
-		&&(CPUProchotONCnt == 0)&&(S0CPUProchotONCnt==0)) //REJERRY0978:update power setting'LBG EC Parameter V2.1_for Y510IP710 20161210'.
+		&& IS_MASK_CLEAR(CPUProchotFlag,b0CpuADPI+b1CpuBattPmax+b2CpuBattRSOC+b3CpuBattAlarm+b4CpuBattOTP+b5CpuPsys) //add psys flag
+		&&(CPUProchotONCnt == 0)&&(S0CPUProchotONCnt==0)) 
 	{	
 		H_PROCHOT_LOW();
-		//VGA_AC_DET_HIGH();  //REJERRY042:add. //REJERRY048:remove.
 		nRealThermalPinDIS;
 		CLEAR_MASK(pPROCHOT, b0Thermal_PRCOHOTon);	// for AP display.
-		//RamDebug(0x64);
 	}
 	else
 	{	// turn on prochot.
 		H_PROCHOT_HI();
-		//VGA_AC_DET_LOW();  //REJERRY042:add. //REJERRY048:remove.
 		nRealThermalPinEN;
 		SET_MASK(pPROCHOT, b0Thermal_PRCOHOTon);	// for AP display.
-		//RamDebug(0x67);
 	}
 }
-//REJERRY031:E+ add CPU prochot control function.
+//
 
-//REJERRY048:S+ add GPU prochot control function.
+//GPU prochot control function.
 void GPUProchotOnControl(void)
 {
-	//if( CPUProchotONCnt == 0 ) //REJERRY056:remove.
-	//if(IS_MASK_CLEAR(GPUProchotFlag,b0GpuAdpI+b1GpuBattAlarm+b2GpuBattOTP+b3GpuBattPmax)
-	if(IS_MASK_CLEAR(GPUProchotFlag,b0GpuAdpI+b1GpuBattAlarm+b2GpuBattOTP+b3GpuBattPmax+b4GpuPsys)		//XITING0002:add psys flag
+	if(IS_MASK_CLEAR(GPUProchotFlag,b0GpuAdpI+b1GpuBattAlarm+b2GpuBattOTP+b3GpuBattPmax+b4GpuPsys)		//add psys flag
 		&&( CPUProchotONCnt == 0 )
-		&&(S0CPUProchotONCnt==0)) //REJERRY056:add. //REJERRY077:add battery OTP condition.//REJERRY0978:update power setting'LBG EC Parameter V2.1_for Y510IP710 20161210'.
+		&&(S0CPUProchotONCnt==0)) //add battery OTP condition.
 	{
 		VGA_AC_DET_HIGH();
 	}
@@ -2447,7 +2051,7 @@ void GPUProchotOnControl(void)
 		VGA_AC_DET_LOW();
 	}
 }
-//REJERRY048:E+ add GPU prochot control function.
+//
 
 //-----------------------------------------------------------------------------
 // Throttle table save to ram.
@@ -2475,7 +2079,7 @@ void VTHRTab_ToRAM(BYTE BStep)
 #endif
 
 
-//REJERRY062:S+ add switch from thermistor voltage to temp.
+//add switch from thermistor voltage to temp.
 const SRTVTstruct RTVTTable [] =
 {
 	{20,0x040E},
@@ -2626,7 +2230,6 @@ void PollingDIMMRT(void)
 	}
 }
 
-//REJERRY062:E+.
 
 void DPTFControl(void)
 {

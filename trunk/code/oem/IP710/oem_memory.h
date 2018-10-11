@@ -441,7 +441,6 @@ typedef enum
 #define b4VGAType				BIT4   //0:DIS;1:UMA
 #define b5FUBIOSWriteReady      BIT5   //JERRYCR049::Add
 #define b6PostHotKey			BIT6
-#define b7UMADISReady           BIT7   //MARTINH028:add
 
 
 #define	pDevStus					SD_uchar_8(OEMRAM3+0x03)

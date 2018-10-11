@@ -94,8 +94,8 @@
 #define C_LVMfgFun2   		0x3E	// LV Smart Battery
 #define C_Cell3            	0x3D 	// manufacture data
 #define C_Cell4            	0x3C 	// manufacture data
-#define FirstUsedDate       0x3F   // FirstUsedDate   //JERRYCR049::Add
-#define C_Pmax              0x59   //PMAX  //REJERRY031:add Pmax cmd.
+#define FirstUsedDate       0x3F   // FirstUsedDate  
+#define C_Pmax              0x59   //add Pmax cmd.
 
 #define	NONE_BAT			0x00
 #define	PWR_CHANGE			0x01

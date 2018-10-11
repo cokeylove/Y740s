@@ -846,13 +846,11 @@ void Cmd_45(BYTE nPort, BYTE sCount)
 
 		case 0xE7:
 			SET_MASK(pProject0,b4VGAType);		//UMA
-			SET_MASK(pProject0,b7UMADISReady);  //MARTINH028:add
 			InitThermalTable1(); //MARTINH079:add
 			InitThermalTable2(); //MARTINH079:add
 			break;
 		case 0xE8:
 			CLEAR_MASK(pProject0,b4VGAType);		//Discreate
-			SET_MASK(pProject0,b7UMADISReady);  //MARTINH028:add
 			InitThermalTable1(); //MARTINH079:add
 			InitThermalTable2(); //MARTINH079:add
 			break;
