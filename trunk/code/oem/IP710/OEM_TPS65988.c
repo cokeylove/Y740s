@@ -2741,7 +2741,7 @@ void OEM_TYPE_C_S5_HOOK(void)
             if((CurrentRDO != ObjectPosition09V))
             {
 
-                if(IS_MASK_SET(PriBattSTS,BattExist)&&IS_MASK_CLEAR(BattStatusL,FullyChg))
+                if(IS_MASK_SET(PriBattSTS,BattExist)&&IS_MASK_CLEAR(nBattery0x16L,FullyChg))
                 {
                     break;
                 }
@@ -2766,7 +2766,7 @@ void OEM_TYPE_C_S5_HOOK(void)
 
             if(CurrentRDO != ObjectPosition20V)
             {
-                if(IS_MASK_SET(PriBattSTS,BattExist)&&IS_MASK_CLEAR(BattStatusL,FullyChg))
+                if(IS_MASK_SET(PriBattSTS,BattExist)&&IS_MASK_CLEAR(nBattery0x16L,FullyChg))
                 {
                     //9v->20V
                     RamDebug(0xAB);
@@ -2793,30 +2793,6 @@ void OEM_TYPE_C_S5_HOOK(void)
             }
         }
         while(0);
-#if 0
-        //if((CurrentRDO != ObjectPosition09V) && IS_MASK_SET(BattStatusL,FullyChg))
-        if((CurrentRDO != ObjectPosition09V)&&(IS_MASK_SET(SYS_STATUS,AC_ADP))
-          )
-        {
-            //SendPdoSet(ObjectPosition5V,TYPECPort1);  // Switch PDO to 5V
-            if((IS_MASK_SET(PriBattSTS,BattExist)&&IS_MASK_CLEAR(BattStatusL,FullyChg)) ||
-               (IS_MASK_SET(SecBattSTS,BattExist)&&IS_MASK_CLEAR(SecBattStatusL,FullyChg))
-              )
-            {
-                return;
-            }
-            else
-            {
-                RamDebug(0x99);
-                SendPDO20VTo9V(TYPECPort1);
-            }
-        }
-        //else ((CurrentRDO!= ObjectPosition20V) &&(IS_MASK_CLEAR(SecBattStatusL ,FullyChg) || IS_MASK_CLEAR(BattStatusL,FullyChg)))
-        //{
-        //  //SendPdoSet(ObjectPosition20V,TYPECPort1); // Switch PDO to 20V
-        //  SendPDO9VTo20V();
-        //}
-#endif
     }
     
     if(IS_MASK_SET(TypeCPort2Status,TypeCAdpExist)&&IS_MASK_SET(TypeCPort2Status,TypeCAdpReady))
@@ -2836,7 +2812,7 @@ void OEM_TYPE_C_S5_HOOK(void)
             if((Port2CurrentRDO != Port2ObjectPosition09V))
             {
 
-                if(IS_MASK_SET(PriBattSTS,BattExist)&&IS_MASK_CLEAR(BattStatusL,FullyChg))
+                if(IS_MASK_SET(PriBattSTS,BattExist)&&IS_MASK_CLEAR(nBattery0x16L,FullyChg))
                 {
                     break;
                 }
@@ -2862,7 +2838,7 @@ void OEM_TYPE_C_S5_HOOK(void)
 
             if(Port2CurrentRDO != Port2ObjectPosition20V)
             {
-                if(IS_MASK_SET(PriBattSTS,BattExist)&&IS_MASK_CLEAR(BattStatusL,FullyChg))
+                if(IS_MASK_SET(PriBattSTS,BattExist)&&IS_MASK_CLEAR(nBattery0x16L,FullyChg))
                 {
                     //9V->20V
                     RamDebug(0xAA);

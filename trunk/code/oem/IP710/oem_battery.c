@@ -20,9 +20,10 @@
 void UpdateNameSpace(void)
 {
 	nBattGasgauge=BAT1PERCL;
+	
 	nBattTsVolt = (BYTE)(BATTEMP>>2);
 
-	nCycleCounter=EC_oCCBQl;
+	nCycleCounter = EC_oCCBQl;
 	EC_BatteryStatusL = nBattery0x16L;
 	EC_BatteryStatusH = nBattery0x16H;
 
@@ -48,7 +49,6 @@ void UpdateNameSpace(void)
 	Lenovo_Battery_EM80();
 
 	//Mos: Reset Battery Protection Status when AC off or battery plugout
-	//MARTINH086: Remove start    
 	/*
 	if (IS_MASK_SET(StatusKeeper, BatteryProtectCHG))
 	{
@@ -56,12 +56,11 @@ void UpdateNameSpace(void)
 	CLEAR_MASK(StatusKeeper, BatteryProtectCHG);
 	}
 	*/
-	//MARTINH086: Remove end  
 
 #if TurboBoostandStorage 
-	if(testtoolflag==0) //MARTINH119:add
+	if(testtoolflag==0) 
 	{
-   		if (IS_MASK_SET(LENOVOPMFW,BATTERY_STORAGE) && IS_MASK_CLEAR(LENOVOPMFW,BATTERY_MAIN_CAL))//W079:the same with spec
+   		if (IS_MASK_SET(LENOVOPMFW,BATTERY_STORAGE) && IS_MASK_CLEAR(LENOVOPMFW,BATTERY_MAIN_CAL))
    		{
 			//Mos: return RSOC(0x0d)=0 to BIOS if battery error
 			if ((ChkBattery_abnormal_status == ChkBattery_abnormal_status_error)
@@ -76,42 +75,33 @@ void UpdateNameSpace(void)
 	
 			SET_MASK(LENOVOPMFW_Temp,BATTERY_CYCLE_RUNNING);
 
-			//REJERRY073:S+ add Q event notify to OS when battery mode switch.
+			//add Q event notify to OS when battery mode switch.
 			if(IS_MASK_CLEAR(StorageNotify,StorageNotify2)) 
 			{
 				ECQEvent(ACPI_BAT1IN_SCI); 	
 				SET_MASK(StorageNotify,StorageNotify2);
 			}
-			//REJERRY073:E+.
+			//
 	
 			if (nBattGasgauge >= 55)
 			{
-				//REJERRY073:S-.
-				/*if ( IS_MASK_SET(ACOFF_SOURCE, BATTLEARN) )
-				{ 
-					ECQEvent(ACPI_BAT1IN_SCI); 	
-				}
-				CLEAR_MASK(ACOFF_SOURCE, BATTLEARN);*/
-				//REJERRY073:E-.
-				CLEAR_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable); //REJERRY051:Modify read addr to write.
-				if (!bRWSMBus(SMbusChB, SMbusWW, Charger_Addr, C_ChargerMode, &CHGIC_WriteCmd0x12L,SMBus_NoPEC)) //REJERRY051:Modify read addr to write.
+				CLEAR_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable);
+				if (!bRWSMBus(SMbusChB, SMbusWW, Charger_Addr, C_ChargerMode, &CHGIC_WriteCmd0x12L,SMBus_NoPEC)) 
 				{
 				  	CHGIC_SMbusFailCnt++;
-				   	RamDebug(0x14);  //MARTINH115:change 0x13 to 0x14
+				   	RamDebug(0x14);  
 				}
-				//Mos: Change Status bit to avoid bit has been reset
+				
+				//Change Status bit to avoid bit has been reset
 				if (IS_MASK_CLEAR(StatusKeeper, BatteryProtectCHG))
 				{
 					SET_MASK(nStopChgStat3H, EmStopChgarg);
-					//SET_MASK(ACOFF_SOURCE, BATTLEARN); //REJERRY057:add.  //REJERRY073:remove.
 					if ((nBattGasgauge == 60)&&(IS_MASK_CLEAR(StorageNotify,StorageNotify0)))
 					{
 						ECQEvent(ACPI_BAT1IN_SCI);  
 						SET_MASK(StorageNotify,StorageNotify0);
 						CLEAR_MASK(StorageNotify,StorageNotify1);
-						//RamDebug(0x60);  //MARTINH115:Remove
 						RamDebug(0x26);
-						//RamDebug(0x60);  //MARTINH115:Remove
 					}
 				}
 				else
@@ -125,46 +115,41 @@ void UpdateNameSpace(void)
 							 ECQEvent(ACPI_BAT1IN_SCI);   
 							 SET_MASK(StorageNotify,StorageNotify1);
 							 CLEAR_MASK(StorageNotify,StorageNotify0);
-							 //RamDebug(0x60); //MARTINH115:Remove
 							 RamDebug(0x25);
-							 //RamDebug(0x60); //MARTINH115:Remove
 						}
 					}
 				}
-			//	ACOFF_LOW();											// charge
 			}
 			else if (nBattGasgauge < 55)
 			{
 				CLEAR_MASK(ACOFF_SOURCE, BATTLEARN);
-				//Mos: Change Status bit to avoid bit has been reset
+				//Change Status bit to avoid bit has been reset
 				SET_MASK(StatusKeeper, BatteryProtectCHG);
 				CLEAR_MASK(nStopChgStat3H,EmStopChgarg);
-				//ACOFF_LOW();											// charge
-				CLEAR_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable); //REJERRY051:Modify read addr to write.
+				CLEAR_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable); 
 				if (!bRWSMBus(SMbusChB, SMbusWW, Charger_Addr, C_ChargerMode, &CHGIC_WriteCmd0x12L,SMBus_NoPEC)) //REJERRY051:Modify read addr to write.
 				{
 				   CHGIC_SMbusFailCnt++;
 				   RamDebug(0x14);
 				}
-				CLEAR_MASK(StorageNotify,StorageNotify0);//BROOKEW039
-				CLEAR_MASK(StorageNotify,StorageNotify1);//BROOKEW039
+				CLEAR_MASK(StorageNotify,StorageNotify0);
+				CLEAR_MASK(StorageNotify,StorageNotify1);
 			}
 		}
 		else
 		{
-			//if (IS_MASK_SET(EC_BatteryStatusL,FullyChg)&&(IS_MASK_SET(SYS_STATUS,AC_ADP))) //REJERRY015:remove.
-			if (IS_MASK_SET(EC_BatteryStatusL,FullyChg)&&(IS_MASK_SET(SYS_STATUS,AC_ADP))&&(nBattGasgauge==100)) //REJERRY015:add.
+			if (IS_MASK_SET(EC_BatteryStatusL,FullyChg)&&(IS_MASK_SET(SYS_STATUS,AC_ADP))&&(nBattGasgauge==100))
 			{
 				nRemainingCapL = nFullChgCapL;
 				nRemainingCapH = nFullChgCapH;
 			}
 			else
 			{
-				//Mos: return RSOC(0x0d)=0 to BIOS if battery error
+				// return RSOC(0x0d)=0 to BIOS if battery error
 				if (ChkBattery_abnormal_status == ChkBattery_abnormal_status_error)
 				{
-					//nRemainingCapL = 0; //REJERRY016:remove.
-					//nRemainingCapH = 0; //REJERRY016:remove.
+					//nRemainingCapL = 0; 
+					//nRemainingCapH = 0; 
 				}
 				else
 				{
@@ -179,7 +164,7 @@ void UpdateNameSpace(void)
 				if(IS_MASK_SET(ACOFF_SOURCE,BATTLEARN))
 				{
 					CLEAR_MASK(ACOFF_SOURCE, BATTLEARN);
-					CLEAR_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable); //REJERRY051:Modify read addr to write.
+					CLEAR_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable); 
 					if (!bRWSMBus(SMbusChB, SMbusWW, Charger_Addr, C_ChargerMode, &CHGIC_WriteCmd0x12L,SMBus_NoPEC)) //REJERRY051:Modify read addr to write.
 					{
 			   			CHGIC_SMbusFailCnt++;
@@ -188,17 +173,15 @@ void UpdateNameSpace(void)
 				}
 			}
 
-			//REJERRY073:S+ add Q event notify to OS when battery mode switch.
+			//add Q event notify to OS when battery mode switch.
 			if(IS_MASK_SET(StorageNotify,StorageNotify2)) 
 			{
 				ECQEvent(ACPI_BAT1IN_SCI); 	
 				CLEAR_MASK(StorageNotify,StorageNotify2);
 			}
-			//REJERRY073:E+.
-
- 			//Mos: Clear BATTERY_CYCLE_fulchg when change to Longest Battery Mode
-			CLEAR_MASK(StorageNotify,StorageNotify0);//BROOKEW040
-			CLEAR_MASK(StorageNotify,StorageNotify1);//BROOKEW040
+			//
+			CLEAR_MASK(StorageNotify,StorageNotify0);
+			CLEAR_MASK(StorageNotify,StorageNotify1);
 			CLEAR_MASK(StatusKeeper, BatteryProtectCHG);
 			CLEAR_MASK(nStopChgStat3H,EmStopChgarg);
  		}
@@ -225,11 +208,11 @@ void UpdateNameSpace(void)
 				CLEAR_MASK(StorageNotify,StorageNotify0); 
 				CLEAR_MASK(StorageNotify,StorageNotify1); 
 				SET_MASK(ACOFF_SOURCE, BATTLEARN);
-				SET_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable); //REJERRY051:Modify read addr to write.
+				SET_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable); 
 				if (!bRWSMBus(SMbusChB, SMbusWW, Charger_Addr, C_ChargerMode, &CHGIC_WriteCmd0x12L,SMBus_NoPEC)) //REJERRY051:Modify read addr to write.
 				{
 					CHGIC_SMbusFailCnt++;
-					RamDebug(0x14); //MARTINH115:change 0x12 to 0x14
+					RamDebug(0x14); 
 				}
 			}
 			else if (nBattGasgauge >= 55 && nBattGasgauge <= 60)
@@ -238,20 +221,22 @@ void UpdateNameSpace(void)
 					{ 
 				    		ECQEvent(ACPI_BAT1IN_SCI); 
 					}
+					
 					CLEAR_MASK(ACOFF_SOURCE, BATTLEARN);
-					CLEAR_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable); //REJERRY051:Modify read addr to write.
-					if (!bRWSMBus(SMbusChB, SMbusWW, Charger_Addr, C_ChargerMode, &CHGIC_WriteCmd0x12L,SMBus_NoPEC)) //REJERRY051:Modify read addr to write.
+					CLEAR_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable); 
+					if (!bRWSMBus(SMbusChB, SMbusWW, Charger_Addr, C_ChargerMode, &CHGIC_WriteCmd0x12L,SMBus_NoPEC)) 
 					{
 						CHGIC_SMbusFailCnt++;
 						RamDebug(0x14);  
 					}
-					//Mos: Change Status bit to avoid bit has been reset
+					
+					// Change Status bit to avoid bit has been reset
 					if (IS_MASK_CLEAR(StatusKeeper, BatteryProtectCHG))
 					{
 						SET_MASK(nStopChgStat3H, EmStopChgarg);
 						if ((nBattGasgauge == 60)&&(IS_MASK_CLEAR(StorageNotify,StorageNotify0)))
 						{
-							ECQEvent(ACPI_BAT1IN_SCI);  //MartinH011:change 
+							ECQEvent(ACPI_BAT1IN_SCI);  
 							SET_MASK(StorageNotify,StorageNotify0);
 							CLEAR_MASK(StorageNotify,StorageNotify1);
 							RamDebug(0x26);
@@ -277,10 +262,10 @@ void UpdateNameSpace(void)
 			else if (nBattGasgauge < 55)
 			{
 					CLEAR_MASK(ACOFF_SOURCE, BATTLEARN);
-					//Mos: Change Status bit to avoid bit has been reset
+					//Change Status bit to avoid bit has been reset
 					SET_MASK(StatusKeeper, BatteryProtectCHG);
 					CLEAR_MASK(nStopChgStat3H,EmStopChgarg);
-					CLEAR_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable); //REJERRY051:Modify read addr to write.
+					CLEAR_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable); 
 					if (!bRWSMBus(SMbusChB, SMbusWW, Charger_Addr, C_ChargerMode, &CHGIC_WriteCmd0x12L,SMBus_NoPEC)) //REJERRY051:Modify read addr to write.
 					{
 						CHGIC_SMbusFailCnt++;
@@ -292,19 +277,18 @@ void UpdateNameSpace(void)
 		} 	
 		else
 		{
-			//if (IS_MASK_SET(EC_BatteryStatusL,FullyChg)&&(IS_MASK_SET(SYS_STATUS,AC_ADP))) //REJERRY015:remove.
-			if (IS_MASK_SET(EC_BatteryStatusL,FullyChg)&&(IS_MASK_SET(SYS_STATUS,AC_ADP))&&(nBattGasgauge==100)) //REJERRY015:add.
+			if (IS_MASK_SET(EC_BatteryStatusL,FullyChg)&&(IS_MASK_SET(SYS_STATUS,AC_ADP))&&(nBattGasgauge==100)) 
 			{
 				nRemainingCapL = nFullChgCapL;
 				nRemainingCapH = nFullChgCapH;
 			}
 			else
 			{
-				//Mos: return RSOC(0x0d)=0 to BIOS if battery error
+				//return RSOC(0x0d)=0 to BIOS if battery error
 				if (ChkBattery_abnormal_status == ChkBattery_abnormal_status_error)
 				{
-					//nRemainingCapL = 0; //REJERRY016:remove.
-					//nRemainingCapH = 0; //REJERRY016:remove.
+					//nRemainingCapL = 0; 
+					//nRemainingCapH = 0; 
 				}
 				else
 				{
@@ -318,8 +302,8 @@ void UpdateNameSpace(void)
 				if(IS_MASK_SET(ACOFF_SOURCE,BATTLEARN))
 				{
 					CLEAR_MASK(ACOFF_SOURCE, BATTLEARN);
-					CLEAR_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable); //REJERRY051:Modify read addr to write.
-					if (!bRWSMBus(SMbusChB, SMbusWW, Charger_Addr, C_ChargerMode, &CHGIC_WriteCmd0x12L,SMBus_NoPEC)) //REJERRY051:Modify read addr to write.
+					CLEAR_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable); 
+					if (!bRWSMBus(SMbusChB, SMbusWW, Charger_Addr, C_ChargerMode, &CHGIC_WriteCmd0x12L,SMBus_NoPEC))
 					{
 						CHGIC_SMbusFailCnt++;
 						RamDebug(0x14);
@@ -327,9 +311,9 @@ void UpdateNameSpace(void)
 				}
 			}
 
-			//Mos: Clear BATTERY_CYCLE_fulchg when change to Longest Battery Mode
-			CLEAR_MASK(StorageNotify,StorageNotify0);//BROOKEW040
-			CLEAR_MASK(StorageNotify,StorageNotify1);//BROOKEW040
+			//Clear BATTERY_CYCLE_fulchg when change to Longest Battery Mode
+			CLEAR_MASK(StorageNotify,StorageNotify0);
+			CLEAR_MASK(StorageNotify,StorageNotify1);
 			CLEAR_MASK(StatusKeeper, BatteryProtectCHG);
 			CLEAR_MASK(nStopChgStat3H,EmStopChgarg);
 		}
@@ -337,69 +321,58 @@ void UpdateNameSpace(void)
 
 #else  //TurboBoostandStorage 
 
-	//if (IS_MASK_SET(LENOVOPMFW,BATTERY_CYCLE) && IS_MASK_CLEAR(LENOVOPMFW,BATTERY_MAIN_CAL))
-	if (IS_MASK_SET(LENOVOPMFW,BATTERY_STORAGE) && IS_MASK_CLEAR(LENOVOPMFW,BATTERY_MAIN_CAL))//W079:the same with spec
+	if (IS_MASK_SET(LENOVOPMFW,BATTERY_STORAGE) && IS_MASK_CLEAR(LENOVOPMFW,BATTERY_MAIN_CAL))
 	{
-		//Mos: return RSOC(0x0d)=0 to BIOS if battery error
+		//return RSOC(0x0d)=0 to BIOS if battery error
 		if ((ChkBattery_abnormal_status == ChkBattery_abnormal_status_error)
 		|| (Chk_Trickle_Current_status == Chk_Trickle_Current_status_error))
 		{
-			//nRemainingCapL = 0;
-			//nRemainingCapH = 0;
-			//Mos: Disable report RSOC(0x0d) = 0 to BIOS, need to modify spec
-			//nRemainingCapL = Bat0x0FTempL;//W080:>>>
-			//nRemainingCapH = Bat0x0FTempH;
-			Calc_Bat_RCC();//W080:<<<
+			Calc_Bat_RCC();
 		}
 		else
 		{
-			//nRemainingCapL = Bat0x0FTempL;//W080:>>>
-			//nRemainingCapH = Bat0x0FTempH;
-			Calc_Bat_RCC();//W080:<<<
+			Calc_Bat_RCC();
 		}
 
 		SET_MASK(LENOVOPMFW_Temp,BATTERY_CYCLE_RUNNING);
 
 		if (nBattGasgauge > 60)
 		{
-			CLEAR_MASK(StorageNotify,StorageNotify0);//BROOKEW039
-			CLEAR_MASK(StorageNotify,StorageNotify1);//BROOKEW039
+			CLEAR_MASK(StorageNotify,StorageNotify0);
+			CLEAR_MASK(StorageNotify,StorageNotify1);
 			SET_MASK(ACOFF_SOURCE, BATTLEARN);
-			SET_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable); //REJERRY051:Modify read addr to write.
+			SET_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable); 
 			if (!bRWSMBus(SMbusChB, SMbusWW, Charger_Addr, C_ChargerMode, &CHGIC_WriteCmd0x12L,SMBus_NoPEC)) //REJERRY051:Modify read addr to write.
 			{
 				CHGIC_SMbusFailCnt++;
-				RamDebug(0x14); //MARTINH115:change 0x12 to 0x14
+				RamDebug(0x14); 
 			}
 		}
 		else if (nBattGasgauge >= 55 && nBattGasgauge <= 60)
 		{
 			if ( IS_MASK_SET(ACOFF_SOURCE, BATTLEARN) )
 			{ 
-				ECQEvent(ACPI_BAT1IN_SCI); //MartinH011:change  
+				ECQEvent(ACPI_BAT1IN_SCI); 
 			}
 			CLEAR_MASK(ACOFF_SOURCE, BATTLEARN);
-			CLEAR_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable); //REJERRY051:Modify read addr to write.
+			CLEAR_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable); 
 			if (!bRWSMBus(SMbusChB, SMbusWW, Charger_Addr, C_ChargerMode, &CHGIC_WriteCmd0x12L,SMBus_NoPEC)) //REJERRY051:Modify read addr to write.
 			{
 				CHGIC_SMbusFailCnt++;
-				RamDebug(0x14); //MARTINH115:change 0x13 to 0x14
+				RamDebug(0x14);
 			}
-			//Mos: Change Status bit to avoid bit has been reset
+			//Change Status bit to avoid bit has been reset
 			if (IS_MASK_CLEAR(StatusKeeper, BatteryProtectCHG))
 			{
 				SET_MASK(nStopChgStat3H, EmStopChgarg);
-				//BROOKEW039: OS&EM show 61% when finish Gaugereset and Storage mode >>>
+				//OS&EM show 61% when finish Gauge reset and Storage mode 
 				if ((nBattGasgauge == 60)&&(IS_MASK_CLEAR(StorageNotify,StorageNotify0)))
 				{
-					ECQEvent(ACPI_BAT1IN_SCI);  //MartinH011:change 
+					ECQEvent(ACPI_BAT1IN_SCI);  
 					SET_MASK(StorageNotify,StorageNotify0);
 					CLEAR_MASK(StorageNotify,StorageNotify1);
-					//RamDebug(0x60); //MARTINH115:Remove
 					RamDebug(0x26);
-					//RamDebug(0x60); //MARTINH115:Remove
 				}
-				//BROOKEW039: <<<
 			}
 			else
 			{
@@ -407,77 +380,51 @@ void UpdateNameSpace(void)
 				if (nBattGasgauge == 60)
 				{
 					CLEAR_MASK(StatusKeeper, BatteryProtectCHG);
-					//BROOKEW039: OS&EM show 61% when finish Gaugereset and Storage mode >>>
+					// OS&EM show 61% when finish Gaugereset and Storage mode
 					if ((nBattGasgauge == 60)&&(IS_MASK_CLEAR(StorageNotify,StorageNotify1)))
 					{
-						ECQEvent(ACPI_BAT1IN_SCI);  //MartinH011:change 
+						ECQEvent(ACPI_BAT1IN_SCI);  
 						SET_MASK(StorageNotify,StorageNotify1);
 						CLEAR_MASK(StorageNotify,StorageNotify0);
-						//RamDebug(0x60); //MARTINH115:Remove
 						RamDebug(0x25);  
-						//RamDebug(0x60);  //MARTINH115:Remove
 					}
-					//BROOKEW039: <<<
-					//W080: +S storage mode 				
-					/*
-					if (KeepBattRemineCap == 0)
-					{ 
-						KeepBattRemineCap = (WORD)(nRemainingCapH << 8) + nRemainingCapL; 
-					}
-					else
-					{
-						//Mos: Avoid that stop charger but OS show god damn 59%...
-						if (((WORD)(nRemainingCapH << 8) + nRemainingCapL) > (KeepBattRemineCap + 10))
-						{
-							KeepBattRemineCap = 0;
-							CLEAR_MASK(StatusKeeper, BatteryProtectCHG);
-							ECQEvent(ACPI_BAT1IN_SCI); //MartinH011:change  // Notify BIOS Update Batt Status
-						}
-					}
-					*/
-				//W080: + e Storage mode 61<->60 roll back. 
 				}
 			}
-			//	ACOFF_LOW();											// charge
 		}
 		else if (nBattGasgauge < 55)
 		{
 			CLEAR_MASK(ACOFF_SOURCE, BATTLEARN);
-			//Mos: Change Status bit to avoid bit has been reset
 			SET_MASK(StatusKeeper, BatteryProtectCHG);
 			CLEAR_MASK(nStopChgStat3H,EmStopChgarg);
-			//ACOFF_LOW();											// charge
-			CLEAR_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable); //REJERRY051:Modify read addr to write.
+			CLEAR_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable); 
 			if (!bRWSMBus(SMbusChB, SMbusWW, Charger_Addr, C_ChargerMode, &CHGIC_WriteCmd0x12L,SMBus_NoPEC)) //REJERRY051:Modify read addr to write.
 			{
 				CHGIC_SMbusFailCnt++;
 				RamDebug(0x14);
 			}
-			CLEAR_MASK(StorageNotify,StorageNotify0);//BROOKEW039
-			CLEAR_MASK(StorageNotify,StorageNotify1);//BROOKEW039
+			CLEAR_MASK(StorageNotify,StorageNotify0);
+			CLEAR_MASK(StorageNotify,StorageNotify1);
 		}
 	}
 	else
 	{
-		//if (IS_MASK_SET(EC_BatteryStatusL,FullyChg)&&(IS_MASK_SET(SYS_STATUS,AC_ADP))) //REJERRY015:remove.
-		if (IS_MASK_SET(EC_BatteryStatusL,FullyChg)&&(IS_MASK_SET(SYS_STATUS,AC_ADP))&&(nBattGasgauge==100)) //REJERRY015:add.
-		{
+		if (IS_MASK_SET(EC_BatteryStatusL,FullyChg)&&(IS_MASK_SET(SYS_STATUS,AC_ADP))&&(nBattGasgauge==100)) 
 			nRemainingCapL = nFullChgCapL;
 			nRemainingCapH = nFullChgCapH;
 		}
 		else
 		{
-			//Mos: return RSOC(0x0d)=0 to BIOS if battery error
+			//return RSOC(0x0d)=0 to BIOS if battery error
 			if (ChkBattery_abnormal_status == ChkBattery_abnormal_status_error)
 			{
-				//nRemainingCapL = 0; //REJERRY016:remove.
-				//nRemainingCapH = 0; //REJERRY016:remove.
+				//nRemainingCapL = 0; 
+				//nRemainingCapH = 0; 
 			}
 			else
 			{
-				//nRemainingCapL = Bat0x0FTempL;//W080:<<<
+				//nRemainingCapL = Bat0x0FTempL;
 				//nRemainingCapH = Bat0x0FTempH;
-				Calc_Bat_RCC();//W080:>>>
+				Calc_Bat_RCC();
 			}
 		}
 
@@ -488,7 +435,7 @@ void UpdateNameSpace(void)
 			if(IS_MASK_SET(ACOFF_SOURCE,BATTLEARN))
 			{
 				CLEAR_MASK(ACOFF_SOURCE, BATTLEARN);
-				CLEAR_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable); //REJERRY051:Modify read addr to write.
+				CLEAR_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable); 
 				if (!bRWSMBus(SMbusChB, SMbusWW, Charger_Addr, C_ChargerMode, &CHGIC_WriteCmd0x12L,SMBus_NoPEC)) //REJERRY051:Modify read addr to write.
 				{
 					CHGIC_SMbusFailCnt++;
@@ -497,9 +444,9 @@ void UpdateNameSpace(void)
 			}
 		}
 
-		//Mos: Clear BATTERY_CYCLE_fulchg when change to Longest Battery Mode
-		CLEAR_MASK(StorageNotify,StorageNotify0);//BROOKEW040
-		CLEAR_MASK(StorageNotify,StorageNotify1);//BROOKEW040
+		//Clear BATTERY_CYCLE_fulchg when change to Longest Battery Mode
+		CLEAR_MASK(StorageNotify,StorageNotify0);
+		CLEAR_MASK(StorageNotify,StorageNotify1);
 		CLEAR_MASK(StatusKeeper, BatteryProtectCHG);
 		CLEAR_MASK(nStopChgStat3H,EmStopChgarg);
 	}	
@@ -518,7 +465,6 @@ void ChkLENOVOPMFW(void)
 				cBF0_Full = 0;
 				cBF0_GoTarget = 0;
 				cTargetGauge = 1;
-				//CLR_MASK(LENOVOPMFW,BATTERY_CYCLE);
 			}
 		}
 	}
@@ -530,14 +476,14 @@ void ChkLENOVOPMFW(void)
 		cBF0_GoTarget = 0;
 		cTargetGauge = 0;
 		CLEAR_MASK(ACOFF_SOURCE, BATTLEARN);
-		CLEAR_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable); //REJERRY051:Modify read addr to write.
-		if (!bRWSMBus(SMbusChB, SMbusWW, Charger_Addr, C_ChargerMode, &CHGIC_WriteCmd0x12L,SMBus_NoPEC)) //REJERRY051:Modify read addr to write.
+		CLEAR_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable); 
+		if (!bRWSMBus(SMbusChB, SMbusWW, Charger_Addr, C_ChargerMode, &CHGIC_WriteCmd0x12L,SMBus_NoPEC))
 		{
 			CHGIC_SMbusFailCnt++;
 			RamDebug(0x14);
 		}
 		cCmdAcOff = 0;
-		RamDebug(0xA3); //MARTINH115:change 0xEE to 0xA3
+		RamDebug(0xA3); 
 	}
 }
 
@@ -548,7 +494,7 @@ void ChkGoTarget(void)
 		if ((cTargetGauge == nBattGasgauge) ||  (nBattGasgauge < cTargetGauge))
 		{
 			CLEAR_MASK(ACOFF_SOURCE, BATTLEARN);
-			CLEAR_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable); //REJERRY051:Modify read addr to write.
+			CLEAR_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable); 
 			if (!bRWSMBus(SMbusChB, SMbusWW, Charger_Addr, C_ChargerMode, &CHGIC_WriteCmd0x12L,SMBus_NoPEC)) //REJERRY051:Modify read addr to write.
 			{
 				CHGIC_SMbusFailCnt++;
@@ -563,7 +509,7 @@ void ChkGoTarget(void)
 				SET_MASK(LENOVOPMFW_Temp,BATTERY_CALIBRATION_OK);   // release Calibration mode
 				uVPCeventSource = General;
 				uVPCeventSource2 = 0;
-				ECQEvent(SDV_VPC_notify); //MartinH011:change 
+				ECQEvent(SDV_VPC_notify);  
 				RamDebug(0x44);
 				ChkLENOVOPMFW();
 			}
@@ -572,8 +518,7 @@ void ChkGoTarget(void)
 		if (nBattGasgauge > cTargetGauge)
 		{
 			SET_MASK(ACOFF_SOURCE, BATTLEARN);
-			SET_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable); //REJERRY051:Modify read addr to write.
-			//RamDebug(0xEF);
+			SET_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable); 
 			if (!bRWSMBus(SMbusChB, SMbusWW, Charger_Addr, C_ChargerMode, &CHGIC_WriteCmd0x12L,SMBus_NoPEC)) //REJERRY051:Modify read addr to write.
 			{
 				CHGIC_SMbusFailCnt++;
@@ -597,23 +542,7 @@ void ChkGoTarget(void)
 
 void ChkS3ResumeRSOC(void)
 {
-	//REJERRY014:S- remove old check function.
-	/*if (IS_MASK_CLEAR(SYS_STATUS,AC_ADP))
-	{
-		if ( SystemIsS3 )
-		{
-			if (nBattGasgauge <= S3ResumeRSOC)	// check battery under 5%. 
-			{
-            	            PWSeqStep = 1;
-				            PowSeqDelay = 1;
-                            RamDebug(0x37);  //W003+
-            	            SysPowState=SYSTEM_S3_S0;
-			}
-		}
-	}*/
-	//REJERRY014:E-.
-
-	//REJERRY014:S+ add new S3 resume check function.
+	//add new S3 resume check function.
 	if(IS_MASK_SET(battery_critical,DCdischargeto5ins3))
 	{
 		PWSeqStep = 1;
@@ -623,10 +552,9 @@ void ChkS3ResumeRSOC(void)
 		CLEAR_MASK(battery_critical,DC0ver5enterS3);
 		CLEAR_MASK(battery_critical,DCdischargeto5ins3);
 	}
-	//REJERRY014:E+ add new S3 resume check function.
 }
 
-//REJERRY014:S+ add new S3 resume check function.
+//add new S3 resume check function.
 void ChkS3DCRSOC(void)
 {
 	if(SystemIsS3)
@@ -637,7 +565,7 @@ void ChkS3DCRSOC(void)
 		}
    		else
    		{	  		
-			if(IS_MASK_CLEAR(SYS_STATUS,AC_ADP)&&(nBattGasgauge== S3ResumeRSOC)&&IS_MASK_SET(battery_critical,DC0ver5enterS3))
+			if(IS_MASK_CLEAR(SYS_STATUS,AC_ADP)&&(nBattGasgauge == S3ResumeRSOC)&&IS_MASK_SET(battery_critical,DC0ver5enterS3))
 			{
 				SET_MASK(battery_critical,DCdischargeto5ins3);	
 			}
@@ -653,16 +581,14 @@ void ChkS3DCRSOC(void)
 		CLEAR_MASK(battery_critical,DCdischargeto5ins3);
 	}
 }
-//REJERRY014:E+ add new S3 resume check function.
 
-//XITING0067:S+ Force system shutdown with 5S when RSOC drop to 0%.
+//Force system shutdown with 5S when RSOC drop to 0%.
 void RSOC1Pto0P_ShutdownCheck(void)
 {
-    if(IS_MASK_SET(SYS_STATUS,AC_ADP)||Read_AC_IN()||nBattGasgauge > 0x01||
-SystemNotS0)
+    if(IS_MASK_SET(SYS_STATUS,AC_ADP)||Read_AC_IN()||nBattGasgauge > 0x01||SystemNotS0)
     {
-       RSOC1PTO0PCount = 0x00;
-	   RSOC1PTO0PSaveSpace = 0x00;
+        RSOC1PTO0PCount = 0x00;
+	    RSOC1PTO0PSaveSpace = 0x00;
     }
 	else
 	{
@@ -691,11 +617,11 @@ SystemNotS0)
 	   }
 	}
 }
-//XITING0067:E
+
 
 void RSMRST_shutdown(void)					//shutdown (RSMRST HI-->low-->HI)
 {
-#if !EN_ThermalSensorTest //MartinH009:add judge
+#if !EN_ThermalSensorTest //add judge
 	ETWCFG=EWDKEYEN;			 // enable external WDT key
 	EWDKEYR=0xFF;			// external WDT reset	
 	while(1);						   // Wait for watch dog time-out
@@ -725,7 +651,7 @@ void ChkBattery_OTP()
 	else
 		return;
 
-	//XITING0038:S  add batt temp control,when temp > 65 shutdown
+	//add batt temp control,when temp > 65 shutdown
 	if((SystemIsS0)&&(nBattAverTemp >= BatteryOTPSD))  //65
 	{
 		#if !EN_PwrSeqTest
@@ -734,69 +660,30 @@ void ChkBattery_OTP()
 		RSMRST_shutdown();
 		#endif
 	} 	
-	//XITING0038:E
 
-	//REJERRY031:S- remove old battery OTP check.
-	/*if ((SystemIsS0)&&(IS_MASK_CLEAR(SYS_STATUS,AC_ADP)))
-	{
-		if (nBattAverTemp >= BatteryOTP)				// 68
-		{
-			SET_MASK(nStopChgStat3L,ENOVERTEMP);
-			SET_MASK(BatteryAlarm,BATOTP);
-			UpBatteryPState();
-			//nRemainingCapL = 0; //REJERRY016:remove.
-			//nRemainingCapH = 0; //REJERRY016:remove.
 
-			if (nBattOvrTempCnt > 80) 					// 2 min
-			{
-				#if !EN_PwrSeqTest  //AIUU3_W32:Enable BAT OTP function
-                	SET_MASK(SysStatus,ERR_ShuntDownFlag);
-				    ProcessSID(BATTOVERTEMP_ID);
-				    RSMRST_shutdown(); //W114
-				#endif
-			}
-			else
-				nBattOvrTempCnt ++;
-		}
-
-		if (nBattAverTemp < BatteryOTPRelease)			//66
-		{
-			CLEAR_MASK(BatteryAlarm,BATOTP);
-			CLEAR_MASK(nStopChgStat3L,ENOVERTEMP);
-			nBattOvrTempCnt =0;
-		}
-	}
-	else
-	{
-		CLEAR_MASK(BatteryAlarm,BATOTP);
-		CLEAR_MASK(nStopChgStat3L,ENOVERTEMP);
-		nBattOvrTempCnt =0;
-	}*/
-	//REJERRY031:E-.
-
-	//REJERRY031:S+ add new battery OTP check.
+	//add new battery OTP check.
 	if (SystemIsS0 && ((!Read_AC_IN())||IS_MASK_SET(CHGIC_ReadCmd0x12L,BatLearnEnable)))
 	{
-		if ((nBattAverTemp >= 55) || (nBattAverTemp <= 10))			//XITING0066:change battery over temp protect temp from 50/45 to 55/50 and add battery low temp protect 10/15 
+		if ((nBattAverTemp >= 55) || (nBattAverTemp <= 10))			//change battery over temp protect temp from 50/45 to 55/50 and add battery low temp protect 10/15 
 		{
 			SET_MASK(CPUProchotFlag,b4CpuBattOTP);
-			SET_MASK(GPUProchotFlag,b2GpuBattOTP); //REJERRY077:add.
-			cGPUBattOTPThrottling = 4; //REJERRY048:GPU to D5;
+			SET_MASK(GPUProchotFlag,b2GpuBattOTP); 
+			cGPUBattOTPThrottling = 4; //GPU to D5
 		}
-		else if((nBattAverTemp <= 50) && (nBattAverTemp >= 15))		//XITING0066:change battery over temp protect temp from 50/45 to 55/50 and add battery low temp protect 10/15 
+		else if((nBattAverTemp <= 50) && (nBattAverTemp >= 15))		//change battery over temp protect temp from 50/45 to 55/50 and add battery low temp protect 10/15 
 		{
 			CLEAR_MASK(CPUProchotFlag,b4CpuBattOTP);
-			CLEAR_MASK(GPUProchotFlag,b2GpuBattOTP); //REJERRY077:add.
-			cGPUBattOTPThrottling = 0; //REJERRY048:GPU to D1;
+			CLEAR_MASK(GPUProchotFlag,b2GpuBattOTP); 
+			cGPUBattOTPThrottling = 0; //GPU to D1
 		}
 	}
 	else
 	{
 		CLEAR_MASK(CPUProchotFlag,b4CpuBattOTP);
-		CLEAR_MASK(GPUProchotFlag,b2GpuBattOTP); //REJERRY077:add.
-		cGPUBattOTPThrottling = 0; //REJERRY048:GPU to D1;
+		CLEAR_MASK(GPUProchotFlag,b2GpuBattOTP); 
+		cGPUBattOTPThrottling = 0; //GPU to D1
 	}
-	//REJERRY031:E+.
 	
 }
 
@@ -825,153 +712,11 @@ void ChkBattery_OCP()
 	}
 }
 
-//XITING0002:remove S using adc get psys
-//REJERRY031: S+ add check battery Pmax and RSOC function.
-/*
-void ChkBattery_Power(void)
-{
-	WORD BattPresentVolt; 
-	WORD BattNowCurrent; 
-	if (((!Read_AC_IN())||IS_MASK_SET(CHGIC_ReadCmd0x12L,BatLearnEnable))&& (nBattGasgauge > 25)&& (nBattAverTemp < 50)) //REJERRY048:add RSOC>30% and temp<50 condition.
-	{ 
-		if(PsysDelayCount == 0) //REJERRY042:add delay time for Psys monitor.
-		{
-			if (nNowCurrentH & 0x80)
-			{		   
-				BattNowCurrent=0xFFFF - (WORD)((nNowCurrentH<<8)+nNowCurrentL);
-				BattPresentVolt = (WORD)((nPresentVoltH << 8) + nPresentVoltL);
-				Power_Temp=(WORD) ((BattPresentVolt * BattNowCurrent)/10000);  
-				POWER_MAX  = 0xFFFF -(WORD)((nbatteryPmaxH<<8)+ nbatteryPmaxL);		 
-			}
-			//HEGANG002:add start, Modify power setting
-			if((Power_Temp/100) < 70)
-			{
-				CLEAR_MASK(CPUProchotFlag,b1CpuBattPmax);
-				cGPUPowerThrottling = 1;	
-			}
-			else if((Power_Temp/100) < 90)
-			{
-				CLEAR_MASK(CPUProchotFlag,b1CpuBattPmax);
-				cGPUPowerThrottling = 3;	
-			}
-			//HEGANG002:add end
-			else 
-			{
-				SET_MASK(CPUProchotFlag,b1CpuBattPmax);
-				cGPUPowerThrottling = 4;
-			}
-			//REJERRY056:E+.
-		}
-		else
-		{
-			PsysDelayCount--; //REJERRY042:add.
-		}
-	}
-	else if(((!Read_AC_IN())||IS_MASK_SET(CHGIC_ReadCmd0x12L,BatLearnEnable))&& (nBattGasgauge <= 25)&& (nBattAverTemp < 50))
-	{
-		if (nNowCurrentH & 0x80)
-		{		   
-			BattNowCurrent=0xFFFF - (WORD)((nNowCurrentH<<8)+nNowCurrentL);
-			BattPresentVolt = (WORD)((nPresentVoltH << 8) + nPresentVoltL);
-			Power_Temp=(WORD) ((BattPresentVolt * BattNowCurrent)/10000);  
-			POWER_MAX  = 0xFFFF -(WORD)((nbatteryPmaxH<<8)+ nbatteryPmaxL);		 
-		}
-
-		if((Power_Temp/100) < 36)
-		{
-			CLEAR_MASK(CPUProchotFlag,b1CpuBattPmax);
-			SET_MASK(GPUProchotFlag,b3GpuBattPmax);
-			cGPUPowerThrottling = 4;	
-		}
-		else 
-		{
-			SET_MASK(CPUProchotFlag,b1CpuBattPmax);
-			SET_MASK(GPUProchotFlag,b3GpuBattPmax);
-			cGPUPowerThrottling = 4;
-		}
-	}
-	else
-	{
-		CLEAR_MASK(CPUProchotFlag,b1CpuBattPmax);
-		CLEAR_MASK(GPUProchotFlag,b3GpuBattPmax);
-		cGPUPowerThrottling = 0; //REJERRY048:GPU to D1;
-		PsysDelayCount = 0; //REJERRY042:add.
-	}
-}
-*/
-//XITING0002:remove E
-
 void ChkBattery_RSOC(void)
 {
-	if(((!Read_AC_IN())||IS_MASK_SET(CHGIC_ReadCmd0x12L,BatLearnEnable))&& SystemIsS0) //REJERRY042:add.
+	if(((!Read_AC_IN())||IS_MASK_SET(CHGIC_ReadCmd0x12L,BatLearnEnable))&& SystemIsS0) 
 	{
-		//XITING0059:S  remove
-		/*
-		//XITING0047:S change to new Control
-		//HEGANG002:add start, Modify power setting
-		if(nBatteryStatL == 0x60) 		//XITING0047: change from 70 to 60 jia bai yu
-		{
-		 	if(nBattGasgauge <= 25)
-		 	{
-				CHGIC_ReadCmd0x3DL=0x39;   //7A
-				CHGIC_ReadCmd0x3DH=0x39;
-		 	}
-			else if (nBattGasgauge <= 45)
-			{
-				CHGIC_ReadCmd0x3DL=0x39;  //11.5A
-				CHGIC_ReadCmd0x3DH=0x5D;
-		 	}
-			else if (nBattGasgauge <= 70)
-			{
-				CHGIC_ReadCmd0x3DL=0x39;  //11A
-				CHGIC_ReadCmd0x3DH=0x59;
-		 	}
-			else if (nBattGasgauge <= 85)
-			{
-				CHGIC_ReadCmd0x3DL=0x39; //10.5A
-				CHGIC_ReadCmd0x3DH=0x55;
-		 	}
-			
-			else 
-			{
-				CHGIC_ReadCmd0x3DL=0x39; //10A
-				CHGIC_ReadCmd0x3DH=0x51;
-		 	}
-		}
-		else 
-		{
-			if(nBattGasgauge <= 25)
-		 	{
-				CHGIC_ReadCmd0x3DL=0x39; //7A
-				CHGIC_ReadCmd0x3DH=0x39;
-		 	}
-			else if (nBattGasgauge <= 45)
-			{
-				CHGIC_ReadCmd0x3DL=0x39; //13.5A
-				CHGIC_ReadCmd0x3DH=0x6D;
-		 	}
-			else if (nBattGasgauge <= 70)
-			{
-				CHGIC_ReadCmd0x3DL=0x39;//13A
-				CHGIC_ReadCmd0x3DH=0x69;
-		 	}
-			else if (nBattGasgauge <= 85)
-			{
-				CHGIC_ReadCmd0x3DL=0x39;//12.5A
-				CHGIC_ReadCmd0x3DH=0x65;
-		 	}
-			else 
-			{
-				CHGIC_ReadCmd0x3DL=0x39;
-				CHGIC_ReadCmd0x3DH=0x59;	//XITING0047: other chagne to 59 39
-		 	}
-		}
-		//HEGANG002:add end
-		//XITING0047:E
-		*/
-		//XITING0059:E
-
-		//XITING0059:S  change battery Discharge current by battery RSOC
+		//change battery Discharge current by battery RSOC
 		if (nBattGasgauge > 25)
 		{
 			CHGIC_ReadCmd0x3DL=0x3C; 	//0x513C  10A
@@ -989,18 +734,19 @@ void ChkBattery_RSOC(void)
 		CHGIC_ReadCmd0x3DH=0x79; // 15A
 	}
 	
-	bRWSMBus(ChargerSMBUSChannel, SMbusWW, Charger_Addr, ChargerProchot1, &CHGIC_ReadCmd0x3DL,SMBus_NoPEC);
-	//REJERRY0978:update power setting'LBG EC Parameter V2.1_for Y510IP710 20161210'.
+    if (!bRWSMBus(ChargerSMBUSChannel, SMbusWW, Charger_Addr, ChargerProchot1, &CHGIC_ReadCmd0x3DL,SMBus_NoPEC)) 
+    {
+       CHGIC_SMbusFailCnt++;
+    }
 }
 
 void ChkBattery_Alarm(void)
 {
-	//if(SystemIsS0)  //REJERRY042:remove.
-	if (((!Read_AC_IN())||IS_MASK_SET(CHGIC_ReadCmd0x12L,BatLearnEnable))&& SystemIsS0) //REJERRY042:add.
+	if (((!Read_AC_IN())||IS_MASK_SET(CHGIC_ReadCmd0x12L,BatLearnEnable))&& SystemIsS0) 
 	{
-		if(BattAlarmDelayCount == 0) //REJERRY042:add delay time for battery alarm monitor.
+		if(BattAlarmDelayCount == 0) //add delay time for battery alarm monitor.
 		{
-			//XITING0047:S delay 1S go to D5
+			//S delay 1S go to D5
 			if(GPU_GO_TO_D5)
 			{
 				SET_MASK(CPUProchotFlag,b3CpuBattAlarm);
@@ -1014,49 +760,32 @@ void ChkBattery_Alarm(void)
 				cGPUBattAlarmThrottling = 0; 
 				CLEAR_MASK(GPUProchotFlag,b1GpuBattAlarm);
 			}
-			//XITING0047:E delay 1S go to D5
 			
 			if (((!Read_AC_IN())||IS_MASK_SET(CHGIC_ReadCmd0x12L,BatLearnEnable))&&(Bat0x00TempL&0x20))
 			{
-				GPU_GO_TO_D5 = 1;				//XITING0047:add
-				BattAlarmDelayCount = 10; 		//XITING0047:add
-
-				//XITING0047:S remove
-				/*
-				SET_MASK(CPUProchotFlag,b3CpuBattAlarm);
-				cGPUBattAlarmThrottling = 4; //REJERRY048:GPU to D5;
-				BattAlarmDelayCount = 10; //REJERRY042:add.
-				SET_MASK(GPUProchotFlag,b1GpuBattAlarm); //REJERRY056:add.
-				*/
-				//XITING0047:S remove
+				GPU_GO_TO_D5 = 1;				
+				BattAlarmDelayCount = 10; 		
 			}
 			else
 			{
-				GPU_GO_TO_D5 = 0;			//XITING0047:add
+				GPU_GO_TO_D5 = 0;		
 
-				//XITING0047:S remove
-				/*
-				CLEAR_MASK(CPUProchotFlag,b3CpuBattAlarm);
-				cGPUBattAlarmThrottling = 0; //REJERRY048:GPU to D1;
-				CLEAR_MASK(GPUProchotFlag,b1GpuBattAlarm); //REJERRY056:add.
-				*/
-				//XITING0047:S remove
 			}
 		}
 		else
 		{
-			BattAlarmDelayCount--; //REJERRY042:add.
+			BattAlarmDelayCount--; 
 		}
 	}
 	else
 	{
 		CLEAR_MASK(CPUProchotFlag,b3CpuBattAlarm);
-		cGPUBattAlarmThrottling = 0; //REJERRY048:GPU to D1;
-		BattAlarmDelayCount = 0; //REJERRY042:add.
-		CLEAR_MASK(GPUProchotFlag,b1GpuBattAlarm); //REJERRY056:add.
+		cGPUBattAlarmThrottling = 0; //GPU to D1;
+		BattAlarmDelayCount = 0; 
+		CLEAR_MASK(GPUProchotFlag,b1GpuBattAlarm); 
 	}
 }
-//REJERRY031: E+ add check battery Pmax and RSOC function.
+
 	
 void ChkBattery_FCCchg()
 {
@@ -1064,29 +793,18 @@ void ChkBattery_FCCchg()
 	if (ChkBattery_FCCchg_count >= 100) //Mos: 10 Sec(100ms 100times)
 	{
 		ChkBattery_FCCchg_count = 0;
-		//REJERRY071:S-.
-		//MARTINH074:add start
-		/*ChkBattery_FCCchg_count2++;
-		if(ChkBattery_FCCchg_count2 < 30)
-		{
-		  return;
-		}
-		ChkBattery_FCCchg_count2 = 0x00;*/
-		//MARTINH074:add end
-		//REJERRY071:E-.
-
-		//Mos: Load default
+		//Load default
 		if ((ChkBattery_FCCchg_lastFCCL == 0) && (ChkBattery_FCCchg_lastFCCH == 0))
 		{
 			ChkBattery_FCCchg_lastFCCL = nFullChgCapL;
 			ChkBattery_FCCchg_lastFCCH = nFullChgCapH;
 		}
 
-		//Mos: Check FCC and Notify OS if FCC change for each 10 sec
+		//Check FCC and Notify OS if FCC change for each 10 sec
 		if ((ChkBattery_FCCchg_lastFCCL != nFullChgCapL)
-			|| (ChkBattery_FCCchg_lastFCCH != nFullChgCapH))  //MARTINH083:change "&&" to "||"
+			|| (ChkBattery_FCCchg_lastFCCH != nFullChgCapH))  
 		{
-			ECQEvent(ACPI_BAT1IN_SCI);  //MartinH011:change 
+			ECQEvent(ACPI_BAT1IN_SCI); 
 			ChkBattery_FCCchg_lastFCCL = nFullChgCapL;
 			ChkBattery_FCCchg_lastFCCH = nFullChgCapH;
 		}
@@ -1095,14 +813,13 @@ void ChkBattery_FCCchg()
 
 void ChkAvgCurrent()
 {
-	//Mos: Modify for meet specification
+	//Modify for meet specification
 	//Average current report to OS
-	//Timer<=60 seconds(The timer starts counting when AC adapter plug out.)
+	//Timer<=60 seconds(The timer starts counting when AC adapter plug out.
 	//Report "0x00" to EC name space 0xd2, 0xd3 by one time, and then
 	//Report battery Current(0x0a) to EC name space 0xd2, 0xd3
 	//Reset condition:When Timer>60 seconds,Report battery AverageCurrent(0x0b) to EC name space 0xd2, 0xd3
-//MARTINH074:add start
-	if (Bat0x0BTempH & 0x80) //MARTINH132:change 'nNowCurrentH' to 'Bat0x0BTempH'
+	if (Bat0x0BTempH & 0x80) //change 'nNowCurrentH' to 'Bat0x0BTempH'
 	{
 		XWTemp1 = 0xFFFF - (WORD)((Bat0x0BTempH<<8)+Bat0x0BTempL);	
 		if (XWTemp1 < 400)
@@ -1110,24 +827,18 @@ void ChkAvgCurrent()
 			return;
 		}
 	}
-//MARTINH104: add start	
-    if(IS_MASK_CLEAR(SYS_STATUS,AC_ADP) && SystemIsS0 && IS_MASK_CLEAR(Bat0x0BTempH,BIT7)) //MARTINH132:change 'nNowCurrentH' to 'Bat0x0BTempH'
-    {
-//MARTINH132:add start    
+	
+    if(IS_MASK_CLEAR(SYS_STATUS,AC_ADP) && SystemIsS0 && IS_MASK_CLEAR(Bat0x0BTempH,BIT7)) //change 'nNowCurrentH' to 'Bat0x0BTempH'
+    {    
          if(IS_MASK_SET(nNowCurrentH,BIT7))
         {
              nAvgCurrentL = nNowCurrentL;
 		     nAvgCurrentH = nNowCurrentH;
         }  
-//MARTINH132:add end		 
+ 
         return;
     }
-//MARTINH104: add end	
-	//nAvgCurrentL = Bat0x0BTempL;  //MARTINH128: remove
-	//nAvgCurrentH = Bat0x0BTempH;  //MARTINH128: remove
-//MARTINH074:add end
-//MARTINH074:remove start
-///*  //MARTINH128:open start
+
 	if ( Bat0x0BFakeCnt == 0)
 	{
 		nAvgCurrentL = Bat0x0BTempL;
@@ -1143,8 +854,6 @@ void ChkAvgCurrent()
 		nAvgCurrentL = 0;
 		nAvgCurrentH = 0;
 	}
-// */	//MARTINH128:open end
-//MARTINH074:remove end
 }
 
 void RST_ChgTimeOutCnt(void)
@@ -1231,8 +940,8 @@ const sRSmbusBStruct  ABatCommandTable [] =
 	{ C_LVMfgFun2,	&Bat0x3ETempL			,0x00},				//Batpollsetp1 = 22     WORD
 	{ C_access,		&Bat0x00TempL			,0x00}, 			//Batpollsetp1 = 23 	WORD
 	{ C_current,	&nNowCurrentL			,0x00},				//Batpollstep1 = 24  	WORD
-	{ C_RSOC,	 	&BAT1PERCL  			,0x00},				//Batpollstep1 = 25 	WORD  //MARTINH035:add
-	{ C_Pmax,       &nbatteryPmaxL         	,0X00},             //Batpollstep1 = 26 	WORD //REJERRY031:add read Pmax.
+	{ C_RSOC,	 	&BAT1PERCL  			,0x00},				//Batpollstep1 = 25 	WORD  
+	{ C_Pmax,       &nbatteryPmaxL         	,0X00},             //Batpollstep1 = 26 	WORD //add read Pmax.
 //	{ C_D_FET,		&SHIPMODE_L				,0x00}, 			//Batpollstep1 = 15 	WORD
 
 };
@@ -1245,7 +954,7 @@ void GetBatData(BYTE _STEP)
 	switch (_STEP)
 	{
 		case 1:	//block data
-		//Mos: Break C_Dchem directly
+		//Break C_Dchem directly
 		//Cause That memory overlap with C_Dname, it will cause Data unstable, I can't get same data 3 times
 		//			break;
 		case 2: //block data
@@ -1277,15 +986,17 @@ void GetBatData(BYTE _STEP)
 			break;
 	}
 }
-//W080:+s Calibration battery RSOC avoid OS can't match Battery RSOC
+
+//Calibration battery RSOC avoid OS can't match Battery RSOC
 void Calc_Bat_RCC(void)
 {   
-	CalcBatRCC=(nFullChgCapH<<8)+nFullChgCapL;
-	CalcBatRCC=((CalcBatRCC*nBattGasgauge)/100)+1;
-	nRemainingCapH=CalcBatRCC>>8;
-	nRemainingCapL=CalcBatRCC;
+	CalcBatRCC = (nFullChgCapH<<8)+nFullChgCapL;
+	CalcBatRCC = ((CalcBatRCC*nBattGasgauge)/100)+1;
+	nRemainingCapH = CalcBatRCC>>8;
+	nRemainingCapL = CalcBatRCC;
 }
-//0W80:+e
+
+
 void ChkBattery_Percl()
 {
 	bRWSMBus(SMbusChB, SMbusRW, SmBat_Addr,C_RSOC,&BAT1PERCL ,SMBus_NoPEC);
@@ -1299,57 +1010,12 @@ void FirstGetBatData(void)
   	BYTE i;
   	Batpollstep1 = 0;
   	nBatteryStatL = 0;
-       //return;  //W007:open  //W006+
   	for (i=0;i<(sizeof(ABatCommandTable)/sizeof(sRSmbusBStruct));i++)
   	{
-    		GetBatData(Batpollstep1);
-    		Batpollstep1++;
+		GetBatData(Batpollstep1);
+		Batpollstep1++;
   	}
       Batpollstep1=8;
-    //  SHA1_SEED = (WORD)((ET4CNTLLR+Bat0x0FTempL)<<8); //Anthony to try
-//BROOKEY065: Start add for GSBI battery Chemistry
-  //    if((batteryChemistry[0]=='L')&&(batteryChemistry[1]=='I')&&(batteryChemistry[2]=='O')&&(batteryChemistry[3]=='N'))
-	//	SET_MASK(nBatteryStatL,CMBS_BATTTYPE);	
-	//else
-	//    CLEAR_MASK(nBatteryStatL,CMBS_BATTTYPE);
-//BROOKEY065: End
-//		RamDebug(0x05);
-	//Mos: Move to OEM_PollingBatData_TASK() to make sure Battery data stable.
-	/*if( ( BATTMANUFACTURE[0] == 'S' ) && ((BATTMANUFACTURE[1] == 'A' )||( BATTMANUFACTURE[1] == 'a' )) )
-	    nBatteryStatL |= 0x10 ;	// SANYO
-	else if( (BATTMANUFACTURE[0] == 'S' ) && ( BATTMANUFACTURE[1] == 'O' ) )
-	    nBatteryStatL |= 0x20 ;	// Sony
-	else if( (BATTMANUFACTURE[0] == 'P' ) && (( BATTMANUFACTURE[1] == 'A' )|| ( BATTMANUFACTURE[1] == 'a' )) )
-		nBatteryStatL |= 0x40 ;	// Panasonic
-	else if( (BATTMANUFACTURE[0] == 'S' ) && ( BATTMANUFACTURE[1] == 'U' ) )
-		nBatteryStatL |= 0x50 ;	// Samsung
-	else if( (BATTMANUFACTURE[0] == 'L' ) && ( BATTMANUFACTURE[1] == 'G' ) )
-		nBatteryStatL |= 0x30 ;	// LG
-	else if( (BATTMANUFACTURE[0] == 'C' ) && (( BATTMANUFACTURE[1] == 'P' ) || ( BATTMANUFACTURE[1] == 'p' )) )
-		nBatteryStatL |= 0x60;	// CPT Celxpert
-	else if( (BATTMANUFACTURE[0] == 'S' ) && (BATTMANUFACTURE[1] == 'M' ) )
-		nBatteryStatL |= 0x70;	// Simplo*/
-//W007+ s
-/*   if(!BatSMbusFailCount) //W018+
-   {
-	OCPCapacity = (WORD)((nDesignCapH<<8)+nDesignCapL);
-	OCPCapacity = OCPCapacity *8;
-       OCPCapacity =(WORD)((DWORD)OCPCapacity*1000 / (WORD)((nDesignVoltH<<8)+nDesignVoltL));
-       
-	OCPCapacityRelease = (WORD)((nDesignCapH<<8)+nDesignCapL);
-	OCPCapacityRelease = OCPCapacityRelease *7;
-       OCPCapacityRelease =(WORD)((DWORD)OCPCapacityRelease*1000 / (WORD)((nDesignVoltH<<8)+nDesignVoltL));
-        RamDebug(0x55);
-   }  
-*/   //W018+   
-//W007+ e
-//W018- /*  //W007+
-     //if(!BatSMbusFailCount) //W018+
-
-//	RamDebug(0xAA);
-//	RamDebug(nDesignVoltL);
-//	RamDebug(nDesignVoltH);
-//	RamDebug(0xBB);
 	
     if((nDesignCapH != 0) && (nDesignVoltL != 0))
     {
@@ -1357,7 +1023,7 @@ void FirstGetBatData(void)
 
 		OCPCapacity = (WORD)((nDesignCapH<<8)+nDesignCapL);
 		OCPCapacity = OCPCapacity *8;
-		//Mos: According Batt - Patrick request, reduce Over Current Point from 0.8 DesignCap to 0.78 DesignCap.
+		//According Batt - Patrick request, reduce Over Current Point from 0.8 DesignCap to 0.78 DesignCap.
 		OCPCapacity = OCPCapacity - (OCPCapacity * 2 / 10);
 		OCPCapacity = OCPCapacity / (WORD)((nDesignVoltH<<8)+nDesignVoltL);
 		OCPCapacity = OCPCapacity * 1000;
@@ -1367,7 +1033,6 @@ void FirstGetBatData(void)
 		OCPCapacityRelease = OCPCapacityRelease / (WORD)((nDesignVoltH<<8)+nDesignVoltL);
 		OCPCapacityRelease = OCPCapacityRelease * 1000;
 	}
-//W018- */  //W007+
 
 	S3ResumeRSOC = S3RSOCPercentage;		// Set S3 resuem in the battery under 5%.
 	BatteryOTP = BatteryOTPHi;
@@ -1378,10 +1043,7 @@ void FirstGetBatData(void)
 	Chk_Battery_Full();
 	
 	nBattErrorCnt = 0;
-/*	//cwy0427
-	SHA1_SEED = SHA1_SEED + (WORD)(ET4CNTLLR);	//Anthony to try
-	srand(SHA1_SEED);
-*/
+
 	if (BatSMbusFailCount==0)
 	{
 		Battdata_ready = 1;
@@ -1408,6 +1070,7 @@ void Chk_Battery_Full(void)
     	    SET_MASK(nBatteryStatH,CMBS_DISCHARGE);	//set battery discharging flag
     	    return;
 	}
+	
 	if ((cCmdAcOff==1)||IS_MASK_SET(ACOFF_SOURCE, BATTLEARN)||IS_MASK_SET(EC_BatteryStatusL,FullyChg)||((nStopChgStat3L|nStopChgStat3H)!=0))
 	{
 		CLEAR_MASK(SEL_STATE0,CHARGE_A);			        //clear  battery charging flag
@@ -1426,10 +1089,9 @@ void Chk_Battery_Full(void)
 		}
 	}
 
-	//if (IS_MASK_CLEAR(LENOVOPMFW,BATTERY_CYCLE))
-	if (IS_MASK_CLEAR(LENOVOPMFW,BATTERY_STORAGE))//W079:same with spec
+	if (IS_MASK_CLEAR(LENOVOPMFW,BATTERY_STORAGE))
 	{
-		if (IS_MASK_SET(nBattery0x16L,FullyChg))	// || IS_MASK_SET(CHGIC_ReadCmd0x12L,ChargeInhibit))
+		if (IS_MASK_SET(nBattery0x16L,FullyChg))	
 		{
 			CLEAR_MASK(SEL_STATE0,CHARGE_A);  			//clear  battery charging flag
 			CLEAR_MASK(nBatteryStatH,CMBS_CHARGE);  	//clear  battery charging flag
@@ -1444,7 +1106,7 @@ void Chk_Battery_Full(void)
 	}
 	else
 	{
-		if (IS_MASK_SET(EC_BatteryStatusL,FullyChg))	// || IS_MASK_SET(CHGIC_ReadCmd0x12L,ChargeInhibit))
+		if (IS_MASK_SET(EC_BatteryStatusL,FullyChg))	
 		{
 			CLEAR_MASK(SEL_STATE0,CHARGE_A);  			//clear  battery charging flag
 			CLEAR_MASK(nBatteryStatH,CMBS_CHARGE);  	//clear  battery charging flag
@@ -1460,27 +1122,9 @@ void Chk_Battery_Full(void)
 
 void Unlock_ShipMode(void)
 {
-/*	BYTE sCmd;
-	WORD sData;
-
-// first command = 0x34, data1 = 0x2000, data2 = 0x4000
-    sCmd = C_D_FET;
-    sData = 0x0020; 	// word form L/H
-    if (!bRWSMBus(SMbusChB, SMbusWW, SmBat_Addr, sCmd, &sData,SMBus_NoPEC))
-    {
-      SMbusFailCnt3++;
-    }
-
-    sCmd = C_D_FET;
-	sData = 0x0040; 	// word form L/H
-    if (!bRWSMBus(SMbusChB, SMbusWW, SmBat_Addr, sCmd, &sData,SMBus_NoPEC))
-    {
-      SMbusFailCnt2++;
-    }
-*/
-	ShipModeEn = 0x00;//MARTINH126: add
-	WSMbusTemp01=0x00;
-	WSMbusTemp02=0x20;
+	ShipModeEn = 0x00;
+	WSMbusTemp01 = 0x00;
+	WSMbusTemp02 = 0x20;
 
 	if(!bRWSMBus(SMbusChB, SMbusWW, SmBat_Addr, C_D_FET, &WSMbusTemp01,SMBus_NeedPEC)) 
 	{
@@ -1494,6 +1138,7 @@ void Unlock_ShipMode(void)
 	{
 		SMbusFailCnt2++;
 	}
+	
 	if(bRWSMBus(SMbusChB, SMbusRW, SmBat_Addr, C_D_FET, &ShipModeACKL,SMBus_NoPEC))
 	{
 		if((ShipModeACKL!=0x00)&&(ShipModeACKL!=0x00))
@@ -1510,75 +1155,6 @@ void Unlock_ShipMode(void)
 
 void Lock_ShipMode(void)
 {
-/*
-	BYTE sCmd;
-	WORD sData;
-
-// first command = 0x34, data1 = 0x0000, data2 = 0x1000
-    sCmd = C_D_FET;
-    sData = 0x0000; 	// word form L/H
-    if (!bRWSMBus(SMbusChB, SMbusWW, SmBat_Addr, sCmd, &sData,SMBus_NoPEC))
-    {
-      SMbusFailCnt3++;
-    }
-
-    sCmd = C_D_FET;
-	sData = 0x0010; 	// word form L/H
-    if (!bRWSMBus(SMbusChB, SMbusWW, SmBat_Addr, sCmd, &sData,SMBus_NoPEC))
-    {
-      SMbusFailCnt2++;
-    }
-*/
-
-	//REJERRY032:s+Add time delay for Clear First Used Date to Enable ship mode following the requirements of the battery and re-try mechanism.
-	/*BYTE retryNum = 0x00; 
-    SMbusFailCnt3 = 0x00; 
-    SMbusFailCnt2 = 0x00;
-	
-	WSMbusTemp01=0x00;
-	WSMbusTemp02=0x00;
-	if(!bRWSMBus(SMbusChB, SMbusWW, SmBat_Addr, C_D_FET, &WSMbusTemp01,SMBus_NeedPEC))
-	{
-		SMbusFailCnt3++;
-	}
-
-	Delay1MS(250);
-
-	WSMbusTemp01=0x00;
-	WSMbusTemp02=0x10;
-	if(!bRWSMBus(SMbusChB, SMbusWW, SmBat_Addr, C_D_FET, &WSMbusTemp01,SMBus_NeedPEC))
-	{
-	  	SMbusFailCnt2++;
-	}
-
-	for(retryNum=0x00;retryNum<0x06;retryNum++)
-    {
-    	if((SMbusFailCnt3 == 0x00)&&(SMbusFailCnt2 == 0x00))
-        	break;
-
-        ProcessSID(0xA5);
-        SMbusFailCnt3 = 0x00;
-        SMbusFailCnt2 = 0x00;
-           
-        Delay1MS(0x0A);
-           
-        WSMbusTemp01=0x00;
-        WSMbusTemp02=0x00;
-        if(!bRWSMBus(SMbusChB, SMbusWW, SmBat_Addr, C_D_FET, &WSMbusTemp01,SMBus_NeedPEC))
-        {
-        	SMbusFailCnt3++;
-        }
-           
-       	Delay1MS(250);
-       
-        WSMbusTemp01=0x00;
-        WSMbusTemp02=0x10;
-        if(!bRWSMBus(SMbusChB, SMbusWW, SmBat_Addr, C_D_FET, &WSMbusTemp01,SMBus_NeedPEC))
-        {
-        	SMbusFailCnt2++;
-        }
-	}*/
-	//REJERRY032:e+Add time delay for Clear First Used Date to Enable ship mode following the requirements of the battery and re-try mechanism.
 	BYTE retryNum = 0x00; 
 	for(retryNum=0x00;retryNum<0x06;retryNum++)
 	{
@@ -1594,13 +1170,16 @@ void Lock_ShipMode(void)
 			SMbusFailCnt3=0;
 			break;
 		}
+		
 		if(SMbusFailCnt3>=6)
 		{
 			RamDebug(0xdb);
 			ProcessSID(0xA8);
 		}
 	}
+	
 	Delay1MS(250);
+	
 	for(retryNum=0x00;retryNum<0x06;retryNum++)
 	{
 		RamDebug(0xda);
@@ -1636,8 +1215,7 @@ void OEM_PollingBatData_TASK(void)
 	BYTE i,j;
 	BYTE *ptr;
 
-	//if(IS_MASK_CLEAR(BATTUPDATEFW,BIT0))//W118
-	if(IS_MASK_CLEAR(StatusKeeper, BatteryFwUpdate)) //W118
+	if(IS_MASK_CLEAR(StatusKeeper, BatteryFwUpdate)) 
 	{
 		GetBatData(Batpollstep1);
 
@@ -1646,7 +1224,7 @@ void OEM_PollingBatData_TASK(void)
 		if(Batpollstep1 >= (sizeof(ABatCommandTable)/sizeof(sRSmbusBStruct)))
 		{
 			////////////////////////
-			//Mos: Battery Debounce Block
+			// Battery Debounce Block
 			//Get 9 entry from battery table, loop and XOR each byte, calculate a hash byte
 			//If hash result same as previous, then counter +1
 			//If counter > 3 times, mean battery data stable, keep Batpollstep1 = 9 to skip first 9 entry in battery table
@@ -1676,7 +1254,7 @@ void OEM_PollingBatData_TASK(void)
 					Get_Batt_debounce_count = 0;
 
 				Batpollstep1=0; //revert Batpollstep1 for start over
-				//Mos: Fill nBatteryStatL after Battery Data stable.
+				//Fill nBatteryStatL after Battery Data stable.
 				if ( Get_Batt_debounce_count >= 3 )
 				{
 					if( ( BATTMANUFACTURE[0] == 'S' ) && ((BATTMANUFACTURE[1] == 'A' )||( BATTMANUFACTURE[1] == 'a' )) )
@@ -1708,37 +1286,35 @@ void OEM_PollingBatData_TASK(void)
 		ChkGoTarget();
 		Chk_Battery_Full();
 		ChkBattery_OTP();
-		//ChkBattery_OCP();  //REJERRY031:remove.
-		//REJERRY031:S+.
-		//ChkBattery_Power();				//XITING0002:remove change to use adc check power 
+		//ChkBattery_OCP();  
 		ChkBattery_RSOC();
 		ChkBattery_Alarm();
-		//REJERRY031:E+.
 		ChkBattery_FCCchg();
 		ChkAvgCurrent();
-		ChkS3DCRSOC(); //REJERRY014:add.
+		ChkS3DCRSOC(); 
 		ChkS3ResumeRSOC();	
-		RSOC1Pto0P_ShutdownCheck();					//XITING0067:Force system shutdown with 5S when RSOC drop to 0%.		
+		RSOC1Pto0P_ShutdownCheck();					//Force system shutdown with 5S when RSOC drop to 0%.		
 	}
 	else
 	{
 		if (IS_MASK_SET(LENOVOPMFW,BATTERY_MAIN_CAL))			// check Calibration Cycle enable
 		{
-			CLEAR_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable); //REJERRY051:Modify read addr to write.
+			CLEAR_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable); 
 			if (!bRWSMBus(SMbusChB, SMbusWW, Charger_Addr, C_ChargerMode, &CHGIC_WriteCmd0x12L,SMBus_NoPEC)) //REJERRY051:Modify read addr to write.
 			{
 				CHGIC_SMbusFailCnt++;
-				RamDebug(0x14); //MARTINH115:change 0x84 to 0x14
+				RamDebug(0x14); 
 			}
 			RamDebug(0x8E);
 		}
+		
 		if (IS_MASK_CLEAR(CHGIC_ReadCmd0x12L,ChargeInhibit))			 // check Calibration Cycle enable
 		{
-			SET_MASK(CHGIC_WriteCmd0x12L,ChargeInhibit); //REJERRY051:Modify read addr to write.
+			SET_MASK(CHGIC_WriteCmd0x12L,ChargeInhibit); 
 			if (!bRWSMBus(SMbusChB, SMbusWW, Charger_Addr, C_ChargerMode, &CHGIC_WriteCmd0x12L,SMBus_NoPEC)) //REJERRY051:Modify read addr to write.
 			{
 				CHGIC_SMbusFailCnt++;
-				RamDebug(0x14); //MARTINH115:change 0x84 to 0x14
+				RamDebug(0x14); 
 			}
 			RamDebug(0x8D);
 		}
@@ -1746,7 +1322,6 @@ void OEM_PollingBatData_TASK(void)
 }
 
 
-//REJERRY065:S+ Add express charge method.
 void Battery_Expresscharge(void)
 {
 	//check battery quick charge support.
@@ -1778,7 +1353,6 @@ void Battery_Expresscharge(void)
 		}
 	}
 }
-//REJERRY065:E+ Add express charge method.
 
 
 //-----------------------------------------------------------------
@@ -1787,54 +1361,26 @@ void Battery_Expresscharge(void)
 void WriteSmartChgIC(void)
 {
 	BYTE sCmd, *sData;
-	uint_16 BattCurrent; //REJERRY065:add.
+	uint_16 BattCurrent; 
 
 	if (!Read_AC_IN())
 		return;
 
-	if( CHGIC_ptr>=4 ) CHGIC_ptr=0; //REJERRY051:Modify step from 3 to 4.
-	else CHGIC_ptr++;
+	if( CHGIC_ptr>=4 ) 
+	    CHGIC_ptr=0; //Modify step from 3 to 4.
+	else 
+	    CHGIC_ptr++;
 
 	switch( CHGIC_ptr )
 	{
 		case 0x00:
-			//JERRYCR081:S+Add express charge feature.
+			//Add express charge feature.
 			if (IS_MASK_SET(OKOStatusBit,Expresschargemode))
 			{
-				//REJERRY065:S-.
-				/*ExpresschargecurrentL = 0xA0;
-				ExpresschargecurrentH = 0x0F;
-				sCmd = C_ChargeCurrent;
-				sData = &ExpresschargecurrentL;*/
-				//REJERRY065:E-.
 
-				//XITING0017:S+
 				BattCurrent = (WORD)((nBattCharCurrentH<< 8) + nBattCharCurrentL);
 				sCmd = C_ChargeCurrent;
 				sData = &nBattCharCurrentL;	
-				//XITING0017:E+
-
-				//XITING0017:S-
-				//REJERRY065:S+ add charge current setting for express mode.
-				/*
-				BattCurrent = (WORD)((nBattCharCurrentH<< 8) + nBattCharCurrentL);
-				if(BattCurrent>0xFA0)
-				{
-					ExpresschargecurrentL = 0xA0;
-					ExpresschargecurrentH = 0x0F;
-					sCmd = C_ChargeCurrent;
-					sData = &ExpresschargecurrentL;
-				}
-				else
-				{
-					ExpresschargecurrentL = 0;
-					ExpresschargecurrentH = 0;
-					sCmd = C_ChargeCurrent;
-					sData = &nBattCharCurrentL;	
-				}
-				*/
-				//REJERRY065:E+.
-				//XITING0017:E-
 			}
 			else
 			{
@@ -1843,31 +1389,18 @@ void WriteSmartChgIC(void)
 				sCmd = C_ChargeCurrent;
 				sData = &nBattCharCurrentL;
 			}
-			//JERRYCR081:E+Add express charge feature.
 			break;
 			
 		case 0x01:
-			if (IS_MASK_SET(EC_BatteryStatusL,FullyChg)) break;//W069:to avoid fully charged voltage to default
+			if (IS_MASK_SET(EC_BatteryStatusL,FullyChg)) break;//to avoid fully charged voltage to default
 			sCmd = C_ChargeVoltage;
 			sData = &nChargingVoltL;
 			break;
 			
 		case 0x02:
-			//JERRYCR030:S+Setting charge IC
-			//XITING0060:S remove 
-			/*
-			if( AdapterID==AdapterID_230W || AdapterID==AdapterID_170W || AdapterID==AdapterID_135W ) //REJERRY048:add 230W adapter ID.
-			{									// 6.25A 1880	(4096+2048+128)
-				CHGIC_InputCurrentH = 0x18; 	
-				CHGIC_InputCurrentL = 0x80;		//XITING0033 change from ox6A to 0x80
-			}
-			*/
-			//XITING0060:E
-
-			//XITING0060:S change AC >=170 7.8A(1.56V)   AC =135W 6.25A(1.25V)
 			if( AdapterID==AdapterID_230W || AdapterID==AdapterID_170W)		//7.8A   (4096+2048+1024+512+128) (1.56V)
 			{								
-				CHGIC_InputCurrentH = 0x1F; 		//XITING0071:change 1E80 to 1F80
+				CHGIC_InputCurrentH = 0x1F; 		//change 1E80 to 1F80
 				CHGIC_InputCurrentL = 0x80;
 			}
 			else if(AdapterID==AdapterID_135W)		// 6.25A 1880	(4096+2048+128)
@@ -1875,23 +1408,22 @@ void WriteSmartChgIC(void)
 				CHGIC_InputCurrentH = 0x18; 	
 				CHGIC_InputCurrentL = 0x80;	
 			}
-			//XITING0060:E		
+			//		
 			else if(AdapterID==AdapterID_90W)	
 			{									// 4.1A 1000	(4096)
 				CHGIC_InputCurrentH = 0x10;		
-				CHGIC_InputCurrentL = 0x00;		//XITING0033 change from ox04 to 0x00
+				CHGIC_InputCurrentL = 0x00;		//change from ox04 to 0x00
 			}
 			else if(AdapterID==AdapterID_65W)		
 			{									// 3A 0C00 (2048+1024)
-				CHGIC_InputCurrentH = 0x0C; 	//XITING0033 change from ox0B to 0x0C
-				CHGIC_InputCurrentL = 0x00;		//XITING0033 change from oxB8 to 0x00
+				CHGIC_InputCurrentH = 0x0C; 	//change from ox0B to 0x0C
+				CHGIC_InputCurrentL = 0x00;		//change from oxB8 to 0x00
 			}
 			else if(AdapterID==AdapterID_45W)
 			{									// 2.05A 0800 (2048)
 				CHGIC_InputCurrentH = 0x08;	 	
-				CHGIC_InputCurrentL = 0x00;		//XITING0033 change from ox02 to 0x00
-			}
-			//JERRYCR030:E+Setting charge IC 
+				CHGIC_InputCurrentL = 0x00;		//change from ox02 to 0x00
+			} 
 			sCmd = C_InputCurrent;
 			sData = &CHGIC_InputCurrentL;
 			break;
@@ -1899,30 +1431,27 @@ void WriteSmartChgIC(void)
 		case 0x03:
 			if ((CHGIC_ReadCmd0x12L!=0) || (CHGIC_ReadCmd0x12H!=0))
 			{
-				if ((cCmdAcOff==1)||IS_MASK_SET(ACOFF_SOURCE, BATTLEARN)||IS_MASK_SET(EC_BatteryStatusL,FullyChg))	//  || IS_MASK_CLEAR(nBatteryStatH,CMBS_CHARGE))
+				if ((cCmdAcOff==1)||IS_MASK_SET(ACOFF_SOURCE, BATTLEARN)||IS_MASK_SET(EC_BatteryStatusL,FullyChg))	
 				{
-					SET_MASK(CHGIC_WriteCmd0x12L,ChargeInhibit);	//Inhibit Charge //REJERRY051:Modify read addr to write.
+					SET_MASK(CHGIC_WriteCmd0x12L,ChargeInhibit);	//Inhibit Charge 
 				}
 				else
 				{
 					if ((cBF0_GoTarget ==1) && (cTargetGauge == nBattGasgauge))
 					{
-						SET_MASK(CHGIC_WriteCmd0x12L,ChargeInhibit);	//Inhibit Charge //REJERRY051:Modify read addr to write.
+						SET_MASK(CHGIC_WriteCmd0x12L,ChargeInhibit);	//Inhibit Charge 
 					}
 					else
 					{
-						CLEAR_MASK(CHGIC_WriteCmd0x12L,ChargeInhibit);	//Enable Charge //REJERRY051:Modify read addr to write.
+						CLEAR_MASK(CHGIC_WriteCmd0x12L,ChargeInhibit);	//Enable Charge
 					}
 				}
 
-				//Mos: Due to must be stop charger before set AC OFF. add ACOFF_SOURCE in condition.
+				//Due to must be stop charger before set AC OFF. add ACOFF_SOURCE in condition.
 				if (nStopChgStat3L|nStopChgStat3H|inhibit2sec|ACOFF_SOURCE)
 				{
-					SET_MASK(CHGIC_WriteCmd0x12L,ChargeInhibit); 	//Inhibit Charge //REJERRY051:Modify read addr to write.
+					SET_MASK(CHGIC_WriteCmd0x12L,ChargeInhibit); 	//Inhibit Charge 
 				}
-				//CLEAR_MASK(CHGIC_WriteCmd0x12L,ACOKDeglitchTime); //REJERRY051:remove.
-				//CLEAR_MASK(CHGIC_ReadCmd0x12H,IFAULT_HI);//AIUU3_W30
-				//SET_MASK(CHGIC_WriteCmd0x12L,IFAULT_LOW); //REJERRY051:remove.
 				sCmd = C_ChargerMode;
 				sData = &CHGIC_WriteCmd0x12L; //REJERRY051:Modify read addr to write.
 			}
@@ -1953,9 +1482,9 @@ const sRSmbusBStruct ReadChgIcCmdTable [] =
 {//     command                   REG 			 no.
 	{ C_ChargeCurrent,    &CHGIC_ReadCmd0x14L    	,0x00},
 	{ C_ChargeVoltage,    &CHGIC_ReadCmd0x15L    	,0x00},
-	{ C_InputCurrent,    	&CHGIC_ReadCmd0x3FL     ,0x00},
-	{ C_ChargerMode,     	&CHGIC_ReadCmd0x12L		,0x00},
-	{ ChargeOption3,     &CHGIC_ReadCmd0x37L		,0x00}, //REJERRY051:add.
+	{ C_InputCurrent,     &CHGIC_ReadCmd0x3FL       ,0x00},
+	{ C_ChargerMode,      &CHGIC_ReadCmd0x12L		,0x00},
+	{ ChargeOption3,      &CHGIC_ReadCmd0x37L		,0x00}, 
 };
 
 void ReadSmartChgIC(void)
@@ -1977,11 +1506,11 @@ void Chk_Shutdown_Volt(void)
 
 	if( (BATTMANUFACTURE[0] == 'L' ) && ( BATTMANUFACTURE[1] == 'G' ) )
 	{
-		cutoff_volt = 5000 ;	//  shutdown Voltage 8.25V  for LG 3S battery//W061: LG 8.25 to 6V fixed cant power on or shutdown
+		cutoff_volt = 5000 ;	//  shutdown Voltage 8.25V  for LG 3S battery// LG 8.25 to 6V fixed can't power on or shutdown
 	}
 	else
 	{
-		cutoff_volt = 5600;		// Voltage 8.5V for Sanyo battery  W040: Change battery shutdown Voltage from 8V to 6V.
+		cutoff_volt = 5600;		// Voltage 8.5V for Sanyo battery //Change battery shutdown Voltage from 8V to 6V.
 	}
 
 
@@ -2009,7 +1538,6 @@ void Chk_BAT1PERCL_5(void)
 {
 	if ((BAT1PERCL <= 5)&&(IS_MASK_SET(nBattery0x16L,Dsg)))	// BAT1PERCL <= 5% 
 	{
-		//cBATTThrottling = 0x0F;
 		SET_MASK(BatteryAlarm,BATPercl_5);
 	}
 	else
@@ -2028,11 +1556,9 @@ void Chk_BAT1PERCL_5(void)
 
 void Chk_BatSMbusFailCount(void)
 {
-//	BYTE sCmd, *sData;
-
 	if (nBattErrorCnt==0)
 	{
-		//XITING0067:S  add smbus pass re-check ECC
+		//add smbus pass re-check ECC
 		if(IS_MASK_SET(Bat1Anth, Bat1AnthEnd))
 		{
 			if(IS_MASK_SET(LV_Authen_Step_CNT,Illegal_battery_flag))
@@ -2040,14 +1566,14 @@ void Chk_BatSMbusFailCount(void)
 				CLEAR_MASK(Bat1Anth, Bat1AnthEnd);
 			}
 		}
-		//XITING0067:E
+		//
 	
 		CLEAR_MASK(nStopChgStat3L,ENCOMMFAIL);	// clear bat communication fail and clear STOP charge
 		CLEAR_MASK(Bat1_FPChgFlag,BIT(0));
 		Chk_BAT1PERCL_5();
 		if (IS_MASK_SET(nBattery0x16L,Dsg))
 		{
-			//Chk_Shutdown_Volt();//W075:Lnv suggest EC don't do shutdown
+			//Chk_Shutdown_Volt();//Lnv suggest EC don't do shutdown
 		}
 		return;
 	}
@@ -2059,24 +1585,20 @@ void Chk_BatSMbusFailCount(void)
 
 		if (nBattErrorCnt==30)
 		{
-			//cBATTThrottling = 0x0F;
 
-			//nRemainingCapL = 0; //REJERRY016:remove.
-			//nRemainingCapH = 0; //REJERRY016:remove.
 			SMbusFailCnt2++;
 		}
 		if (nBattErrorCnt>=150)
 		{
-			
-			//cBATTThrottling = 0x0F;
+
 			SMbusFailCnt3++;
 			nBattErrorCnt = 151;
-#if !EN_PwrSeqTest  //AIUU3_W36: Battery SMBUS always fail then shutdown system 
+#if !EN_PwrSeqTest  //Battery SMBUS always fail then shutdown system 
 			if ((SysPowState==SYSTEM_S0)||(SysPowState==SYSTEM_S3))
 			{
 				SET_MASK(SysStatus,ERR_ShuntDownFlag);
 				ProcessSID(BATTCOMMFAIL_ID);
-				RSMRST_shutdown();//W114
+				RSMRST_shutdown();
 			}
 #endif
 		}
@@ -2090,20 +1612,13 @@ void Chk_BatSMbusFailCount(void)
 				{
 					nBattCharCurrentL = 0x00;	// 256mA
 					nBattCharCurrentH = 0x01;
-					nChargingVoltL = 0x38;		// 12.6V (trickle voltage)  //REJERRY031:modify from 8.4V to 12.6V.
+					nChargingVoltL = 0x38;		// 12.6V (trickle voltage)  //modify from 8.4V to 12.6V.
 					nChargingVoltH = 0x31;
-//					CHGIC_InputCurrentL = 0x00;
-//					CHGIC_InputCurrentH = 0x0C;
+
 					SMbusFailCnt3++;
 				}
 				if ((nBattErrorCnt >= 30))				// disable charge
 				{
-//					nBattCharCurrentL = 0x00;			// 0 mA
-//					nBattCharCurrentH = 0x00;
-//					nChargingVoltL = 0x00;				// 0 V
-//					nChargingVoltH = 0x00;
-//					CHGIC_InputCurrentL = 0x00;
-//					CHGIC_InputCurrentH = 0x00;
 					RST_ChgTimeOutCnt();
 					SET_MASK(nStopChgStat3L,ENCOMMFAIL);	// Set bat communication fail and STOP charge.
 															//	charge inhibit
@@ -2149,8 +1664,7 @@ void Chk_CHG_TimeOut(void)			// every 1 min
 
 void ChkBattery_abnormal(void)
 {
-	//  if(IS_MASK_SET(BATTUPDATEFW,BIT0))//W118
-	if(IS_MASK_SET(StatusKeeper, BatteryFwUpdate) )//MARTINH152:Change "IS_MASK_CLEAR" to "IS_MASK_SET" //W118
+	if(IS_MASK_SET(StatusKeeper, BatteryFwUpdate) )
 		return;
 
 	switch(ChkBattery_abnormal_status)
@@ -2173,10 +1687,10 @@ void ChkBattery_abnormal(void)
 			break;
 			
 		case ChkBattery_abnormal_status_error:
-			//Mos: Reset until EC power down
+			//Reset until EC power down
 			SET_MASK(ACOFF_SOURCE, CHARGECURRENT);
 			//ACOFF_HI();
-			SET_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable); //REJERRY051:Modify read addr to write.
+			SET_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable); 
 			RamDebug(0xED);
 			if (!bRWSMBus(SMbusChB, SMbusWW, Charger_Addr, C_ChargerMode, &CHGIC_WriteCmd0x12L,SMBus_NoPEC)) //REJERRY051:Modify read addr to write.
 			{
@@ -2203,63 +1717,10 @@ BYTE Compare_data(BYTE *buf1, BYTE *buf2, BYTE count)
 	}while(count);
 	return TRUE;
 }
-//W105:modify sha1 count and fail retry count 
-void Compare_Auth_Result(void)
-{
-	// inverse result for compare
-//	inverse(&Hn0, &Hn4+3);
-	if(Compare_data(&K[0], &RBATH0[0], 0x14) ) //W105
-	{
-		CLEAR_MASK(nStopChgStat3H,NotLenovoBattery); 	// SHA1 pass,legal
-		CLEAR_MASK(LENOVOBATT,BATTERY_LEGAL);			// SHA1 pass,legal
-		CLEAR_MASK(LV_Authen_Step_CNT,BIT(6)); 		// authentication ok
-	}
-	else
-	{
-		SHA1failCnt ++;
-		if (SHA1failCnt < 6) //W105
-		{
-			Service_Auth_Step=1;					//W063:	//if  SHA1failCnt <3, retry
-		}
-		else
-		{
-			SET_MASK(nStopChgStat3H,NotLenovoBattery);	// SHA1 no pass, battery illegal
-			SET_MASK(LENOVOBATT,BATTERY_LEGAL);			// SHA1 no pass, battery illegal
-			SET_MASK(LV_Authen_Step_CNT,BIT(6)); 		// authentication Fail
-		}
-	}
-}
 
-BYTE SendChallengeToBat(void)
-{
-	BYTE SMBus_work;
-	SMBus_work = bWSMBusBlock(SMbusChB, SMbusWBK, SmBat_Addr, 0x27, &BATchallenger[0], 0x14, TRUE);//W105
-	if( SMBus_work ) return TRUE;
-		return FALSE;
-}
-
-BYTE GetChallengeFromBat(void)
-{
-	if( bRSMBusBlock(SMbusChB, SMbusRBK, SmBat_Addr, 0x28, &RBATH0[0]) ) return TRUE;
-		return FALSE;
-}
 
 void Chk_Trickle_Current(void)
 {
-/*When Current(0x0a)>=700mA,and Charging Current(0x14)<500mA,and Polling cycle=5 cycles,then AC_OFF high, AND
-Report RSOC(0x0d)=0 to BIOS.
-Reset condition:EC Power down.*/
-
-/*typedef enum
-{
-	Chk_Trickle_Current_status_normal,
-	Chk_Trickle_Current_status_error,
-}Chk_Trickle_Current_status_type;
-extern XBYTE	Chk_Trickle_Current_status;			//_at_(ECRAM1+0x45);
-extern XBYTE	Chk_Trickle_Current_count;			//_at_(ECRAM1+0x46);
-extern XWORD	Chk_Trickle_Current_Now_Current;		//_at_(ECRAM1+0x47); //0x47~0x48
-extern XWORD	Chk_Trickle_Current_Chg_Current;		//_at_(ECRAM1+0x49); //0x49~0x4A*/
-
 	uint_16 Batt_Now_current;
 	uint_16 BattChargeCurrent;
 
@@ -2298,11 +1759,10 @@ extern XWORD	Chk_Trickle_Current_Chg_Current;		//_at_(ECRAM1+0x49); //0x49~0x4A*
 			}
 			break;
 		case Chk_Trickle_Current_status_error:
-			//Mos: Reset until EC power down
+			//Reset until EC power down
 			SET_MASK(ACOFF_SOURCE, LEAKCURRENT);
-			//	ACOFF_HI();
-			SET_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable); //REJERRY051:Modify read addr to write.
-			RamDebug(0xA7);  ////MARTINH115:Change 0xEC to 0xA7
+			SET_MASK(CHGIC_WriteCmd0x12L,BatLearnEnable); 
+			RamDebug(0xA7);  
 			if (!bRWSMBus(SMbusChB, SMbusWW, Charger_Addr, C_ChargerMode, &CHGIC_WriteCmd0x12L,SMBus_NoPEC)) //REJERRY051:Modify read addr to write.
 			{
 				CHGIC_SMbusFailCnt++;
@@ -2354,7 +1814,7 @@ void Lenovo_Battery_EM80(void)
 	}
 }
 
-//REJERRY101£ºs+ Modify battery clear first user method.
+//Modify battery clear first user method.
 void Clear_Batt_First_Used_Date(void)
 {
 	if(IS_MASK_SET(SEL_STATE0,PRESENT_A)) 
@@ -2385,11 +1845,8 @@ void Clear_Batt_First_Used_Date(void)
 		}
 	}
 }
-//REJERRY101£º e+Modify battery clear first user method.
-//#endif
+//
 
-
-//XITING0002:S+
 void ChkPsys(void)
 {
 	if ((SystemIsS0) && (!Read_AC_IN()))
@@ -2406,15 +1863,15 @@ void ChkPsys(void)
 						CLEAR_MASK(GPUProchotFlag, b4GpuPsys);
 						SET_MASK(CPUProchotFlag, b5CpuPsys);
 					}					
-					else if ((Psys_AvgData >= 239) && (Psys_AvgData <= 307))		//psys between 70W and 90W			//XITING0065:change from 80W ~ 90W  to 70W ~ 90W
+					else if ((Psys_AvgData >= 239) && (Psys_AvgData <= 307))		//psys between 70W and 90W			//change from 80W ~ 90W  to 70W ~ 90W
 					{
-						cGPUBattPsysThrottling = 2;				//modify DGPU to D3										//XITING0059: change from D4 to D3
+						cGPUBattPsysThrottling = 2;				//modify DGPU to D3										//change from D4 to D3
 						CLEAR_MASK(GPUProchotFlag, b4GpuPsys);
 						CLEAR_MASK(CPUProchotFlag, b5CpuPsys);
 					}
-					else										//psys<70W(0.7V)	(1023/3*0.7=238.7)					//XITING0065:change from 80W to 70W
+					else										//psys<70W(0.7V)	(1023/3*0.7=238.7)					//change from 80W to 70W
 					{
-						cGPUBattPsysThrottling = 1;				//modify DGPU to D2		//XITING0047: change D2 to D3		//XITING0059: change from D4 to D2
+						cGPUBattPsysThrottling = 1;				//modify DGPU to D2		//change D2 to D3		//change from D4 to D2
 						CLEAR_MASK(GPUProchotFlag, b4GpuPsys);
 						CLEAR_MASK(CPUProchotFlag, b5CpuPsys);
 					}
@@ -2450,21 +1907,18 @@ void ChkPsys(void)
 		CLEAR_MASK(CPUProchotFlag, b5CpuPsys);
 	}
 
-	//XITING0044:S add AC in  psys check
-	//if((Read_AC_IN() && (nBattGasgauge < Chk_Hybrid_STPP_min_BattGasgauge))||(Read_AC_IN() && IS_MASK_CLEAR(SEL_STATE0,PRESENT_A)))								//XITING0071:add OS status check and change  DC RSOC from < to <=
-	if((SystemIsS0) && ((Read_AC_IN() && (nBattGasgauge <= Chk_Hybrid_STPP_min_BattGasgauge))||(Read_AC_IN() && IS_MASK_CLEAR(SEL_STATE0,PRESENT_A))))				//XITING0071:add OS status check and change  DC RSOC from < to <=
+	//add AC in  psys check							//add OS status check and change  DC RSOC from < to <=
+	if((SystemIsS0) && ((Read_AC_IN() && (nBattGasgauge <= Chk_Hybrid_STPP_min_BattGasgauge))||(Read_AC_IN() && IS_MASK_CLEAR(SEL_STATE0,PRESENT_A))))				//add OS status check and change  DC RSOC from < to <=
 	{
-		SET_MASK(OverPowerStatus, AC_Only_Set_Status);							//XITING0071:add
-		
-		//if( AdapterID == AdapterID_135W || AdapterID == AdapterID_170W || AdapterID == AdapterID_230W )	//AC power >= 135		//XITING0071:remove 135W AC
-		if(AdapterID == AdapterID_170W || AdapterID == AdapterID_230W )	//AC power >= 170											//XITING0071:remove 135W AC
+		SET_MASK(OverPowerStatus, AC_Only_Set_Status);							
+	//AC power >= 135		//remove 135W AC
+		if(AdapterID == AdapterID_170W || AdapterID == AdapterID_230W )	//AC power >= 170		//remove 135W AC
 		{
 			cGPUACOVPThrottling = 0;
 			
 			if(VolCount == 0)			//H_PROCHOT#EC_H 40 ms check 
 			{
-				//if(Psys_AvgData > 410)			//120W 410  (1023/3*1.20 = 410)			//XITING0060:change from 120W to 160W 
-				if(Psys_AvgData > 546)				//160W(1.6V) 546  (1023/3*1.60 = 545.6)			//XITING0060:change from 120W to 160W 
+				if(Psys_AvgData > 546)				//160W(1.6V) 546  (1023/3*1.60 = 545.6)			//change from 120W to 160W 
 				{
 					OverVolCount_normal_AC++;
 				}
@@ -2489,15 +1943,13 @@ void ChkPsys(void)
 				VolCount--;
 			}	
 		}
-		//else if(AdapterID == AdapterID_90W)					//XITING0071:change from 90W to 135W
-		else if(AdapterID == AdapterID_135W)					//XITING0071:change from 90W to 135W
+		else if(AdapterID == AdapterID_135W)					//change from 90W to 135W
 		{
 			cGPUACOVPThrottling = 2;
 			
 			if(VolDelayCount == 0)
 			{
-				//if(Psys_AvgData > 273)					//80W 273  (1023/3*0.8 = 273)		//XITING0071:change from 80 to 135
-				if(Psys_AvgData > 460)						//XITING0071:change from 80 to 135   135W 273  (1023/3*1.35 = 460.35)	
+				if(Psys_AvgData > 460)					//change from 80 to 135   135W 273  (1023/3*1.35 = 460.35)	
 				{
 					OverVolCount++;
 				}
@@ -2521,19 +1973,18 @@ void ChkPsys(void)
 	}
 	else
 	{
-		CLEAR_MASK(OverPowerStatus, AC_Only_Set_Status);							//XITING0071:add
+		CLEAR_MASK(OverPowerStatus, AC_Only_Set_Status);					
 	
 		OverVolCount = 0;
 		VolDelayCount = 0;
 		OverVolCount_normal_AC = 0;
 		VolCount = 0;
 		
-		CLEAR_MASK(CPUProchotFlag,b0CpuADPI);		//XITING0039:add  when Conditions are not met go normal set 
-		cGPUACOVPThrottling = 0;					//XITING0039:add  when Conditions are not met go normal set 
+		CLEAR_MASK(CPUProchotFlag,b0CpuADPI);		//add  when Conditions are not met go normal set 
+		cGPUACOVPThrottling = 0;					//add  when Conditions are not met go normal set 
 	}
-	//XITING0044:E add
 
-	//XITING0071:S add CPU turbo of/off control
+	//add CPU turbo of/off control
 	if(SystemIsS0)
 	{
 		if(IS_MASK_SET(OverPowerStatus, AC_Only_Set_Status))
@@ -2552,15 +2003,14 @@ void ChkPsys(void)
 				ECQEvent(EN_CPUTURBO_67);
 			}
 		}
-	}
-	//XITING0071:E	
+	}	
 
 #if DPTF_SUPPORT
 	DPTF_Power_Psys_Control();				//add DPTF control	(power and psys)
 #endif
 	
 }
-//XITING0002:E+
+
 
 
 //add DPTF control	(power and psys)

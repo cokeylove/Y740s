@@ -151,7 +151,6 @@ void Init_ADC(void)
 	//T24 + E
 }
 
-//#ifdef Anthony0711
 
 //Setting charge IC.
 void SetPowerBatteryparameter(void)

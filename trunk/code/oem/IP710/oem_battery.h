@@ -14,19 +14,17 @@
 #define BATTERY_H
 
 #define ChargerSMBUSChannel SMbusCh2
-//#define Chargert_Addr 0x12
 
 #define ChargeOption		0x12
 #define ChargeCurrent		0x14
 #define MaxChargeVoltage	0x15
-#define Dischargecurrent	0x39	//JERRYCR030:Setting charge IC.
-#define ChargerMode1		0x3B    // JERRYCR030:Setting charge IC.
-#define ChargerProchot	   0x3c    // JERRYCR030:Setting charge IC.
-#define ChargerProchot1	  0x3D   //JERRYCR030:Setting charge IC.
+#define Dischargecurrent	0x39	
+#define ChargerMode1		0x3B    
+#define ChargerProchot	    0x3c   
+#define ChargerProchot1	    0x3D   
 #define MinSysVoltage		0x3E
 #define InputCurrent		0x3F
 //====
-//#ifdef	Anthony0711
 #define SMbusTOC    200     // SMbus re-try counter
 
 #define SMbusChA    0x00    // SMbus channel A index,SMbusCh1.
@@ -79,11 +77,11 @@
 #define C_Dname            	0x21  	// device name
 #define C_Dchem            	0x22  	// device chemistry
 #define C_Mdata            	0x23 	// manufacture data
-//[-start-150409-David-add]//
+
 
 #define BATCmd_SHA1W 				0x27    // sending 20 bytes challenge from host EC to battery BMU
 #define BATCmd_SHA1R 				0x28    // receiving 20 bytes response from battery BMU to host EC
-//[-end-150409-David-add]//
+
 
 #define C_D_FET            	0x34 	// Ship Mode and Additional Over Discharge Mode.
 
@@ -119,9 +117,9 @@
 #define ChargeDeviceID		0x08
 #define ChargeMFID			0x4D
 
-#define ChargeOption3 0x37	// add by sheldon//// SHELDON18:Add several command for init charge IC.
-#define ChargeOption2 0x38	// add by sheldon
-#define ProchotStatus	0x3A	// add by sheldon
+#define ChargeOption3 0x37	//Add several command for init charge IC.
+#define ChargeOption2 0x38	
+#define ProchotStatus	0x3A	
 typedef struct RSmbusBStruct
 {
     BYTE 	cmd;
@@ -134,11 +132,9 @@ typedef struct RSmbusBStruct
 #define ChangeChgBattery	0x82
 #define ChangeDischgBattery 0x20
 #define ABatteryLow			0x05
-//#define BBatteryLow			0x05
+
 #define ACriticalLow		0x02
-//#define BCriticalLow		0x02
 #define AOverVoltage		13400
-//#define BOverVoltage		13400
 
 extern void vPollingBatteryData(void);
 extern void Charge_or_Discharge(void);
@@ -147,11 +143,11 @@ extern void	CheckAdapterInOut(void);
 
 extern void ChkBattery_Percl();
 extern void Calc_Bat_RCC(void);
-extern void Clear_Batt_First_Used_Date(void);//REJERRY101£º Modify battery clear first user method.
-extern void ChkPsys(void);			//XITING0002:add
+extern void Clear_Batt_First_Used_Date(void);//Modify battery clear first user method.
+extern void ChkPsys(void);			
 
-extern void DPTF_Power_Psys_Control(void);				//XITING0071:add
-extern void DPTF_GPU_Temp_Control(void);				//XITING0071:add
+extern void DPTF_Power_Psys_Control(void);				
+extern void DPTF_GPU_Temp_Control(void);			
 
 
 //-----------------------------------------------------------------
@@ -160,29 +156,14 @@ extern void DPTF_GPU_Temp_Control(void);				//XITING0071:add
 #define	PSID_FAIL		0
 #define	PSID_GOOD		1
 #define	ROM_SKIP		0xCC
-//#define	ROM_READ		0x33
-//#define	MEM_STATUS_READ	0xAA
 #define	MEM_READ		0xF0
 
-#define RSOC_Shut_Cnt		50 					//XITING0067:Force system shutdown with 5S when RSOC drop to 0%.
+#define RSOC_Shut_Cnt		50 					//Force system shutdown with 5S when RSOC drop to 0%.
 
-//----------------------------------------------------------------------------
-// ROM Layout
-//----------------------------------------------------------------------------
-//#define PSID_DELL_HEADER        0x00   	// 'D', 'E', 'L', 'L'
-//#define PSID_REV_NUM            0x04   	// 2 bytes ASCII
-//#define PSID_CLASS_OF_PRODUCT   0x06   	// 'AC090', 'PS130'
-#define PSID_WATTS            	0x08  	// 3 bytes,
-//#define PSID_VOLTAGE            0x0B   	// 3 bytes, ACSII: '195' = 19.5V
-//#define PSID_CURRENT            0x0E   	// 3 bytes, ASCII: '045' = 4.5A
-//#define PSID_PPID               0x11    // Label On AC Adapter
-//#define PSID_PPID_MFGID			0x19	// Supplier MFG ID
-//#define PSID_CHECKSUM           0x28	// 2 byte CRC = X^16 + X^15 + X^2 + 1
 //----------------------------------------------------------------------------
 // adapter types
 //----------------------------------------------------------
-//#define AC_TYPE_MAX                     230
-//#define AC_ADAPTER_MIN					65
+
 #define AC_TYPE_UNKNOWN                 0
 #define AC_TYPE_45W                	    45
 #define AC_TYPE_50W                     50
@@ -195,10 +176,10 @@ extern void DPTF_GPU_Temp_Control(void);				//XITING0071:add
 #define AC_TYPE_150W                    150
 #define AC_TYPE_230W                    230
 #define AC_TYPE_240W					240
-//#define ACAV_HW     bAdapter_In
+
 
 extern void OEM_PollingBatData_TASK(void);
-extern void Battery_Expresscharge(void); //REJERRY065: Add express charge method.
+extern void Battery_Expresscharge(void); //Add express charge method.
 extern void WriteSmartChgIC(void);
 extern void ReadSmartChgIC(void);
 extern void Lenovo_Battery_EM80(void);
@@ -216,9 +197,9 @@ extern void DownBatteryPState();
 extern void Battery100ms(void);
 extern void ChkBattery_abnormal(void);
 extern void LV_BAT_Authentication(void);
-extern void RSOC1Pto0P_ShutdownCheck(void);					//XITING0067:Force system shutdown with 5S when RSOC drop to 0%.
+extern void RSOC1Pto0P_ShutdownCheck(void);					//Force system shutdown with 5S when RSOC drop to 0%.
 
-//#endif
+
 typedef struct batINFO
 {
 	BYTE DeviceNO;

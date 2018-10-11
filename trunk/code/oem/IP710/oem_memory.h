@@ -206,7 +206,7 @@ typedef enum
 //#define TurboBoost				BIT2 //REJERRY051:remove.
 #define IDCHG_GAIN				BIT3 //REJERRY051:add.
 #define IADP_GAIN				BIT4 //REJERRY051:add.
-#define BatLearnEnable          BIT5            //A28:battery learn discharging  W041.Fixed Battery Gauge Reset no function. 
+#define BatLearnEnable          BIT5            //battery learn discharging 
 //#define IFAULT_LOW				BIT6 //REJERRY051:remove.
 //#define IFAULT_HI				BIT7 //REJERRY051:remove.
 #define CHGIC_ReadCmd0x12H				SD_uchar_8(OEMRAM2+0x57)
@@ -222,7 +222,6 @@ typedef enum
 	#define Expresscharge_mode	BIT4 //REJERRY065: Add express charge flag.
 #define	EC_BatteryStatusL				SD_uchar_8(OEMRAM2+0x5A)
 #define	EC_BatteryStatusH				SD_uchar_8(OEMRAM2+0x5B)
-#define    BattTemp						SD_uchar_8(OEMRAM2+0x5C)
 #define	BatteryOTPRelease				SD_uchar_8(OEMRAM2+0x5D)
 #define	BatteryOTP						SD_uchar_8(OEMRAM2+0x5E)
 #define	BatteryOTPShutdown				SD_uchar_8(OEMRAM2+0x5F)
@@ -459,7 +458,7 @@ typedef enum
 #define	OverVolCount_normal_AC			SD_uchar_8(OEMRAM3+0x04)		//XITING0044:add
 #define	VolCount						SD_uchar_8(OEMRAM3+0x05)		//XITING0044:add
 
-#define	GPU_GO_TO_D5					SD_uchar_8(OEMRAM3+0x06)		//XITING0047:add
+#define	GPU_GO_TO_D5					SD_uchar_8(OEMRAM3+0x06)		
 
 //XITING0032:S change location to ram4 0x4C & 0x4D
 //JERRYCR049::Add start
@@ -1596,7 +1595,7 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 
 #define     DebugFan2RPMT 			SD_uchar_8(OEMRAM5+0xFA)     //MARTINH031:add 
 
-#define     testtoolflag 			SD_uchar_8(OEMRAM5+0xFB)     //MARTINH119:Add
+#define     testtoolflag 			SD_uchar_8(OEMRAM5+0xFB)    
 //MARTINH146:Add start
 #define     Fan1RPMTemp 				SD_uchar_8(OEMRAM5+0xFC) 
 #define     Fan2RPMTemp 				SD_uchar_8(OEMRAM5+0xFD)  
@@ -2150,17 +2149,6 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
   #define    SMART_NumLock   BIT5
   #define    USBALWONGet     GET_MASK(u4Cfgspace2,USBALWOn)
   #define    SrtNumLockGet   GET_MASK(u4Cfgspace2,SMART_NumLock)
-#define  BattStatusL         							SD_uchar_8(OEMRAM9+0xDE)					    // DE
- #define SMBerror0    BIT0          // error code bit0
- #define SMBerror1    BIT1          // error code bit1
- #define SMBerror2    BIT2          // error code bit2
- #define SMBerror3    BIT3          // error code bit3
- #define FullyDsg     BIT4          // statusfully discharged
- #define FullyChg     BIT5          // statusfully charged
- #define Dsg          BIT6          // statusdischarging
- #define Initialized  BIT7          // statusgauge initialized
-#define  BattStatusH         							SD_uchar_8(OEMRAM9+0xDF)					    // DF
-
 
 
 #define UCSI_50CMD_WA									SD_uchar_8(OEMRAM9+0xE0)					
@@ -2460,12 +2448,12 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 #define batterymoderetrycnt                  SD_uchar_8(OEMRAMC + 0x33)//HEGANG007:Add retry mechanism when battery SMBUS fail in ECC mode.
 #define LED_KB_PWM_Count					SD_uint_16(OEMRAMC + 0x34)  //REJERRY007:add.
 
-//XITING0067:S+ Force system shutdown with 5S when RSOC drop to 0%.
+//Force system shutdown with 5S when RSOC drop to 0%.
 #define RSOC1PTO0PCount						SD_uchar_8(OEMRAMC + 0x36)  
 #define RSOC1PTO0PSaveSpace					SD_uchar_8(OEMRAMC + 0x37)
 #define RSOCIs1P  BIT0
 #define RSOCIs0P  BIT1
-//XITING0067:E+ Force system shutdown with 5S when RSOC drop to 0%.
+
 
 
 #define SLI_GPUMax						SD_uchar_8(OEMRAMC + 0x38)
