@@ -285,8 +285,6 @@
 
 #define chSMB_TYPEC				SMbusChA
 
-#define NV_GC6                	FALSE // Set TRUE to support nV VGA GC6 feature
-
 #define EC_I2C_ADDR      0x02
 
 #define ACPOWER_ON 0//( Read_AC_IN() && !Read_ACOFF() ) //(JSN)

@@ -643,10 +643,9 @@ void Cmd_45(BYTE nPort, BYTE sCount)
 	//REJERRY091:E+.
 	#if Lenovo_Brightness
 		case 0x10://BIOS confirm Panel ok
-			//u_Reserve07.fbit.uE_PanelOK = 1; 
 			break;
 		case 0x11://BIOS confirm Panel fail
-			//u_Reserve07.fbit.uE_PanelOK = 0;
+
 			break;
 	#endif	// Lenovo_Brightness
 
@@ -855,13 +854,13 @@ void Cmd_45(BYTE nPort, BYTE sCount)
 			InitThermalTable2(); //MARTINH079:add
 			break;
 
-		case 0xE9://W036: beep function enable
-			uACInOutBeep = 1;	// Enable AC in/out beep //MARTINH110: change 0 to 1
-			RamDebug(0xEB);  //MARTINH115:change 0xE9 to 0xEB
+		case 0xE9:// beep function enable
+			uACInOutBeep = 1;	// Enable AC in/out beep 
+			RamDebug(0xEB); 
 			break;
 
 		case 0xEA://W036
-		      uACInOutBeep = 0;	// Disable AC in/out beep //MARTINH110: change 1 to 0
+		      uACInOutBeep = 0;	// Disable AC in/out beep
 		      RamDebug(0xEA);
 			break;
 
@@ -957,12 +956,10 @@ void Cmd_46(BYTE nPort,BYTE nData)
 			Data2Port(nPort, nAtmFan2Speed);			//Reading FAN speed from FAN2 //MARTINH031:change 'FAN2PRM' to 'nAtmFan2Speed'
 			break;
 		case 0x84:
-			//uReserve07.fbit.nFanManual = 0;		// return EC control.
-//T03-			uReserve07.fbit.b7Fan2Manual = 0;	// return EC control.
-            nFanManual = 0;  //martin0616:add
-			b7Fan2Manual = 0; //martin0616:add
+            nFanManual = 0; 
+			b7Fan2Manual = 0; 
 			break;
-	    #if Second_Module  //T03+
+	    #if Second_Module  
 		case 0x85:
 			SET_MASK(SLI_Status, b5CmdCtrl);
 			//SLI_FAN_PWM = FAN_PWM_Max;			// Turn on SLI FAN full speed.
@@ -982,17 +979,16 @@ void Cmd_46(BYTE nPort,BYTE nData)
 			//uReserve07.fbit.b7Fan2Manual = 1;
 			break;
 	   #endif    //T03 +  end "Second_Module"
-		default:  //martin0616 change for fan2.
-			//uReserve07.fbit.nFanManual = 1;
-			nFanManual = 1;  //martin0616:add
-			b7Fan2Manual = 1; //martin0616:add
+		default:  //change for fan2.
+			nFanManual = 1;  
+			b7Fan2Manual = 1; 
 			if ( nData >= 160 )
 			{
 				nData -= 160;
 				ManualFan2PRM = nData;
-				FAN2_PWM_ALT;//JERRYCR018:Add FAN2 control setting.
-				FAN2_PWM = ManualFan2PRM + 2;//JERRYCR018:Add FAN2 control setting.
-				FAN2_SPEED_ALT;		//JERRYCR018:Add FAN2 control setting.		
+				FAN2_PWM_ALT;//Add FAN2 control setting.
+				FAN2_PWM = ManualFan2PRM + 2;//Add FAN2 control setting.
+				FAN2_SPEED_ALT;		//Add FAN2 control setting.		
 			}
 			else
 			{
@@ -1527,10 +1523,8 @@ void Cmd_59(BYTE nPort, BYTE nData, BYTE nData2)
 		*/
 
 		case 0xB9:							// PME enable
-			//uReserve07.fbit.nPmeWakeEN = 1;
 			break;
 		case 0xBA:							// PME disable
-			//uReserve07.fbit.nPmeWakeDIS =0;
 			break;
 
 		case 0xC1:	// Force battery in learning state with AC

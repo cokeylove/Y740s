@@ -46,32 +46,22 @@
 #define	SysPowState						SD_uchar_8(OEMRAM2+0x00)
 #define	PWSeqStep			    		SD_uchar_8(OEMRAM2+0x01)
 #define	DeepSleepCunt					SD_uchar_8(OEMRAM2+0x02)
-#define DelayDoPowerSeq					SD_uchar_8(OEMRAM2+0x03)
+
 #define	PowSeqDelay						SD_uchar_8(OEMRAM2+0x05)
 #define	EC_ON_Delay						SD_uchar_8(OEMRAM2+0x06)	
 
 #define	SBSWReleaseCunt				    SD_uchar_8(OEMRAM2+0x07) 
 
-//REJERRY076:S+ add win key status define.
+//add win key status define.
 #define	WinKEY_STATE					SD_uchar_8(OEMRAM2+0x09)
 	#define  WinKey_Pressed      	BIT0 
 	#define  WinKey_Sended  		BIT1
-	#define  WinKEY_STATE_Check     BIT2						//XITING0007:add
-//REJERRY076:E+.
-#define	Test10A						SD_uchar_8(OEMRAM2+0x0A)//Y7JERRY091: Add workaround for hang S4/cold boot/reboot.
+	#define  WinKEY_STATE_Check     BIT2						
+//
+#define	Test10A						    SD_uchar_8(OEMRAM2+0x0A)//Add workaround for hang S4/cold boot/reboot.
 #define UART_DB_RAM						SD_uchar_8(OEMRAM2+0x0B)
-#define	KB_OBF_count					SD_uchar_8(OEMRAM2+0x0C)
 #define	UpdateLEDBL_delay				SD_uchar_8(OEMRAM2+0x0D)
-#define	uVGATurboFun					SD_uchar_8(OEMRAM2+0x0E)
-#define 		uEnableGPS			BIT0
-#define 		uDisPowerSteeringOK	BIT1
-#define 		uDisVGATurboOK		BIT2
-#define         uDisCPUTurboOK      BIT3 //REJERRY055:add.
-//#define 		uEnableOK			BIT3
-//#define 		uTruboLED_ON		BIT4
-//#define 		uChagnedToQuiet		BIT5
-//#define 		uExitFromQuiet		BIT6
-//#define 		uReserve0E_bit7		BIT7
+
 
 #define	CmdData2						SD_uchar_8(OEMRAM2+0x0F)
 
@@ -97,9 +87,9 @@
 
 #define	uVPCeventSource2				SD_uchar_8(OEMRAM2+0x19)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#define App_Control_Mic			 BIT0 //REJERRY004:add.
+#define App_Control_Mic			 BIT0 
 #define AllRF                    BIT1
-#define TPStateChange            BIT2 //MARTINH151:change "UserSelfDefine" to "TPStateChange"
+#define TPStateChange            BIT2 
 #define SwitchDisplayResolution  BIT3
 #define Switch_EQ                BIT4
 #define App_Control_RF           BIT5
@@ -107,8 +97,8 @@
 #define ODD_Notify               BIT7
 
 #define	uNovoVPCCount					SD_uchar_8(OEMRAM2+0x1A)
-#define	DebugCombineKey					SD_uchar_8(OEMRAM2+0x1B)
-#define	PowerLed_Count					SD_uchar_8(OEMRAM2+0x1C)
+
+
 #define LED_KB_PWM_Step					SD_uchar_8(OEMRAM2+0x1D)
 
 #define	u_Reserve07						(*((BITS_8 *)(OEMRAM2+0x1E)))
@@ -138,19 +128,16 @@
 #define	CHGIC_ReadCmd0x3FH				SD_uchar_8(OEMRAM2+0x29)
 #define BATTEMP							SD_uint_16(OEMRAM2+0x2A)
 #define EC_C_modeL						SD_uchar_8(OEMRAM2+0x2C)
-	#define b4QuickChargeMode	BIT4 //REJERRY065:add.
+	#define b4QuickChargeMode	BIT4 
 #define	EC_C_modeH						SD_uchar_8(OEMRAM2+0x2D)
 #define	ManualFanPRM					SD_uchar_8(OEMRAM2+0x2E)
 #define	AdapterID						SD_uchar_8(OEMRAM2+0x2F)
 
-#define	eFlashVarifyOK					SD_uchar_8(OEMRAM2+0x30)
-#define	eFlash_r_data					SD_uchar_8(OEMRAM2+0x31)
+
 #define	eFlashA1						SD_uchar_8(OEMRAM2+0x32)
-#define	eFlashA0						SD_uchar_8(OEMRAM2+0x33)
 #define	eEEPROMBank						SD_uchar_8(OEMRAM2+0x34)
 #define	eEEPROMAddrsss					SD_uchar_8(OEMRAM2+0x35)
 #define	eEEPROMData						SD_uchar_8(OEMRAM2+0x36)
-#define	eEEPROMMarkData					SD_uchar_8(OEMRAM2+0x37)
 #define e256ByteCnt						SD_uchar_8(OEMRAM2+0x38)
 #define	eUpdateEEPROMCnt				SD_uchar_8(OEMRAM2+0x39)
 #define	eUpdatepDevStusCnt				SD_uchar_8(OEMRAM2+0x3A)
@@ -161,7 +148,6 @@
 #define	SMbusFailCnt3					SD_uchar_8(OEMRAM2+0x3F)
 
 #define	CombineKeyRN					SD_uchar_8(OEMRAM2+0x40)
-#define EscScanCodeDelay				SD_uchar_8(OEMRAM2+0x41)
 #define	API_ID							SD_uint_16(OEMRAM2+0x42)
 
 typedef enum
@@ -177,21 +163,11 @@ typedef enum
 #define	Get_Batt_debounce_count				SD_uchar_8(OEMRAM2+0x4B)
 #define	Get_Batt_debounce_hash1				SD_uchar_8(OEMRAM2+0x4C)
 #define	Get_Batt_debounce_hash2				SD_uchar_8(OEMRAM2+0x4D)
-#define	CombineKeyIO						SD_uchar_8(OEMRAM2+0x4E)
-#define	GPIO_STATUS							SD_uchar_8(OEMRAM2+0x4F)
-#define GPIO_RSMRST				BIT0			// PB.7 RSMRST.
-#define GPIO_PBTN_OUT			BIT1			// PF.1 PBTN_OUT.
-#define GPIO_VDDQ_PGOOD			BIT2			// PI.1 VDDQ_PGOOD
-#define GPIO_PM_SLP_S3			BIT3			// PH.1 PM_SLP_S3
-#define GPIO_PM_SLP_S4			BIT4			// PH.2 PM_SLP_S4
-#define GPIO_PM_SLP_S5			BIT5			// Px.x PM_SLP_S5
-#define GPIO_VR_ON				BIT6			// PE.3 VR_ON
-#define GPIO_PCH_PWROK			BIT7			// PH.6 PCH_PWROK
+
 
 #define	Bat0x0BTempL						SD_uchar_8(OEMRAM2+0x50)
 #define	Bat0x0BTempH						SD_uchar_8(OEMRAM2+0x51)
 #define	Bat0x0BFakeCnt						SD_uchar_8(OEMRAM2+0x52)
-#define	Bat0x08OTPCnt						SD_uchar_8(OEMRAM2+0x53)
 #define	S3ResumeRSOC						SD_uchar_8(OEMRAM2+0x54)
 #define	BatteryAlarm						SD_uchar_8(OEMRAM2+0x55)
 #define BATOCP					BIT0
@@ -202,68 +178,47 @@ typedef enum
 
 #define CHGIC_ReadCmd0x12L					SD_uchar_8(OEMRAM2+0x56)
 #define ChargeInhibit			BIT0
-//#define BoostIndication			BIT1 //REJERRY051:remove.
-//#define TurboBoost				BIT2 //REJERRY051:remove.
-#define IDCHG_GAIN				BIT3 //REJERRY051:add.
-#define IADP_GAIN				BIT4 //REJERRY051:add.
+
 #define BatLearnEnable          BIT5            //battery learn discharging 
-//#define IFAULT_LOW				BIT6 //REJERRY051:remove.
-//#define IFAULT_HI				BIT7 //REJERRY051:remove.
-#define CHGIC_ReadCmd0x12H				SD_uchar_8(OEMRAM2+0x57)
-//#define ACOKDeglitchTime        BIT4 //REJERRY051:remove.
-#define PWM_FREQ				BIT0 //REJERRY051:add.
-#define PWM_FREQ1				BIT1 //REJERRY051:add. 
-#define WDTMR_ADJ				BIT5 //REJERRY051:add.
-#define WDTMR_ADJ1				BIT6 //REJERRY051:add.
-#define LOWPWR_EN				BIT7//JERRYCR030:Setting charge IC
+
+#define CHGIC_ReadCmd0x12H				    SD_uchar_8(OEMRAM2+0x57)
+
+#define PWM_FREQ				BIT0 
+#define PWM_FREQ1				BIT1  
+#define WDTMR_ADJ				BIT5 
+#define WDTMR_ADJ1				BIT6 
+#define LOWPWR_EN				BIT7
 
 #define    Bat0x3ETempL					SD_uchar_8(OEMRAM2+0x58)
 #define    Bat0x3ETempH					SD_uchar_8(OEMRAM2+0x59)
-	#define Expresscharge_mode	BIT4 //REJERRY065: Add express charge flag.
+	#define Expresscharge_mode	BIT4 
 #define	EC_BatteryStatusL				SD_uchar_8(OEMRAM2+0x5A)
 #define	EC_BatteryStatusH				SD_uchar_8(OEMRAM2+0x5B)
 #define	BatteryOTPRelease				SD_uchar_8(OEMRAM2+0x5D)
 #define	BatteryOTP						SD_uchar_8(OEMRAM2+0x5E)
 #define	BatteryOTPShutdown				SD_uchar_8(OEMRAM2+0x5F)
 
-#define	FAN_Tab_OFF					SD_uchar_8(OEMRAM2+0x60)
-#define	FAN_Tab_LOW					SD_uchar_8(OEMRAM2+0x61)
-#define	FAN_Tab_Step1					SD_uchar_8(OEMRAM2+0x62)
-#define	FAN_Tab_Step2					SD_uchar_8(OEMRAM2+0x63)
-#define	FAN_Tab_HI						SD_uchar_8(OEMRAM2+0x64)
-#define	THR_PRO_OFF					SD_uchar_8(OEMRAM2+0x65)
+
+
+
+#define	THR_PRO_OFF					    SD_uchar_8(OEMRAM2+0x65)
 #define	THR_PRO_ON						SD_uchar_8(OEMRAM2+0x66)
 #define	THR_Turo_Rem					SD_uchar_8(OEMRAM2+0x67)
 #define	THR_Turo_OFF					SD_uchar_8(OEMRAM2+0x68)
 #define	THR_Tab_Shut					SD_uchar_8(OEMRAM2+0x69)
 #define	KB_S3Dly						SD_uchar_8(OEMRAM2+0x6A)
-#define	SLI_FAN_Tab_OFF				SD_uchar_8(OEMRAM2+0x6B)
-#define	SLI_FAN_Tab_LOW				SD_uchar_8(OEMRAM2+0x6C)
-#define	SLI_FAN_Tab_Step1				SD_uchar_8(OEMRAM2+0x6D)
-#define	SLI_FAN_Tab_Step2				SD_uchar_8(OEMRAM2+0x6E)
-#define	SLI_FAN_Tab_HI					SD_uchar_8(OEMRAM2+0x6F)
 
-#define	VFAN_Tab_OFF					SD_uchar_8(OEMRAM2+0x70)
-#define	VFAN_Tab_LOW					SD_uchar_8(OEMRAM2+0x71)
-#define	VFAN_Tab_Step1					SD_uchar_8(OEMRAM2+0x72)
-#define	VFAN_Tab_Step2					SD_uchar_8(OEMRAM2+0x73)
-#define	VFAN_Tab_HI					SD_uchar_8(OEMRAM2+0x74)
 #define	VTHR_PRO_OFF					SD_uchar_8(OEMRAM2+0x75)
-#define	VTHR_PRO_ON					SD_uchar_8(OEMRAM2+0x76)
+#define	VTHR_PRO_ON					    SD_uchar_8(OEMRAM2+0x76)
 #define	VTHR_Turo_Rem					SD_uchar_8(OEMRAM2+0x77)
 #define	VTHR_Turo_OFF					SD_uchar_8(OEMRAM2+0x78)
 #define	VTHR_Tab_Shut					SD_uchar_8(OEMRAM2+0x79)
 
-#define	SLI_THR_PRO_OFF				SD_uchar_8(OEMRAM2+0x7B)
-#define	SLI_THR_PRO_ON					SD_uchar_8(OEMRAM2+0x7C)
-#define	SLI_THR_Turo_Rem				SD_uchar_8(OEMRAM2+0x7D)
-#define	SLI_THR_Turo_OFF				SD_uchar_8(OEMRAM2+0x7E)
-#define	SLI_THR_Tab_Shut				SD_uchar_8(OEMRAM2+0x7F)
 
 #define	inhibit2sec 					SD_uchar_8(OEMRAM2+0x80)
-#define	Battdata_ready 				SD_uchar_8(OEMRAM2+0x81)
-#define		TrickleChgTimeOutCnt			SD_uint_16(OEMRAM2+0x82)//0x82,0x83
-#define		FastChgTimeOutCnt				SD_uint_16(OEMRAM2+0x84)//0x84,0x85
+#define	Battdata_ready 				    SD_uchar_8(OEMRAM2+0x81)
+#define	TrickleChgTimeOutCnt			SD_uint_16(OEMRAM2+0x82)//0x82,0x83
+#define	FastChgTimeOutCnt				SD_uint_16(OEMRAM2+0x84)//0x84,0x85
 #define	RSMshutdownCnt					SD_uchar_8(OEMRAM2+0x86)
 typedef enum
 {
@@ -273,7 +228,7 @@ typedef enum
 }ChkBattery_abnormal_status_type;
 #define	ChkBattery_abnormal_status		SD_uchar_8(OEMRAM2+0x87)
 #define	ChkBattery_abnormal_count		SD_uchar_8(OEMRAM2+0x88)
-#define	LOWBATT_3TIMES 				SD_uchar_8(OEMRAM2+0x89)
+#define	LOWBATT_3TIMES 				    SD_uchar_8(OEMRAM2+0x89)
 
 #define	Bat0x00TempL 					SD_uchar_8(OEMRAM2+0x8C)
 #define	Bat0x00TempH 					SD_uchar_8(OEMRAM2+0x8D)
@@ -281,91 +236,57 @@ typedef enum
 #define	Bat0x0FTempH 					SD_uchar_8(OEMRAM2+0x8F)
 
 
-#define   ACIN_FallINT_Count				SD_uchar_8(OEMRAM2+0x91)
-#define Chk_Wrong_10ms_Count				SD_uint_16(OEMRAM2+0x92)
-typedef enum
-{
-	Chk_ACOP_Status_Null,
-	Chk_ACOP_Status_wait_10sec,
-	Chk_ACOP_Status_ACOFF_Lock
-}Chk_ACOP_Status_Type;
-#define	Chk_ACOP_Status				SD_uchar_8(OEMRAM2+0x98)
-#define	Chk_ACOP_Bat_Chg_Current		SD_uint_16(OEMRAM2+0x94)
-#define	Chk_ACOP_10ms_Count			SD_uint_16(OEMRAM2+0x96)
 
-typedef enum
-{
-	Chk_Hybrid_STPP_Status_CP,
-	Chk_Hybrid_STPP_Status_Charger_Turbo,
-	Chk_Hybrid_STPP_Status_Disable_CPUTurbo,
-	Chk_Hybrid_STPP_Status_CPU_throttling,
-	Chk_Hybrid_STPP_Status_Recover_CPU_throttling,
-	Chk_Hybrid_STPP_Status_Recover_Charger_Turbo
-}Chk_Hybrid_STPP_Status_Type;
-#define	Chk_Hybrid_STPP_Status				SD_uchar_8(OEMRAM2+0x99)
 #define	Chk_Hybrid_STPP_min_BattGasgauge	SD_uchar_8(OEMRAM2+0x9A)
-#define Chk_Hybrid_STPP_Batt_Output_Power		SD_uint_16(OEMRAM2+0x9C)
-#define Chk_Hybrid_STPP_Batt_Output_Power_Limit		SD_uint_16(OEMRAM2+0x9E)
-#define	BackLight_En_Delay				SD_uchar_8(OEMRAM2+0x9B)
+#define	BackLight_En_Delay				    SD_uchar_8(OEMRAM2+0x9B)
 
-#define	UCS1002ID						SD_uchar_8(OEMRAM2+0xA0)
-#define	Chk_Hybrid_STPP_Turboboost_Battery_Current_limit	SD_uint_16(OEMRAM2+0xA2)
 
-#define	NTC_V3					SD_uint_16(OEMRAM2+0xA6) //martin0606A +
+#define	NTC_V3					SD_uint_16(OEMRAM2+0xA6) 
 
 
 #define	ADPI_Data					SD_Ptr_uint_16(OEMRAM2+0xA8)//0xA8~0xAF
-//MQJERRY001:s-Change the EC register address.
-//#define ITempW01					SD_uint_16(OEMRAM2+0xAA)
-//#define ShipModeACKL                 SD_uchar_8(OEMRAM2+0xAC)
-//#define ShipModeACKH                 SD_uchar_8(OEMRAM2+0xAD)
-//#define ShipModeCnt                 SD_uchar_8(OEMRAM2+0xAE)
-//#define ECONTimer                   SD_uchar_8(OEMRAM2+0xAF)
-//MQJERRY001:e-Change the EC register address.
+
 #define ShipModeEn                  SD_uchar_8(OEMRAM2+0xB0)
 #define ShipModeEnCnt               SD_uchar_8(OEMRAM2+0xB1)
 #define SMbusFailCnt4               SD_uchar_8(OEMRAM2+0xB2)
 
-//REJERRY007:S+ add led control timer count.
+//add led control timer count.
 #define BAT_LED_Cnt_ON              SD_uchar_8(OEMRAM2+0xB4)
 #define BAT_LED_Cnt_OFF             SD_uchar_8(OEMRAM2+0xB6)
 #define BAT_LOW_LED_Cnt             SD_uchar_8(OEMRAM2+0xB8)
-//REJERRY007:E+
 
-#define KeyBoardID                  SD_uchar_8(OEMRAM2+0xBA) //REJERRY008:add.
 
-//REJERRY014:S+
+#define KeyBoardID                  SD_uchar_8(OEMRAM2+0xBA)
+
 #define battery_critical            SD_uchar_8(OEMRAM2+0xBC)
 	#define	DC0ver5enterS3			BIT0
   	#define	DCdischargeto5ins3		BIT1
-//REJERRY014:E+
 
-#define DPTF_OverTemp_Count			SD_uchar_8(OEMRAM2+0xBD)		//XITING0029:add
-#define DPTF_UnderTemp_Count		SD_uchar_8(OEMRAM2+0xBE)		//XITING0029:add
-#define DPTF_OverTemp_Flag			SD_uchar_8(OEMRAM2+0xBF)		//XITING0029:add
+#define DPTF_OverTemp_Count			SD_uchar_8(OEMRAM2+0xBD)		
+#define DPTF_UnderTemp_Count		SD_uchar_8(OEMRAM2+0xBE)	
+#define DPTF_OverTemp_Flag			SD_uchar_8(OEMRAM2+0xBF)		
 
 
 #define	XWTemp1						SD_uint_16(OEMRAM2+0xC0)
-#define	OCPCapacityRelease				SD_uint_16(OEMRAM2+0xC2)
-#define    OCPCapacity					SD_uint_16(OEMRAM2+0xC4)
-#define	ECBIOSVersionH					SD_uchar_8(OEMRAM2+0xC6)
-#define	ECBIOSVersionL					SD_uchar_8(OEMRAM2+0xC7)
-#define    ECBIOSUbSVersion				SD_uchar_8(OEMRAM2+0xC8)
+#define	OCPCapacityRelease			SD_uint_16(OEMRAM2+0xC2)
+#define OCPCapacity					SD_uint_16(OEMRAM2+0xC4)
+#define	ECBIOSVersionH				SD_uchar_8(OEMRAM2+0xC6)
+#define	ECBIOSVersionL				SD_uchar_8(OEMRAM2+0xC7)
+#define ECBIOSUbSVersion			SD_uchar_8(OEMRAM2+0xC8)
 
-#define    ADPIDON10MS_NUM			SD_uchar_8(OEMRAM2+0xC9) //JERRYCR031:Add 45W and 65W adapter not allow power on.
-#define    VolDn_Cnt                       SD_uchar_8(OEMRAM2+0xCA)
-#define    VolUp_Cnt                       SD_uchar_8(OEMRAM2+0xCB)
-#define	ADPI2Sec						SD_uchar_8(OEMRAM2+0xCF)
-#define	TurboBoostCP					SD_uint_16(OEMRAM2+0xD0)
-#define	TurboBoostEn					SD_uint_16(OEMRAM2+0xD2)
+#define ADPIDON10MS_NUM			    SD_uchar_8(OEMRAM2+0xC9) //Add 45W and 65W adapter not allow power on.
+
+#define	ADPI2Sec					SD_uchar_8(OEMRAM2+0xCF)
+#define	TurboBoostCP				SD_uint_16(OEMRAM2+0xD0)
+#define	TurboBoostEn				SD_uint_16(OEMRAM2+0xD2)
 #define	TurboBoostthrottlEn			SD_uint_16(OEMRAM2+0xD4)
-#define	TurboBoostthrottlDis			SD_uint_16(OEMRAM2+0xD6)
-#define	TurboBoostDis					SD_uint_16(OEMRAM2+0xD8)
-#define   	ACModeSTPPEn					SD_uint_16(OEMRAM2+0xDA)
-#define   	ACModeSTPPDis					SD_uint_16(OEMRAM2+0xDC)
-#define	ADPI_AvgData					SD_uint_16(OEMRAM2+0xDE)
+#define	TurboBoostthrottlDis		SD_uint_16(OEMRAM2+0xD6)
+#define	TurboBoostDis				SD_uint_16(OEMRAM2+0xD8)
+#define ACModeSTPPEn				SD_uint_16(OEMRAM2+0xDA)
+#define ACModeSTPPDis				SD_uint_16(OEMRAM2+0xDC)
+#define	ADPI_AvgData				SD_uint_16(OEMRAM2+0xDE)
 
-#define    POWER_FLAG1            		SD_uchar_8(OEMRAM2+0xE0)	//EC power flag 1
+#define POWER_FLAG1            		SD_uchar_8(OEMRAM2+0xE0)	//EC power flag 1
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #define adapter_in      	BIT0  	    		// 1: AC adapter exist
 #define wait_PSW_off    	BIT1  	    		// 1: waiting for PSW released
@@ -376,7 +297,7 @@ typedef enum
 #define vol_up_off          BIT6
 #define vol_down_off        BIT7
 /*  BATTERYS INFORMATION    */
-#define    BT1_STATUS1            		SD_uchar_8(OEMRAM2+0xE1)	//Battery 1 status1 flag
+#define BT1_STATUS1            		SD_uchar_8(OEMRAM2+0xE1)	//Battery 1 status1 flag
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #define bat_in         		BIT0	    		// 1: Battery 1 exist
 #define bat_valid           BIT1   	    		// 1: Battery 1 battery idetify OK
@@ -388,20 +309,15 @@ typedef enum
 
 #define	PSW_COUNTER            		SD_uint_16(OEMRAM2+0xE2)	//(word)
 
-#define    EVT_STATUS1            		SD_uchar_8(OEMRAM2+0xE4)	//Event status flag 1
-#define LAN_WAKE_Status     BIT4			//JERRYCR020:Add lan wake function.
-#define Lid_Act             BIT5                //martin0628B add
+#define EVT_STATUS1            		SD_uchar_8(OEMRAM2+0xE4)	//Event status flag 1
+#define LAN_WAKE_Status     BIT4			//Add lan wake function.
+#define Lid_Act             BIT5          
 #define DummyFlag           BIT7        		// 1:CRT Sense
 
-#define   	DS3PowSeqDelay					SD_uint_16(OEMRAM2+0xE6) 	//(word)
-#define   	DS3PowSeqStep			    	SD_uchar_8(OEMRAM2+0xE8)
 
-#define   	DRAMRST_CNTRL_CNT				SD_uchar_8(OEMRAM2+0xE9)
-#define		SUSACK_LOW_CNT					SD_uint_16(OEMRAM2+0xEA)
-#define   	SUSACK_HI_CNT					SD_uchar_8(OEMRAM2+0xEC)
-#define		DRAMRST_CNTRL_LOW_CNT			SD_uchar_8(OEMRAM2+0xED)
-#define   	S3S4DelayCnt					SD_uchar_8(OEMRAM2+0xEE)
-#define    BatOnlyPWRON                   SD_uchar_8(OEMRAM2+0xEF)   //A13:rewrite power on sequence to match EE requirement 20130507 10:57
+
+
+#define S3S4DelayCnt					SD_uchar_8(OEMRAM2+0xEE)
 
 #define	DEBOUNCE_CONT1			SD_uchar_8(OEMRAM2+0xF0) //(byte)
 #define	DEBOUNCE_CONT2			SD_uchar_8(OEMRAM2+0xF1) //(byte)
@@ -426,20 +342,18 @@ typedef enum
 //-------------------------------------------------------------------------------
 //*******************************************************************************
 
-//REJERRY056:S+ add flag for DGPU G0 and G1.
+//add flag for DGPU G0 and G1.
 #define	pProject1				SD_uchar_8(OEMRAM3+0x01)
 #define b0NvGpuG1				BIT0
-//REJERRY056:E+.
+
 
 #define	pProject0				SD_uchar_8(OEMRAM3+0x02)
 #define b0DispToggleEn			BIT0
-//JERRYCR049::Add start
 #define b1uFUdayClr			    BIT1
 #define b2uFUdayFail            BIT2
 #define b3uBatteryTimeNoOK      BIT3
-//JERRYCR049::Add end
 #define b4VGAType				BIT4   //0:DIS;1:UMA
-#define b5FUBIOSWriteReady      BIT5   //JERRYCR049::Add
+#define b5FUBIOSWriteReady      BIT5   
 #define b6PostHotKey			BIT6
 
 
@@ -447,26 +361,19 @@ typedef enum
 #define	pKillSwitch			BIT0		// WLan & Bluetooth Button status
 #define	pWireless			BIT1		// Wireless status
 #define	pBluetooth			BIT2		// Bluetooth status
-#define	pENABLE_TP			BIT3		// 1 : Enable TP, 0 : Disable TP //W121//JERRYCR013+
-//#define pPadLidSendScanCode BIT3		// 1: have send 0: TP driver has responsed //W121//JERRYCR013-
+#define	pENABLE_TP			BIT3		// 1 : Enable TP, 0 : Disable TP 
 #define	pCamera				BIT4
 #define	pKBLight			BIT5
 #define	p3GDevice			BIT6
 #define	pSwitchableBTN		BIT7
 
-#define	OverVolCount_normal_AC			SD_uchar_8(OEMRAM3+0x04)		//XITING0044:add
-#define	VolCount						SD_uchar_8(OEMRAM3+0x05)		//XITING0044:add
+#define	OverVolCount_normal_AC			SD_uchar_8(OEMRAM3+0x04)		
+#define	VolCount						SD_uchar_8(OEMRAM3+0x05)		
 
 #define	GPU_GO_TO_D5					SD_uchar_8(OEMRAM3+0x06)		
 
-//XITING0032:S change location to ram4 0x4C & 0x4D
-//JERRYCR049::Add start
-//#define	batteryFirstUsedDateL		SD_uchar_8(OEMRAM3+0x04)
-//#define	batteryFirstUsedDateH		SD_uchar_8(OEMRAM3+0x05)
-//JERRYCR049::Add end
-//XITING0032:E
 
-#define		pOneKeyAPPStatus		SD_uchar_8(OEMRAM3+0x0B)	// Lenovo_VGATurbo
+#define	pOneKeyAPPStatus		SD_uchar_8(OEMRAM3+0x0B)	// Lenovo_VGATurbo
 #define	pReserve0B_bit0			BIT0
 #define	pTheaterKey				BIT1
 #define	pSecurityKey			BIT2
@@ -474,14 +381,14 @@ typedef enum
 #define	pReserve13_bit4			BIT4		//Lenovo security essentials
 #define	pEMturboBtn				BIT5		//Use this to notify EM when user push turbo button.
 
-#define pPROCHOT						SD_uchar_8(OEMRAM3+0x0C)
+#define pPROCHOT				SD_uchar_8(OEMRAM3+0x0C)
 #define	b0Thermal_PRCOHOTon		BIT0
 #define b1ISCT_PROCHOTon		BIT1
-#define	pProject4					SD_uchar_8(OEMRAM3+0x0D) //REJERRY091:add.
-	#define  pPWSWdisable      BIT0  //REJERRY091:add.
+#define	pProject4					SD_uchar_8(OEMRAM3+0x0D)
+#define pPWSWdisable      BIT0  
 
-#define DPTF_OVER_TEMP_COUNT				SD_uchar_8(OEMRAM3+0x0E)		//XITING0071:add
-#define DPTF_UNDER_TEMP_COUNT				SD_uchar_8(OEMRAM3+0x0F)		//XITING0071:add
+#define DPTF_OVER_TEMP_COUNT				SD_uchar_8(OEMRAM3+0x0E)		
+#define DPTF_UNDER_TEMP_COUNT				SD_uchar_8(OEMRAM3+0x0F)		
 	
 #define SMartNoise					SD_uchar_8(OEMRAM3+0x11)
 #define	b0FanCleanOn			BIT0
@@ -506,12 +413,10 @@ typedef enum
 #define	uMBID						SD_uchar_8(OEMRAM3+0x15)
 
 
-//XITING0031:S+ add power led control timer count.
+//add power led control timer count.
 #define PWR_LED_Cnt_ON              SD_uchar_8(OEMRAM3+0x16)
 #define PWR_LED_Cnt_OFF             SD_uchar_8(OEMRAM3+0x18)
-//XITING0031:E+
 
-//XITING0018:S change ram location form ram4 0x70 to ram3 x18
 #define	Debug_BRT_RC_C2_L			SD_uchar_8 (OEMRAM3+0x17)
 #define	Debug_BRT_RC_C2_H			SD_uchar_8 (OEMRAM3+0x19)
 
@@ -523,15 +428,15 @@ typedef enum
 
 #define	Debug_BRT_AC_D2_L			SD_uchar_8 (OEMRAM3+0x1E)
 #define	Debug_BRT_AC_D2_H			SD_uchar_8 (OEMRAM3+0x1F)
-//XITING0018:E
-
-#define Psys						SD_uint_16(OEMRAM3+0x20)			// 20-21 XITING0002:add
-#define	Psys_AvgData				SD_uint_16(OEMRAM3+0x22)			// 22-23 XITING0002:add
-#define	Psys_Data					SD_Ptr_uint_16(OEMRAM3+0x24)		// 22-2B XITING0002:add
-#define cGPUBattPsysThrottling		SD_uchar_8(OEMRAM3+0x2C)			// 2C    XITING0002:add
 
 
-//XITING0018:S+  UCSI
+#define Psys						SD_uint_16(OEMRAM3+0x20)			
+#define	Psys_AvgData				SD_uint_16(OEMRAM3+0x22)			
+#define	Psys_Data					SD_Ptr_uint_16(OEMRAM3+0x24)		
+#define cGPUBattPsysThrottling		SD_uchar_8(OEMRAM3+0x2C)			
+
+
+//UCSI
 //#define Fsm                         SD_uchar_8(OEMRAM3+0x2E)           	//XITING0018:add
 
 #define SMB3_DATA					SD_Ptr_uchar_8(OEMRAM3+0x30)		// 30-4F
@@ -567,51 +472,32 @@ typedef enum
  #define  pEdgeProjectBATWake     BIT4
  #define  pEdgeTPReset            BIT5
  #define  pEdgeADPIDReady         BIT6
-#if NV_GC6
- #define  pEdgeGC6EventHI         BIT7
-#endif // NV_GC6
 
-#define uSMBusBcnt					SD_uchar_8(OEMRAM3+0x55)		 // 55
 
-//XITING0018:E+
 
 #define	StartFanClean				SD_uchar_8(OEMRAM3+0x61)
 #define	FanCleanFull				SD_uchar_8(OEMRAM3+0x62)
 #define	FanCleanHalt				SD_uchar_8(OEMRAM3+0x63)
 
-#define	pModuleID					SD_uchar_8(OEMRAM3+0x66)
 #define	pLastSID					SD_uchar_8(OEMRAM3+0x67)
 #define	pLastSID2					SD_uchar_8(OEMRAM3+0x68)
 #define	pLastSID3					SD_uchar_8(OEMRAM3+0x69)
 #define	pLastSID4					SD_uchar_8(OEMRAM3+0x6A)
 
-////72JERRY008:s+
-#define  AOURSTCNT					SD_uchar_8(OEMRAM2+0x70)  
+
 #define  EC_AOU_DBG_FLAG			SD_uchar_8(OEMRAM2+0x71)
 // BIT6:0 used for setting battery level for testing.
 #define AOU_DC_LEVEL_DBG    BIT7
 #define EC_AOU_PWR_TYPE       		SD_uchar_8(OEMRAM2+0x72)
   // BIT7:4 AOU port power mode
   // BIT3:0 Non-AOU port power mode
-  ////72JERRY008:e+
 
-#define	KeepBattRemineCap			SD_uint_16(OEMRAM3+0x82)
-#define	cPacketPowerLimit1			SD_uchar_8(OEMRAM3+0x84)
 
 #define	ChkBattery_FCCchg_count		SD_uchar_8(OEMRAM3+0x85)
 #define	ChkBattery_FCCchg_lastFCCL	SD_uchar_8(OEMRAM3+0x86)
 #define	ChkBattery_FCCchg_lastFCCH	SD_uchar_8(OEMRAM3+0x87)
 #define	CountSecAfterPswPressed		SD_uchar_8(OEMRAM3+0x88)
 #define	CountSecAfterNOVOPressed	SD_uchar_8(OEMRAM3+0x89)
-
-#define	pVCompareFlag				SD_uchar_8(OEMRAM3+0x8A)
-#define VC0TriggerOn				BIT0
-#define VC1TriggerOn				BIT1
-#define VC2TriggerOn				BIT2
-
-#define	ChkBattery_FCCchg_count2		SD_uchar_8(OEMRAM3+0x8B)   //MARTINH074:add
-
-#define	TURBO_V					SD_uint_16(OEMRAM3+0x8C)
 
 #define	chargerInitIndex        SD_uchar_8(OEMRAM3+0x8F) //(byte)
 
@@ -625,97 +511,94 @@ typedef enum
 #define	Chg_MinSysVoltage_H     SD_uchar_8(OEMRAM3+0x97) //(byte)
 #define	Chg_InputCurrent_L     	SD_uchar_8(OEMRAM3+0x98) //(byte)
 #define	Chg_InputCurrent_H     	SD_uchar_8(OEMRAM3+0x99) //(byte)
-#define Dischg_Current_L		SD_uchar_8(OEMRAM3+0x9A) //(byte)//JERRYCR030:Setting charge IC.
-#define Dischg_Current_H		SD_uchar_8(OEMRAM3+0x9B) //(byte)//JERRYCR030:Setting charge IC.
-#define CHGIC_ReadCmd0x3BL		SD_uchar_8(OEMRAM3+0x9C) //(byte)//JERRYCR030:Setting charge IC.
-#define CHGIC_ReadCmd0x3BH		SD_uchar_8(OEMRAM3+0x9D) //(byte)//JERRYCR030:Setting charge IC.
-#define CHGIC_ReadCmd0x3CL		SD_uchar_8(OEMRAM3+0x9E) //(byte)//JERRYCR030:Setting charge IC.
-#define CHGIC_ReadCmd0x3CH		SD_uchar_8(OEMRAM3+0x9F) //(byte)//JERRYCR030:Setting charge IC.
-#define CHGIC_ReadCmd0x3DL		SD_uchar_8(OEMRAM3+0xA0) //(byte)//JERRYCR030:Setting charge IC.
-#define CHGIC_ReadCmd0x3DH		SD_uchar_8(OEMRAM3+0xA1) //(byte)//JERRYCR030:Setting charge IC.
-#define CHGIC_ReadCmd0x37L		SD_uchar_8(OEMRAM3+0xA2)// by sheldon
+#define Dischg_Current_L		SD_uchar_8(OEMRAM3+0x9A) //(byte)
+#define Dischg_Current_H		SD_uchar_8(OEMRAM3+0x9B) //(byte)
+#define CHGIC_ReadCmd0x3BL		SD_uchar_8(OEMRAM3+0x9C) //(byte)
+#define CHGIC_ReadCmd0x3BH		SD_uchar_8(OEMRAM3+0x9D) //(byte)
+#define CHGIC_ReadCmd0x3CL		SD_uchar_8(OEMRAM3+0x9E) //(byte)
+#define CHGIC_ReadCmd0x3CH		SD_uchar_8(OEMRAM3+0x9F) //(byte)
+#define CHGIC_ReadCmd0x3DL		SD_uchar_8(OEMRAM3+0xA0) //(byte)
+#define CHGIC_ReadCmd0x3DH		SD_uchar_8(OEMRAM3+0xA1) //(byte)
+#define CHGIC_ReadCmd0x37L		SD_uchar_8(OEMRAM3+0xA2)
 #define CHGIC_ReadCmd0x37H		SD_uchar_8(OEMRAM3+0xA3)
-#define CHGIC_ReadCmd0x38L		SD_uchar_8(OEMRAM3+0xA4)// by sheldon
+#define CHGIC_ReadCmd0x38L		SD_uchar_8(OEMRAM3+0xA4)
 #define CHGIC_ReadCmd0x38H		SD_uchar_8(OEMRAM3+0xA5)
-#define CHGIC_ReadCmd0x3AL		SD_uchar_8(OEMRAM3+0xA6)// by sheldon
+#define CHGIC_ReadCmd0x3AL		SD_uchar_8(OEMRAM3+0xA6)
 #define CHGIC_ReadCmd0x3AH		SD_uchar_8(OEMRAM3+0xA7)
-#define KEYBOARD_LED     		SD_uchar_8(OEMRAM3+0xA8) ////JERRYCR059:+
+#define KEYBOARD_LED     		SD_uchar_8(OEMRAM3+0xA8) 
 
-//REJERRY031:S+
-#define CPUProchotONCnt         SD_uchar_8(OEMRAM3+0xA9) //REJERRY035:modify from RAM2 to RAM3.
-#define VolDelayCount           SD_uchar_8(OEMRAM3+0xAA) //REJERRY042:add.
-#define OverVolCount            SD_uchar_8(OEMRAM3+0xAB) //REJERRY042:add.
-#define PsysDelayCount          SD_uchar_8(OEMRAM3+0xAC) //REJERRY042:add.
-#define BattAlarmDelayCount     SD_uchar_8(OEMRAM3+0xAD) //REJERRY042:add.
 
-#define GPUProchotFlag          SD_uchar_8(OEMRAM3+0xAE) //REJERRY056:add.
-    #define b0GpuAdpI           BIT0  //REJERRY056:add.
-    #define b1GpuBattAlarm      BIT1  //REJERRY056:add.
-    #define b2GpuBattOTP        BIT2  //REJERRY077:add.
-    #define b3GpuBattPmax        BIT3  //REJERRY077:add.
-    #define b4GpuPsys        	BIT4					//XITING0002:add
+#define CPUProchotONCnt         SD_uchar_8(OEMRAM3+0xA9) 
+#define VolDelayCount           SD_uchar_8(OEMRAM3+0xAA) 
+#define OverVolCount            SD_uchar_8(OEMRAM3+0xAB) 
+#define PsysDelayCount          SD_uchar_8(OEMRAM3+0xAC)
+#define BattAlarmDelayCount     SD_uchar_8(OEMRAM3+0xAD) 
+
+#define GPUProchotFlag          SD_uchar_8(OEMRAM3+0xAE) 
+    #define b0GpuAdpI           BIT0 
+    #define b1GpuBattAlarm      BIT1  
+    #define b2GpuBattOTP        BIT2  
+    #define b3GpuBattPmax       BIT3  
+    #define b4GpuPsys        	BIT4					
     
-#define S0CPUProchotONCnt         SD_uchar_8(OEMRAM3+0xAF)//REJERRY0978:update power setting'LBG EC Parameter V2.1_for Y510IP710 20161210'.
+#define S0CPUProchotONCnt       SD_uchar_8(OEMRAM3+0xAF)
 #define nbatteryPmaxL           SD_uchar_8(OEMRAM3+0xB1) 
 #define nbatteryPmaxH           SD_uchar_8(OEMRAM3+0xB2) 
-#define Power_Temp             	SD_uint_16(OEMRAM3+0xB4)
-#define POWER_MAX				SD_uint_16(OEMRAM3+0xB6)
 
-#define CPUProchotFlag          SD_uchar_8(OEMRAM3+0xB8) //REJERRY035:modify from RAM2 to RAM3.
-	#define b0CpuADPI         	BIT0 //REJERRY042:modify flag name.
+#define CPUProchotFlag          SD_uchar_8(OEMRAM3+0xB8) 
+	#define b0CpuADPI         	BIT0 
 	#define b1CpuBattPmax       BIT1
 	#define b2CpuBattRSOC       BIT2
 	#define b3CpuBattAlarm      BIT3
 	#define b4CpuBattOTP        BIT4
-	#define b5CpuPsys        	BIT5					//XITING0002:add
-//REJERRY031:E+
+	#define b5CpuPsys        	BIT5				
 
-//REJERRY048:S+ add GPU throttling function.
+
+//add GPU throttling function.
 #define cGPUThrottlingSet  		SD_uchar_8(OEMRAM3+0xB9)
 #define cGPUThermalThrottling	SD_uchar_8(OEMRAM3+0xBA)
 #define cGPUPowerThrottling		SD_uchar_8(OEMRAM3+0xBB)
 #define cGPUBattAlarmThrottling	SD_uchar_8(OEMRAM3+0xBC)
 #define cGPUBattOTPThrottling	SD_uchar_8(OEMRAM3+0xBD)
 #define cGPUBattRSOCThrottling	SD_uchar_8(OEMRAM3+0xBE)
-//REJERRY048:E+.
-#define	CHGIC_WriteCmd0x38L		SD_uchar_8(OEMRAM3+0xBF)//REJERRY051:add.
-#define	CHGIC_WriteCmd0x38H		SD_uchar_8(OEMRAM3+0xC0)//REJERRY051:add. 
-#define	CHGIC_WriteCmd0x37L		SD_uchar_8(OEMRAM3+0xC1)//REJERRY051:add. 
-#define BoostIndication				BIT1 //REJERRY051:add.
-#define TurboBoost					BIT2 //REJERRY051:add.
-#define IFAULT_LOW					BIT6 //REJERRY051:add.
-#define IFAULT_HI					BIT7  //REJERRY051:add.
-#define	CHGIC_WriteCmd0x37H		SD_uchar_8(OEMRAM3+0xC2)//REJERRY051:add.
-#define ACOKDeglitchTime        	BIT4 //REJERRY051:add.
-#define	CHGIC_WriteCmd0x12L		SD_uchar_8(OEMRAM3+0xC3)//REJERRY051:add. 
-#define	CHGIC_WriteCmd0x12H		SD_uchar_8(OEMRAM3+0xC4)//REJERRY051:add.
+//
+#define	CHGIC_WriteCmd0x38L		SD_uchar_8(OEMRAM3+0xBF)
+#define	CHGIC_WriteCmd0x38H		SD_uchar_8(OEMRAM3+0xC0) 
+#define	CHGIC_WriteCmd0x37L		SD_uchar_8(OEMRAM3+0xC1) 
+#define BoostIndication				BIT1 
+#define TurboBoost					BIT2
+#define IFAULT_LOW					BIT6 
+#define IFAULT_HI					BIT7  
+#define	CHGIC_WriteCmd0x37H		SD_uchar_8(OEMRAM3+0xC2)
+#define ACOKDeglitchTime        	BIT4 
+#define	CHGIC_WriteCmd0x12L		SD_uchar_8(OEMRAM3+0xC3)
+#define	CHGIC_WriteCmd0x12H		SD_uchar_8(OEMRAM3+0xC4)
 #define workaoundhangSSDflag   	SD_uchar_8(OEMRAM3+0xC5)		
-#define PCH_ColdBoot_TimeOut    SD_uchar_8(OEMRAM3+0xC6) //REJERRY082:add.
-#define workaoundhangrebootflag SD_uchar_8(OEMRAM3+0xC7) //REJERRY083:add.
-#define Test109 				SD_uchar_8(OEMRAM3+0xC8) //REJERRY083:add.
+#define PCH_ColdBoot_TimeOut    SD_uchar_8(OEMRAM3+0xC6) 
+#define workaoundhangrebootflag SD_uchar_8(OEMRAM3+0xC7) 
+#define Test109 				SD_uchar_8(OEMRAM3+0xC8) 
 #define cGPUACOVPThrottling	SD_uchar_8(OEMRAM3+0xC9)
 
-#define OverPowerStatus				SD_uchar_8(OEMRAM3+0xCA)			//XITING0071:add
+#define OverPowerStatus				SD_uchar_8(OEMRAM3+0xCA)			
 #define Current_Status		BIT0	
-//#define Set_Status			BIT1									//XITING0071:remove
-#define AC_Only_Set_Status	BIT2										//XITING0071:add
+
+#define AC_Only_Set_Status	BIT2									
 
 
-#define ReadPCHTempCount			SD_uchar_8(OEMRAM3+0xCB)			//XITING0068:add
-#define PCH_TBuff1					SD_uchar_8(OEMRAM3+0xCC)			//XITING0068:add
-#define PCH_TBuff2					SD_uchar_8(OEMRAM3+0xCD)			//XITING0068:add
-#define PCH_TBuff3					SD_uchar_8(OEMRAM3+0xCE)			//XITING0068:add
+#define ReadPCHTempCount			SD_uchar_8(OEMRAM3+0xCB)			
+#define PCH_TBuff1					SD_uchar_8(OEMRAM3+0xCC)			
+#define PCH_TBuff2					SD_uchar_8(OEMRAM3+0xCD)			
+#define PCH_TBuff3					SD_uchar_8(OEMRAM3+0xCE)		
 #define hangSSDcount   				SD_uchar_8(OEMRAM3+0xCF)	
 
 
-//MQJERRY001:s+Change the EC register address.
+
 #define ITempW01					SD_uint_16(OEMRAM3+0xD0)
-#define ShipModeACKL                 SD_uchar_8(OEMRAM3+0xD3)
-#define ShipModeACKH                 SD_uchar_8(OEMRAM3+0xD4)
+#define ShipModeACKL                SD_uchar_8(OEMRAM3+0xD3)
+#define ShipModeACKH                SD_uchar_8(OEMRAM3+0xD4)
 #define ShipModeCnt                 SD_uchar_8(OEMRAM3+0xD5)
-#define ECONTimer                   SD_uchar_8(OEMRAM3+0xD6)
-//MQJERRY001:e+Change the EC register address.
-//MARTINH100: add 
+
+
 #define	cwy1     	SD_uchar_8(OEMRAM3+0xF1) //(byte)
 #define	cwy2     	SD_uchar_8(OEMRAM3+0xF2) //(byte)
 #define	cwy3     	SD_uchar_8(OEMRAM3+0xF3) //(byte)
@@ -854,58 +737,51 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 
 #define	 PANEL_INFO	    				SD_Ptr_uchar_8(OEMRAM4+0x30)	// 0x30~0x3F	 // PanelROM 20100406 David
 
-//REJERRY074: S+ Add interface to support game zone app.
+//Add interface to support game zone app.
 #define GameZoneState						SD_uchar_8(OEMRAM4+0x38)
-	//#define FanCooling			BIT0 //1: endable, 0:disable  //REJERRY079:remove.
 	#define winkeydisable		BIT1 // 1: endable, 0:disable
 	#define TPdisable			BIT2 // 0: endable, 1:disable
-//REJERRY074: E+.
+//
 
-//REJERRY079:S+ add fan cooling status flag define.
+//add fan cooling status flag define.
 #define GameZoneState1						SD_uchar_8(OEMRAM4+0x39)
 		#define FanCooling			BIT0 // 1: endable, 0:disable 
-//REJERRY079:E+.
+//
 
 #define	pDevStatus1 					SD_uchar_8(OEMRAM4+0x43)     // 0x43
-#define b0F6ScanCodeSend 	BIT0 	//1: have send 0: TP driver has responsed //W121
+#define b0F6ScanCodeSend 	BIT0 	//1: have send 0: TP driver has responsed 
 #define b1F6DisableTP       BIT1                //b1=1 F6 Disable TP
 #define b2DisableKB         BIT2                //b2=1 disable kb
-//JERRYCR047:s+
-//#define b3Transition_08cmd  BIT3                ///b3=1 VPC 2A 08
-//#define b4Transition_09cmd  BIT4                ///b4=1 VPC 2A 09
-//#define b5Transition_01cmd  BIT5                
-//#define b6Transition_01cmd  BIT6
+
 #define b3Scancode_STATUS   BIT3                ///b3=1 
 #define b4LNVAPP_STATUS     BIT4                ///b4=1 
 #define b5TPDRIVER_STATUS   BIT5                
 #define b6MODE_STATUS       BIT6
-//JERRYCR047:+e
+
 #define b7DisableTP       BIT7
 #define	pDevStatus2 			        SD_uchar_8(OEMRAM4+0x49)      //0x49
 #define b1TransAP_CTRL      BIT1                //b1=1 transition AP control 
 #define b2PadLid_Close      BIT2                //b2=1 pad lid close
-//A27: Start Add combine button function  20130514 22:27
+// Start Add combine button function  
 #define b3Win8BtnOverride   BIT3                //b3=1 win8 button override
 #define b4VolUpOverride     BIT4                //b4=1 vol up button override
 #define b5VolDnOverride     BIT5                //b5=1 vol Dn button override
 #define b6PwrBtnOverride    BIT6                //b6=1 pwr sw pressed
-//A27: End Add combine button function  20130514 22:27
-//MARTINH062:add start
+//
+
 #define	EMStatusBit2					SD_uchar_8(OEMRAM4+0x4A)
 #define b0SetBatteryShipMode	BIT0	// 0: turn off, 1:turn on ship mode
-//MARTINH062:add end
-//MARTINH140:Add start
+
 #define	YogaModeStatus				    SD_uchar_8(OEMRAM4+0x4B)
 #define H0x01NotebookMode   0x01     //Notebook Mode
 #define H0x02TabletMode     0x02     //Tablet Mode
 #define H0x03StandMode      0x03     //Stand Mode
 #define H0x04TendMode       0x04     //Tend Mode
-//MARTINH140:Add end
 
-//XITING0032:S change location to ram4 0x4C & 0x4D
+
 #define	batteryFirstUsedDateL		SD_uchar_8(OEMRAM4+0x4C)
 #define	batteryFirstUsedDateH		SD_uchar_8(OEMRAM4+0x4D)
-//XITING0032:E
+
 
 #define  TDIM0_temp          		    SD_uchar_8(OEMRAM4+0x50)   // DRAM 0 temperature
 #define  TDIM1_temp          		    SD_uchar_8(OEMRAM4+0x51)   // DRAM 1 temperature
@@ -919,12 +795,9 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 
 // External name space 0x5D ~ 0x5F
 #define	 EXT_NAMESPACE_INDEX   		    SD_uchar_8(OEMRAM4+0x5D)	       // 0x5D
-//#define	 EXT_NAMESPACE_BANK			    SD_uchar_8(OEMRAM4+0x5E)	// 0x5E //REJERRY076:remove.
-//#define	 EXT_NAMESPACE_DATA			    SD_uchar_8(OEMRAM4+0x5F)       // 0x5F  //REJERRY076:remove.
 
-#define	SMB_BCNT0						SD_uchar_8(OEMRAM4+0x5E)// 0x5E  //REJERRY076:add.
-#define SMB_PRTC0                       SD_uchar_8(OEMRAM4+0x5F) // 0x5F  //REJERRY076:add.
-
+#define	SMB_BCNT0						SD_uchar_8(OEMRAM4+0x5E)// 0x5E  
+#define SMB_PRTC0                       SD_uchar_8(OEMRAM4+0x5F) // 0x5F  
 // SMBus EC interface ACPI RAM definition 0x60 ~ 0x87
 #define	SMB_PRTC				        SD_uchar_8 (OEMRAM4+0x60)// 0x60,
 #define	SMB_STS				            SD_uchar_8 (OEMRAM4+0x61)// 0x61,
@@ -932,24 +805,7 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 #define	SMB_CMD				    		SD_uchar_8 (OEMRAM4+0x63)// 0x63,
 #define	SMB_DATA						SD_uchar_8 (OEMRAM4+0x64)// 0x64,
 
-//XITING0018:S //XITING0018:S change ram location form ram4 0x70 to ram3 x18
-/*
-//XBYTE SMB_DATA1[31]						_at_ (OEMRAM4+0x65)
-//MARTINH101: add add
-#define	Debug_BRT_RC_C2_L				SD_uchar_8 (OEMRAM4+0x70)
-#define	Debug_BRT_RC_C2_H				SD_uchar_8 (OEMRAM4+0x71)
 
-#define	Debug_BRT_PV_C6_L				SD_uchar_8 (OEMRAM4+0x72)
-#define	Debug_BRT_PV_C6_H				SD_uchar_8 (OEMRAM4+0x73)
-
-#define	Debug_BRT_FCC_CC_L			SD_uchar_8 (OEMRAM4+0x74)
-#define	Debug_BRT_FCC_CC_H			SD_uchar_8 (OEMRAM4+0x75)
-
-#define	Debug_BRT_AC_D2_L				SD_uchar_8 (OEMRAM4+0x76)
-#define	Debug_BRT_AC_D2_H				SD_uchar_8 (OEMRAM4+0x77)
-//MARTINH101: add end
-*/
-//XITING0018:E
 
 #define	SMB_BCNT				SD_uchar_8 (OEMRAM4+0x84)// 0x84,
 // SBS Only Alarm registers
@@ -957,7 +813,7 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 #define	SMB_ALRD0				SD_uchar_8 (OEMRAM4+0x86)// 0x86,
 #define	SMB_ALRD1				SD_uchar_8 (OEMRAM4+0x87)// 0x87,
 
-#define  	nBattery0x16L      			SD_uchar_8(OEMRAM4+0x88)
+#define nBattery0x16L      			SD_uchar_8(OEMRAM4+0x88)
 #define SMBerror0		BIT0					// error code bit0
 #define SMBerror1		BIT1					// error code bit1
 #define SMBerror2		BIT2					// error code bit2
@@ -987,15 +843,12 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 #define b7RdUSBChgEn	BIT7					// 0: not support, 1: Support usb charge S4/S5 feature.
 
 #define 	TP_Type					SD_uchar_8(OEMRAM4+0x8B)
-#define	OKOStatusBit				SD_uchar_8(OEMRAM4+0x8C)//JERRYCR081:Add express charge feature.
-	#define Expresschargemode		BIT0					// states: 0 off,1 on//JERRYCR081:Add express charge feature.
-	//#define b1BkOff         		BIT1                    //0:screen backlight on, 1:screen backlight off.  //REJERRY061:add.  //REJERRY080:remove.
+#define	OKOStatusBit				SD_uchar_8(OEMRAM4+0x8C)//Add express charge feature.
+	#define Expresschargemode		BIT0					// states: 0 off,1 on//Add express charge feature.
+	//#define b1BkOff         		BIT1                    //0:screen backlight on, 1:screen backlight off.  
 	#define b4DisUSBpower           BIT4
 
 #define BATTMANUFACTURE 			        SD_Ptr_uchar_8(OEMRAM4+0x8F)   // offset 0x00 ~ 0x1F
-
-//#define	BATTMANUFACTURE0			SD_uchar_8(OEMRAM4+0x8F)	// (9 BYTES) Battery ManufactureName, reserve 9 byte
-//#define BATTMANUFACTURE1			SD_uchar_8(OEMRAM4+0x90)
 
 #define	BATTDEVICENAME				SD_Ptr_uchar_8(OEMRAM4+0x98) // Only support main battery so far, 0x99~0x9F
 												// deviece name ==> 8 byte  (2012.04.13 update by AC.)
@@ -1010,11 +863,11 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 // bit6-7 ISCT wake up status. 01:EC time out, 02:PME(LAN) wake.
 
 #define	ACPI_HOTKEY					SD_uchar_8(OEMRAM4+0xA1)		//
-#define RESERVEA1_BIT0		BIT0				// Reserved    [L10110802]
+#define RESERVEA1_BIT0		BIT0				// Reserved    
 #define VIDEO_KEY			BIT1				// Video output key  (1=Video output key pressed)
 #define TOUCHPAD_BTN		BIT2				// Touch pad button (1=enable)
-//T09A- #define RESERVEA1_BIT3		BIT3				// Reserved
-#define HotkeyDisable		BIT3				// For hotkey disable in setup and hotkey behavior changed //T09A+
+
+#define HotkeyDisable		BIT3				// For hotkey disable in setup and hotkey behavior changed 
 #define b4BIOS_Cover		BIT4				// For BIOS used.
 #define b5BIOS_IFFS			BIT5				// BIOS enter IFFS status.
 #define b6Cmd_NoShut		BIT6				// For command use to cut power bit.
@@ -1026,8 +879,8 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 #define OSTYPE1 			BIT1				//
 #define OSTYPE2 			BIT2				//
 #define RESERVEA3_BIT3		BIT3				// Reserved
-#define b4IllegalAdp		BIT4				// bit4:1 is Illegal Adapter  bit5bit4=00 is normal adapter bit5bit4=01 is illegal adp bit5bit4=10 is adapter power is not suitable    //T07C:brooke for EM9.0 Adapter protect 
-#define b5UnSuitAdpPow     	BIT5				// bit5:1 is Adapter power is not suitable 	//T07C:brooke for EM9.0 Adapter protect 
+#define b4IllegalAdp		BIT4				// bit4:1 is Illegal Adapter  bit5bit4=00 is normal adapter bit5bit4=01 is illegal adp bit5bit4=10 is adapter power is not suitable    
+#define b5UnSuitAdpPow     	BIT5				// bit5:1 is Adapter power is not suitable  
 #define b6BIOS_Flash		BIT6				// BIOS ignore Flash bit.
 #define AC_ADP				BIT7				// (AC Adapter:0=OffLine, 1=OnLine)
 
@@ -1086,7 +939,7 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 #define	THROTTLING_HW					SD_uchar_8(OEMRAM4+0xAF)		//HW throttling define
 #define TS_THERMAL			BIT0				// 1= Throttling for thermal
 #define TS_BATTCAP			BIT1				// 1= Throttling for battery capacity
-#define TS_THROT			BIT2				// Reserved for Cedar trail platform sync bit used. [L11080402]
+#define TS_THROT			BIT2				// Reserved for Cedar trail platform sync bit used. 
 #define RESERVEAF_BIT3		BIT3				// Reserved
 #define RESERVEAF_BIT4		BIT4				// Reserved
 #define RESERVEAF_BIT5		BIT5				// Reserved
@@ -1096,19 +949,19 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 #define	nCpuTemp 						SD_uchar_8(OEMRAM4+0xB0)		// CPU current temperature
 #define	nCpuTempLocal					SD_uchar_8(OEMRAM4+0xB1)		// CPU local temperature
 #define	nSKINTemp90						SD_uchar_8(OEMRAM4+0xB2)		// SKIN temperature address 90
-//#define	nOSShutdownTemp3			SD_uchar_8(OEMRAM4+0xB3)		// OS Shutdown Temp. For system read setting.(VGA)
-#define ThermistorCPU_TEMP           	SD_uchar_8(OEMRAM4+0xB3)        //REJERRY062:add.
+
+#define ThermistorCPU_TEMP           	SD_uchar_8(OEMRAM4+0xB3)       
 #define	VGA_TEMP						SD_uchar_8(OEMRAM4+0xB4)		// VGA temperature
 #define	EXTVGA_TEMP						SD_uchar_8(OEMRAM4+0xB5)		// External VGA temperature.
 
 #define	nNBTemp							SD_uchar_8(OEMRAM4+0xB6)		// NorthBridge temperature
 #define	ACPI_STAT						SD_uchar_8(OEMRAM4+0xB7)
-#define RESERVEB7_BIT0		BIT0				// Reserved [L10110801]
+#define RESERVEB7_BIT0		BIT0				// Reserved 
 #define PASSWORD_BTN		BIT1				// 1=enable
 #define DIGITAILMODE		BIT2				// 1=Digitial mode selected
 #define CDMODELOCK			BIT3				// 1=CD lock mode enable
-#define RESERVEB7_BIT4		BIT4				// Reserved [L10110801] [L11051201]
-#define RESERVEB7_BIT5		BIT5				// Reserved [L10110801] [L11051201]
+#define RESERVEB7_BIT4		BIT4				// Reserved 
+#define RESERVEB7_BIT5		BIT5				// Reserved 
 #define RESERVEB7_BIT6		BIT6				// Reserved
 #define RESERVEB7_BIT7		BIT7				// Reserved
 
@@ -1124,7 +977,7 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 
 #define	nBrightValue					SD_uchar_8(OEMRAM4+0xB9)		// LCD Brightness value.
 
-#define	GPU_REAL_THROTTLING_INDEX       SD_uchar_8(OEMRAM4+0xBA)  //REJERRY048:add GPU throttling.
+#define	GPU_REAL_THROTTLING_INDEX       SD_uchar_8(OEMRAM4+0xBA)  //add GPU throttling.
 
 #define	DEVICEMODULE 					SD_uchar_8(OEMRAM4+0xBB)
 #define WIRELESS			BIT0				// 1 = wirless lan active
@@ -1246,7 +1099,6 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 #define RESERVEF0_BIT4	BIT4					//
 #define RESERVEF0_BIT5	BIT5					//
 #define ENRDCOMPLETE	BIT6					// Battery read complete
-//#define RESERVEF0_BIT7	BIT7					//
 #if SW_ISCT
 #define BATUnZeroTemp	BIT7					// Temp of indicate under 0 degree
 #endif
@@ -1297,21 +1149,19 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 #define   ALS_LSB_DATA                    SD_uchar_8(OEMRAM4+0xF9)
 #define   ALS_MSB_DATA                    SD_uchar_8(OEMRAM4+0xFA)
 
-//XITING0018:S
+
 #define uSMBusSts       			SD_uchar_8(OEMRAM4+0xFB)		 // 56
  #define SMB_STS_ALARM	BIT6    //AOAC
  #define SMB_STS_DONE	BIT7
-//XITING0018:E
 
-//#define   PECIBIOSTEST                    SD_uchar_8(OEMRAM4+0xFC)  //MARTINH053_A: Remove //MARTINH053:add
 
-#define F2_Pressed                      SD_uchar_8(OEMRAM4+0xFC) //REJERRY052:add.
-	#define F2Flag          BIT0  //REJERRY067:add.
-	#define F12Flag         BIT1  //REJERRY067:add.
+#define F2_Pressed                      SD_uchar_8(OEMRAM4+0xFC) 
+	#define F2Flag          BIT0  
+	#define F12Flag         BIT1  
 
-#define nPCH_Temp 						SD_uchar_8(OEMRAM4+0xFD) 				//XITING0068:add
+#define nPCH_Temp 						SD_uchar_8(OEMRAM4+0xFD) 			
 
-#define	nAtmFan2Speed 					SD_uchar_8(OEMRAM4+0xFE)		// Fan2 speed.//MARTINH031:add
+#define	nAtmFan2Speed 					SD_uchar_8(OEMRAM4+0xFE)		// Fan2 speed.
 
 #define	EM8_TEST						SD_uchar_8(OEMRAM4+0xFF)		//  replace 0x407 data for EM8.0 test
 
@@ -1324,7 +1174,7 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 #define SYS_MISC1								 SD_uchar_8(OEMRAM5+0x00)
 #define 	b1Num_LED		BIT1
 #define 	b2Cap_LED		BIT2
-#define     b3_KB_Disable   BIT3				//XITING0045:add
+#define     b3_KB_Disable   BIT3			
 #define 	b5Crisis_LED	BIT5
 #define 	Crisis_On		BIT6
 #define 	ACPI_OS			BIT7
@@ -1333,14 +1183,13 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 #define AutoTimer								 SD_uchar_8(OEMRAM5+0x02)
 #define 	b7AutoBootTm	BIT7
 
-//MARTINH154:Add : start
+
 #define    CMOS_TEST					SD_uchar_8(OEMRAM5+0x03)	
 #define    b0_CMOS_FunctionKey     BIT0 
 #define    b1_CMOS_delay1flag      BIT1
 
-//MARTINH154:Add : end
 
-#define QEVENT_DEBUG					 SD_uchar_8(OEMRAM5+0x05)  //W011+
+#define QEVENT_DEBUG					 SD_uchar_8(OEMRAM5+0x05)  
 #define SCI_Event_In_Index					 SD_uchar_8(OEMRAM5+0x06)
 #define SCI_Event_Out_Index					 SD_uchar_8(OEMRAM5+0x07)
 #define SCI_Event_Buffer	 					SD_Ptr_uchar_8(OEMRAM5+0x08)
@@ -1348,24 +1197,14 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 #define NTC_V									 SD_uint_16(OEMRAM5+0x12)
 #define NTC_V2									 SD_uint_16(OEMRAM5+0x14)
 
-//#define Read_ENBKL_IN									 SD_uint_16(OEMRAM5+0x16)
+
 #define LV_Authen_Step_CNT					 SD_uchar_8(OEMRAM5+0x18)
 #define Illegal_battery_flag		BIT6
 #define Bat1_FPChgFlag						 SD_uchar_8(OEMRAM5+0x19)
 #define Auto_mode_AVG							 SD_uint_16(OEMRAM5+0x1C)
 #define Auto_mode_EnPtr						 SD_uchar_8(OEMRAM5+0x1F)
 #define Auto_mode							 	SD_Ptr_uint_16(OEMRAM5+0x20)
-//MARTINH031: remove start: below memory not used and give them to fan control
-/*
-#define PM1PendingTXCount						 SD_uchar_8(OEMRAM5+0x50)
-#define PM1PendingRXCount						 SD_uchar_8(OEMRAM5+0x51)
-#define PM1DataPending						 SD_Ptr_uchar_8(OEMRAM5+0x52)
-#define PM2PendingTXCount						 SD_uchar_8(OEMRAM5+0x58)
-#define PM2PendingRXCount						 SD_uchar_8(OEMRAM5+0x59)
-#define PM2DataPending						 SD_Ptr_uchar_8(OEMRAM5+0x5A)
-*/
-//MARTINH031: remove end
-//MARTINH031: add start
+
 #define     Fan1On_Step1   		    SD_uchar_8(OEMRAM5+0x50)
 #define     Fan1On_Step2  		    SD_uchar_8(OEMRAM5+0x51)
 #define     Fan1On_Step3   	     	SD_uchar_8(OEMRAM5+0x52)
@@ -1382,15 +1221,15 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 #define     Fan2On_Step6  			SD_uchar_8(OEMRAM5+0x5D)
 #define     Fan2On_Step7  			SD_uchar_8(OEMRAM5+0x5E)
 #define     Fan2On_Step8 			SD_uchar_8(OEMRAM5+0x5F)
-//MARTINH031: add end
-#define     USB_Delay				SD_uchar_8(OEMRAM5+0x60) //REJERRY009:add.
+
+#define     USB_Delay				SD_uchar_8(OEMRAM5+0x60)
 #define	uCritBattWakeThre					 SD_uchar_8(OEMRAM5+0x63)
 #define IFFS_Enable 		BIT0
 
 #define	uIffsCnt							 SD_uchar_8(OEMRAM5+0x64)
 
-#define     Fan1On_Step9    		SD_uchar_8(OEMRAM5+0x65)		//XITING0068:add
-#define     Fan2On_Step9 			SD_uchar_8(OEMRAM5+0x66)		//XITING0068:add
+#define     Fan1On_Step9    		SD_uchar_8(OEMRAM5+0x65)		
+#define     Fan2On_Step9 			SD_uchar_8(OEMRAM5+0x66)		
 
 
 #define	uISCT								 SD_uchar_8(OEMRAM5+0x70)
@@ -1418,13 +1257,13 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 #define SMBus3TableSize     			SD_uchar_8(OEMRAM5+0x77)
 
 #define	WinFlashMark2					SD_uchar_8(OEMRAM5+0x78)
-//MARTINH154:Add start
+
 #define cmosdelay     			SD_uchar_8(OEMRAM5+0x79)
 #define cmosdelay1     			SD_uchar_8(OEMRAM5+0x80)
 #define cmosshutdelay     		SD_uchar_8(OEMRAM5+0x81)
-//MARTINH154:Add end
-#define ExpresschargecurrentL     			SD_uchar_8(OEMRAM5+0x82)//JERRYCR081:Add express charge feature.
-#define ExpresschargecurrentH     			  SD_uchar_8(OEMRAM5+0x83)//JERRYCR081:Add express charge feature.
+
+#define ExpresschargecurrentL     			SD_uchar_8(OEMRAM5+0x82)
+#define ExpresschargecurrentH     			  SD_uchar_8(OEMRAM5+0x83)
 
 #define AOU_status			SD_uchar_8(OEMRAM5+0x84)
 #define AOUPort_Dev			BIT0    		// 1 = Exist USB Device in AOU port.
@@ -1434,49 +1273,16 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 
 #define AOU_IFG_Debounce_Cnt	SD_uchar_8(OEMRAM5+0x85)
 
-//W101<<20131017 fix fix qevent send fast and avoid system restart hang up
-//MARTINH042:remove start
-/*
-#define     SCI_StepTimer              SD_uchar_8(OEMRAM5+0x79)
-#define     SCI_LastQueryEvent         SD_uchar_8(OEMRAM5+0x7A)
-#define     SCI_QueryEvent             SD_uchar_8(OEMRAM5+0x7B)
-#define     SCI_Index_Record             SD_uchar_8(OEMRAM5+0x7C)
-#define     SCI_Event_Record     	   SD_Ptr_uchar_8(OEMRAM5+0x7F) //martin0616:modify '0x80' to '0x7F'
-*/
-//MARTINH042:remove end
-//W101:>>
-//martin0616 add start
-//MARTINH031: remove start
-/*
-#define     Fan1On_Step1   		    SD_uchar_8(OEMRAM5+0x80)
-#define     Fan1On_Step2  		    SD_uchar_8(OEMRAM5+0x81)
-#define     Fan1On_Step3   	     	SD_uchar_8(OEMRAM5+0x82)
-#define     Fan1On_Step4   			SD_uchar_8(OEMRAM5+0x83)
-#define     Fan1On_Step5    		SD_uchar_8(OEMRAM5+0x84)
-#define     Fan1On_Step6    		SD_uchar_8(OEMRAM5+0x85)
-#define     Fan1On_Step7    		SD_uchar_8(OEMRAM5+0x86)
-#define     Fan1On_Step8    		SD_uchar_8(OEMRAM5+0x87)
-#define     Fan2On_Step1  			SD_uchar_8(OEMRAM5+0x88)
-#define     Fan2On_Step2  			SD_uchar_8(OEMRAM5+0x89)
-#define     Fan2On_Step3  			SD_uchar_8(OEMRAM5+0x8A)
-#define     Fan2On_Step4  			SD_uchar_8(OEMRAM5+0x8B)
-#define     Fan2On_Step5   			SD_uchar_8(OEMRAM5+0x8C)
-#define     Fan2On_Step6  			SD_uchar_8(OEMRAM5+0x8D)
-#define     Fan2On_Step7  			SD_uchar_8(OEMRAM5+0x8E)
-#define     Fan2On_Step8 			SD_uchar_8(OEMRAM5+0x8F)
-*/
-//MARTINH031: remove end
-
-#define     Fan1Off_Step9   		SD_uchar_8(OEMRAM5+0x86)		//XITING0068:add
-#define     Fan2Off_Step9   		SD_uchar_8(OEMRAM5+0x87)		//XITING0068:add
-#define     Fan1OnVGA_Step9    		SD_uchar_8(OEMRAM5+0x88)		//XITING0068:add
-#define     Fan2OnVGA_Step9    		SD_uchar_8(OEMRAM5+0x89)		//XITING0068:add
-#define     Fan1OffVGA_Step9   		SD_uchar_8(OEMRAM5+0x8A)		//XITING0068:add
-#define     Fan2OffVGA_Step9   		SD_uchar_8(OEMRAM5+0x8B)		//XITING0068:add
-#define     Fan1RPM_Step9  			SD_uchar_8(OEMRAM5+0x8C) 		//XITING0068:add
-#define     Fan2RPM_Step9  			SD_uchar_8(OEMRAM5+0x8D) 		//XITING0068:add
-#define     Fan1RPMVGA_Step9  		SD_uchar_8(OEMRAM5+0x8E)		//XITING0068:add
-#define     Fan2RPMVGA_Step9  		SD_uchar_8(OEMRAM5+0x8F)		//XITING0068:add
+#define     Fan1Off_Step9   		SD_uchar_8(OEMRAM5+0x86)		
+#define     Fan2Off_Step9   		SD_uchar_8(OEMRAM5+0x87)		
+#define     Fan1OnVGA_Step9    		SD_uchar_8(OEMRAM5+0x88)		
+#define     Fan2OnVGA_Step9    		SD_uchar_8(OEMRAM5+0x89)		
+#define     Fan1OffVGA_Step9   		SD_uchar_8(OEMRAM5+0x8A)		
+#define     Fan2OffVGA_Step9   		SD_uchar_8(OEMRAM5+0x8B)		
+#define     Fan1RPM_Step9  			SD_uchar_8(OEMRAM5+0x8C) 		
+#define     Fan2RPM_Step9  			SD_uchar_8(OEMRAM5+0x8D) 		
+#define     Fan1RPMVGA_Step9  		SD_uchar_8(OEMRAM5+0x8E)	
+#define     Fan2RPMVGA_Step9  		SD_uchar_8(OEMRAM5+0x8F)		
 
 
 #define     Fan1Off_Step1   		SD_uchar_8(OEMRAM5+0x90)
@@ -1580,27 +1386,26 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 #define     Fan2RPMVGA_Step8  			SD_uchar_8(OEMRAM5+0xEF)
 
 //===============================================================================
-//martin0616 add end
+
 #define	DelayCount						SD_uchar_8(OEMRAM5+0xF0) //(byte)
 #define DelayCount1						SD_uchar_8(OEMRAM5+0xF1) //(byte)
 #define PowerBtnPress                                   SD_uchar_8(OEMRAM5+0xF2) //(byte)  //W002+
 #define DelayCount2                                     SD_uchar_8(OEMRAM5+0xF3)
-#define CalcBatRCC                                         SD_ulong_32(OEMRAM5+0xF4)//(Dword)
+#define CalcBatRCC                                      SD_ulong_32(OEMRAM5+0xF4)//(Dword)
 
-//martin0624A add start
 #define     FanLevelVGA 			SD_uchar_8(OEMRAM5+0xF8) 
 #define     FanLevel2CPU 			SD_uchar_8(OEMRAM5+0xF9)  
-//martin0624A add end
 
-#define     DebugFan2RPMT 			SD_uchar_8(OEMRAM5+0xFA)     //MARTINH031:add 
+
+#define     DebugFan2RPMT 			SD_uchar_8(OEMRAM5+0xFA)     
 
 #define     testtoolflag 			SD_uchar_8(OEMRAM5+0xFB)    
-//MARTINH146:Add start
+
 #define     Fan1RPMTemp 				SD_uchar_8(OEMRAM5+0xFC) 
 #define     Fan2RPMTemp 				SD_uchar_8(OEMRAM5+0xFD)  
 #define     Fan1RPMCount 				SD_uchar_8(OEMRAM5+0xFE) 
 #define     Fan2RPMCount 				SD_uchar_8(OEMRAM5+0xFF)  
-//MARTINH146:Add: End
+
 
 
 //*******************************************************************************
@@ -1608,8 +1413,8 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 //  OEM RAM 6 
 //-------------------------------------------------------------------------------
 //*******************************************************************************
-#define  Fan1RPMBackUp 		    SD_uchar_8(OEMRAM6+0x00)   //MARTINH150:add
-#define  Fan2RPMBackUp 		    SD_uchar_8(OEMRAM6+0x01)   //MARTINH150:add
+#define  Fan1RPMBackUp 		    SD_uchar_8(OEMRAM6+0x00)  
+#define  Fan2RPMBackUp 		    SD_uchar_8(OEMRAM6+0x01)   
 
 #define PECI_TIMEOUT		    SD_uchar_8(OEMRAM6 + 0x0B)
 #define PECI_ERROR				SD_uchar_8(OEMRAM6 + 0x0C)
@@ -1623,7 +1428,7 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 #define PECIBuffer5				SD_uint_16(OEMRAM6 + 0x18)
 #define PECIBuffer7				SD_uint_16(OEMRAM6 + 0x1A)
 #define PECIBuffer6				SD_uint_16(OEMRAM6 + 0x1C)
-// reserved 0x0C1F
+
 #define TJMAX						SD_uchar_8(OEMRAM6 + 0x20)
 #define PECI_Err_CNT				SD_uchar_8(OEMRAM6 + 0x21)
 
@@ -1650,38 +1455,16 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 #define PCHTEMP_Buff_3						SD_uchar_8(OEMRAM6 + 0x52)
 
 #define MaxCPU_MCHTemp			SD_uchar_8(OEMRAM6+0x6C)
-// Reserve 0x056D~057F
-/*
-#define EC_DeepSleep_Temp0        SD_uchar_8(OEMRAM6 + 0x70)
-#define EC_DeepSleep_Temp1        SD_uchar_8(OEMRAM6 + 0x71)
-#define EC_DeepSleep_Temp2        SD_uchar_8(OEMRAM6 + 0x72)
-#define EC_DeepSleep_Temp3        SD_uchar_8(OEMRAM6 + 0x73)
-#define EC_DeepSleep_Temp4        SD_uchar_8(OEMRAM6 + 0x74)
-#define EC_DeepSleep_Temp5        SD_uchar_8(OEMRAM6 + 0x75)
-#define EC_DeepSleep_Temp6        SD_uchar_8(OEMRAM6 + 0x76)
 
-#define EC_DeepSleep_TempPortA    SD_uchar_8(OEMRAM6 + 0x80)
-#define EC_DeepSleep_TempPortB    SD_uchar_8(OEMRAM6 + 0x81)
-#define EC_DeepSleep_TempPortC    SD_uchar_8(OEMRAM6 + 0x82)
-#define EC_DeepSleep_TempPortD    SD_uchar_8(OEMRAM6 + 0x83)
-#define EC_DeepSleep_TempPortE    SD_uchar_8(OEMRAM6 + 0x84)
-#define EC_DeepSleep_TempPortF    SD_uchar_8(OEMRAM6 + 0x85)
-#define EC_DeepSleep_TempPortG    SD_uchar_8(OEMRAM6 + 0x86)
-#define EC_DeepSleep_TempPortH    SD_uchar_8(OEMRAM6 + 0x87)
-#define EC_DeepSleep_TempPortI    SD_uchar_8(OEMRAM6 + 0x88)
-#define EC_DeepSleep_TempPortJ    SD_uchar_8(OEMRAM6 + 0x89)
-*/
 #define LPCRSTFlag                        SD_uchar_8(OEMRAM6 + 0x70) 
-//#define WorkAround_QvtDelay      		SD_uchar_8(OEMRAM6 + 0x71) //MARTINH041:remove   //W124
+
 #define zhuangqitest                        SD_uchar_8(OEMRAM6 + 0x71) 
 #define zhuangqitest1                        SD_uchar_8(OEMRAM6 + 0x72)
-// OEMRAM5 Offset 0x40 ~ 0xAF   For PECI function  
-//#define PECICtrlRAM      OEMRAM5+0x80    //MARTINH030: remove 
-//MARTINH030: add start
-// OEMRAM6 Offset 0x80 ~ 0xEF   For PECI function  
-#define PECICtrlRAM      OEMRAM6+0x80    //MARTINH030: remove 
 
-//MARTINH030: add end
+
+// OEMRAM6 Offset 0x80 ~ 0xEF   For PECI function  
+#define PECICtrlRAM      OEMRAM6+0x80  
+
 #define PECIReadBuffer 			        SD_Ptr_uchar_8(PECICtrlRAM+0x00)  //0x680
 #define PECIWriteBuffer 			    SD_Ptr_uchar_8(PECICtrlRAM+0x10)  //0x690
 #define PECI_CRC8                       SD_uchar_8(PECICtrlRAM + 0x20)    //0x6A0
@@ -1724,7 +1507,7 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 #define PSTB_CmdCode                PSTB_CommandSpecificData
 
 #define ServivePECIStressTool   BIT0
-#define   workaoundhangS5flag                  SD_uchar_8(OEMRAM6 + 0xee)//Y7JERRY091: Add workaround for hang S4/cold boot/reboot.
+#define   workaoundhangS5flag                  SD_uchar_8(OEMRAM6 + 0xee)//Add workaround for hang S4/cold boot/reboot.
 
 
 //*******************************************************************************
@@ -1847,7 +1630,6 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 //-------------------------------------------------------------------------------
 //*******************************************************************************
 
-#if 1
 
 #define		cCmd				SD_uchar_8(OEMRAM9+0xA0)
 #define bPCHPWR_Keep			BIT2
@@ -1983,101 +1765,23 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 #define    EM9_NEWFUN             SD_uchar_8(OEMRAM9+0xBB)    
 	#define   b0_FnPlus	       BIT0
 	#define	  b1_FnMinus	   BIT1
-	#define   b2_RCtrlPress    BIT2            //A38-H120128  start
+	#define   b2_RCtrlPress    BIT2           
 	#define   b3_LCtrlPress    BIT3
 	#define   b4_RAltPress     BIT4
 	#define   b5_LAltPress     BIT5
 	#define   b6_RShiftPress   BIT6
-    #define   b7_LShiftPress   BIT7           //A38-H120128 end
+    #define   b7_LShiftPress   BIT7         
 	
 	
 #define	cCHIPType				SD_uchar_8(OEMRAM9+0xBC)	// 01: 8586EX
 
-//MARTINH096: Add start
+
 #define	stateOfDevice				SD_uchar_8(OEMRAM9+0xBE)	
    #define   b0_KBLedStateFormer   BIT0
-//   #define   b1_KBLedState	       BIT1  // 1: KB LED on; 0: KB LED off 
-//MARTINH096: Add end
+
+
 #define Vedio_Record_Key_Delay    SD_uchar_8(OEMRAM9+0xC0)//HEGANG005:Optimize video key method follow lenovo and Synchronous state of TP.
 #define Vedio_Record_Key_Reg     SD_uchar_8(OEMRAM9+0xC1)//HEGANG005:Optimize video key method follow lenovo and Synchronous state of TP.
-#else
-#define	SYS_STATUS							SD_uchar_8(OEMRAM9+0x01) 		//
-#define	nBattGasgauge 						SD_uchar_8(OEMRAM9+0x02) 
-#define	EMStatusBit							SD_uchar_8(OEMRAM9+0x03) 
-//carl add function for Battery led flash <<
-#define	BAT_LED_FLASH_CNT					SD_uchar_8(OEMRAM9+0x04) 
-#define	Battery_Crack_Cnt					SD_uchar_8(OEMRAM9+0x0B) 
-#define Rpc_H								SD_uchar_8(OEMRAM9+0x0C) 	
-#define Rpc_L								SD_uchar_8(OEMRAM9+0x0D)
-
-#define LV_Authen_String					SD_Ptr_uchar_8(OEMRAM9+0x10) 	// LV_Authen_String[10] 0x910~0x919, Retrurn from battery of 0x3C command  
-
-#define Npc									SD_uint_16(OEMRAM9+0x1A) 	// 0x91A, 0x91B
-
-#define	BAT1_MD_1							SD_uchar_8(OEMRAM9+0x20) 
-#define	BAT1_MD_2							SD_uchar_8(OEMRAM9+0x21) 
-#define	BAT1_MD_3							SD_uchar_8(OEMRAM9+0x22) 
-#define	BAT1_MD_4							SD_uchar_8(OEMRAM9+0x23) 
-#define	BAT1_MD_5							SD_uchar_8(OEMRAM9+0x24) 
-#define	BAT1_MD_6							SD_uchar_8(OEMRAM9+0x25) 
-#define	BAT1_MD_7							SD_uchar_8(OEMRAM9+0x26) 
-#define	BAT1_MD_8							SD_uchar_8(OEMRAM9+0x27) 
-#define	BAT1_MD_9							SD_uchar_8(OEMRAM9+0x28) 
-#define	BAT1_MD_A							SD_uchar_8(OEMRAM9+0x29) 
-#define	BAT1_MD_B							SD_uchar_8(OEMRAM9+0x2A) 
-#define	BAT1_MD_C							SD_uchar_8(OEMRAM9+0x2B) 
-#define	BAT1_MD_D							SD_uchar_8(OEMRAM9+0x2C) 
-#define	BAT1_MD_E							SD_uchar_8(OEMRAM9+0x2D) 
-#define Battery_Storage_Counter				SD_uchar_8(OEMRAM9+0x32) 
-#define	Battery_Info1_Save					SD_uchar_8(OEMRAM9+0x33)  
-#define Battery_Info2_Save 					SD_uchar_8(OEMRAM9+0x34)  
-#define TurnOnDefectCnt 					SD_uchar_8(OEMRAM9+0x35) 
-#define ChargeCtrlCnt 						SD_uchar_8(OEMRAM9+0x36) 
-#define Absent_Status      	 				SD_uchar_8(OEMRAM9+0x37) 		//ABSENT MODE STATUS FLAG
-#define KeyboardLedMode 					SD_uchar_8(OEMRAM9+0x38) 
-
-#define	RPM1								SD_uint_16(OEMRAM9+0x40) 
-#define	RPM2								SD_uint_16(OEMRAM9+0x42) 
-
-#define	Fan1RPM 							SD_uchar_8(OEMRAM9+0x44) 
-#define	Fan2RPM								SD_uchar_8(OEMRAM9+0x45) 
-#define	FanLevel							SD_uchar_8(OEMRAM9+0x46) 
-#define	FanLeve2							SD_uchar_8(OEMRAM9+0x47) 
-#define	temperature1						SD_uchar_8(OEMRAM9+0x48) 	
-#define	temperature2						SD_uchar_8(OEMRAM9+0x49) 
-#define	Debugtemperature1					SD_uchar_8(OEMRAM9+0x4A) 			
-#define	Debugtemperature2					SD_uchar_8(OEMRAM9+0x4B) 	
-#define	DummyStep							SD_uchar_8(OEMRAM9+0x4C) 
-#define	FanFullOnCont						SD_uchar_8(OEMRAM9+0x4D) 
-#define	RPMTimeShift						SD_uchar_8(OEMRAM9+0x4E) 
-#define	DebugFan1RPMT						SD_uchar_8(OEMRAM9+0x4F) 
-#define SBMC_METHOD_SAVE					SD_uchar_8(OEMRAM9+0x50) 
-#define Charge_control_flag					SD_uchar_8(OEMRAM9+0x51)
-
-#define AD_IINP								SD_uint_16(OEMRAM9+0x5E)
-
-#define ADIINP_Buff							SD_Ptr_uint_16(OEMRAM9+0x60)  	// 0X960~0X991 	ADIINP_Buff[25]	
-#define ADIINP_PEAK_Buff					SD_Ptr_uint_16(OEMRAM9+0x92)	// 0x992~0x99 	ADIINP_PEAK_Buff[5]
-#define ADIINP_PEAK_AVG						SD_uint_16(OEMRAM9+0x9C)		//0x99C~0x99D
-#define Auto_mode							SD_Ptr_uint_16(OEMRAM9+0xA0) 	// 0x9A0~0x9C7	Auto_mode[20]
-#define Auto_mode_AVG						SD_uint_16(OEMRAM9+0xC8) 		// 0x9C8,0x9C9
-//#define 	Auto_mode_EnPtr						SD_uchar_8 (OEMRAM9+0xBA) 	// 0x86A
-#define Auto_mode_Count						SD_uchar_8(OEMRAM9+0xCA) 	// 0x86A
-#define ADIINPCOUNT							SD_uchar_8(OEMRAM9+0xCB)
-
-#define VCORE_IMON							SD_uint_16(OEMRAM9+0xCC)
-#define AD_IINP_AVG							SD_uint_16(OEMRAM9+0xCE)
-
-#define ACIOT_IMON							SD_uchar_8(OEMRAM9+0xD0)
-#define	MX_Write_CNT						SD_uchar_8(OEMRAM9+0xD1) 
-#define	AID_Write_CNT						SD_uchar_8(OEMRAM9+0xD2) 
-
-#define BAT1_FCcap_Save						SD_uint_16(OEMRAM9+0xE0) 
-
-#define CsDelaySleep 						SD_uchar_8(OEMRAM9+0xE2) 
-#define	Charge_Min_Voltage_LO				SD_uchar_8(OEMRAM9+0xE3) 
-#define	Charge_Min_Voltage_HI				SD_uchar_8(OEMRAM9+0xE4) 
-#endif
 
 
 #if Support_UCSI
@@ -2157,20 +1861,12 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 //  OEM RAM A  
 //-------------------------------------------------------------------------------
 //*******************************************************************************
-#if 1
+
 #define KB_RAM_Table				SD_uchar_8(OEMRAMA+0x00)	// 0x00	// KB_RAM_Table[128]
 #define ExKB_RAM_Table				SD_uchar_8(OEMRAMA+0x80)	// 0x80	// ExKB_RAM_table[24]
-#else
-// yangkun + for test sha1 function. 2012 0917
-#define HashRandom							SD_Ptr_ulong_32(OEMRAMA+0x00)  // 0xA00~0xA14		// HashRandom[5]
-#define SHA1ECProcV							SD_Ptr_ulong_32(OEMRAMA+0x20)  // 0xA20~0xA34		// SHA1ECProcV[5]
-#define Respond								SD_Ptr_ulong_32(OEMRAMA+0x40)  // 0xA20~0xA34		// Respond[5]
-// yangkun + for test sha1 function. 2012 0917
-#endif
 
 
-
-//XITING0068:S  Y530 1060 & Y7000P 1060 using same EC
+//Y530 1060 & Y7000P 1060 using same EC
 #define Fan1LevelCPU_Sensor				SD_uchar_8(OEMRAMA+0xBD)
 #define Fan2LevelCPU_Sensor				SD_uchar_8(OEMRAMA+0xBE)
 #define temperature3					SD_uchar_8(OEMRAMA+0xBF)	
@@ -2234,7 +1930,6 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 #define Fan2RPMCPU_Step7				SD_uchar_8(OEMRAMA+0xFD)
 #define Fan2RPMCPU_Step8				SD_uchar_8(OEMRAMA+0xFE)
 #define Fan2RPMCPU_Step9				SD_uchar_8(OEMRAMA+0xFF)
-//XITING0068:E
 
 
 //*******************************************************************************
@@ -2242,9 +1937,8 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 //  OEM RAM B  
 //-------------------------------------------------------------------------------
 //*******************************************************************************
-//#define PwrOnDly5Sec					    SD_uchar_8(OEMRAMB+0x34)	// 0x34  //MARTINH072:remove //MARTINH061:add
 
-#define EEPROMDataBuf						SD_Ptr_uchar_8(OEMRAMB + 0x00)//MARTINH072:add
+#define EEPROMDataBuf						SD_Ptr_uchar_8(OEMRAMB + 0x00)
 
 #define MMIO_rDATA_index					SD_uchar_8(OEMRAMB+0x81)	// 0x81
 #define MMIO_CMD_Ctrl						SD_uchar_8(OEMRAMB+0x82)	// 0x82
@@ -2259,7 +1953,6 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 #define MMIO_iDATA8F						SD_uchar_8(OEMRAMB+0x8F) 	// 0x8F
 #define MMIO_iDATA90						SD_uchar_8(OEMRAMB+0x90) 	// 0x90
 
-//MARTINH072:add start
 #define EEPROMTestFlag						SD_uchar_8(OEMRAMB + 0x91)
 #define EEPROMOffset						SD_uchar_8(OEMRAMB + 0x92)
 #define EEPROMDataRWCount					SD_uchar_8(OEMRAMB + 0x93)
@@ -2268,10 +1961,10 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 #define EEPROMWriteByte						SD_Ptr_uchar_8(OEMRAMB + 0x95)
 #define EEPROMReadWord						SD_Ptr_uchar_8(OEMRAMB + 0x96)
 #define EEPROMWriteWord						SD_Ptr_uchar_8(OEMRAMB + 0x98)
-//MARTINH072:add end
 
 
-#define ShutDnCause						    SD_uchar_8(OEMRAMB+0xA3) 	// 0xA3 //MARTINH054:add
+
+#define ShutDnCause						    SD_uchar_8(OEMRAMB+0xA3) 	// 0xA3 
 
 #define FnStatus							SD_uchar_8(OEMRAMB+0xE0)
 
@@ -2294,8 +1987,8 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 #define	PWRBTN_press_retry	BIT0
 #define	b1NOVOBTN_retry		BIT1
 #define	b2NOVOKey_Press		BIT2
-#define b3PWRNOV_Release    BIT3            //A46-H120128
-#define EC_ON_Flag      		            SD_uchar_8(OEMRAMB+0xF6)  //T31+
+#define b3PWRNOV_Release    BIT3          
+#define EC_ON_Flag      		            SD_uchar_8(OEMRAMB+0xF6)  
 
 #define SysStatus3                        SD_uchar_8(OEMRAMB+0xF7)
 
@@ -2320,7 +2013,7 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 //-------------------------------------------------------------------------------
 //  OEM RAM C  
 //-------------------------------------------------------------------------------
-#if 1
+
 #define TEMP_Buff_1						SD_uchar_8(OEMRAMC + 0x00)
 #define TEMP_Buff_2						SD_uchar_8(OEMRAMC + 0x01)
 #define TEMP_Buff_3						SD_uchar_8(OEMRAMC + 0x02)
@@ -2337,8 +2030,8 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 #define b2EXTVGA_Temp 		BIT2				// SLI VGA Temperature.
 #define b3PCH_Temp 			BIT0				// PCH Temperature.
 
-#define b4RemoteSensor_Temp BIT4				// Remote sensor Temperature.//MARTINH138:Add
-#define b5NTC_V_Temp        BIT5				// NTC_V Temperature.//MARTINH139:Add
+#define b4RemoteSensor_Temp BIT4				// Remote sensor Temperature.
+#define b5NTC_V_Temp        BIT5				// NTC_V Temperature.
 
 #define VGA_TBuff1						SD_uchar_8(OEMRAMC + 0x08)
 #define VGA_TBuff2						SD_uchar_8(OEMRAMC + 0x09)
@@ -2393,15 +2086,14 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 
 #define CPU_Shut_Cnt						SD_uchar_8(OEMRAMC + 0x16)
 #define VGA_Shut_Cnt						SD_uchar_8(OEMRAMC + 0x17)
-#define RemoteSensor_Shut_Cnt				SD_uchar_8(OEMRAMC + 0x18) //MARTINH138:Change 'EXTVGA_Shut_Cnt' to 'RemoteSensor_Shut_Cnt'
-//#define LED_KB_PWM_Count					SD_uchar_8(OEMRAMC + 0x19)  //REJERRY007:remove.
+#define RemoteSensor_Shut_Cnt				SD_uchar_8(OEMRAMC + 0x18) //Change 'EXTVGA_Shut_Cnt' to 'RemoteSensor_Shut_Cnt'
+
 #define FAN2PRM 							SD_uchar_8(OEMRAMC + 0x1A)
 #define FAN_CpTarget 						SD_uchar_8(OEMRAMC + 0x1B)
 #define SMSC_ChgDelay						SD_uchar_8(OEMRAMC + 0x1C)
 #define USB_ChargerStep					    SD_uchar_8(OEMRAMC + 0x1D)
 
-#define NTC_V_Shut_Cnt				        SD_uchar_8(OEMRAMC + 0x1E) //MARTINH139:Add
-
+#define NTC_V_Shut_Cnt				        SD_uchar_8(OEMRAMC + 0x1E) 
 #define ManualFan2PRM						SD_uchar_8(OEMRAMC + 0x20)
 #define SHA1_SEED							SD_uint_16(OEMRAMC + 0x1E)
 
@@ -2441,11 +2133,11 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 
 #define TouchPadCount						SD_uchar_8(OEMRAMC + 0x30)
 #define EEPROM_PwrSts						SD_uchar_8(OEMRAMC + 0x31)
-#define Bat1Anth                            SD_uchar_8(OEMRAMC + 0x32)//JERRYCR003:Add BatteryECCSupport function.
+#define Bat1Anth                            SD_uchar_8(OEMRAMC + 0x32)//Add BatteryECCSupport function.
 #define Bat1AnthEnd           BIT0
 #define Bat1AnthStatus        BIT1
-#define batterymoderetrycnt                  SD_uchar_8(OEMRAMC + 0x33)//HEGANG007:Add retry mechanism when battery SMBUS fail in ECC mode.
-#define LED_KB_PWM_Count					SD_uint_16(OEMRAMC + 0x34)  //REJERRY007:add.
+#define batterymoderetrycnt                  SD_uchar_8(OEMRAMC + 0x33)//Add retry mechanism when battery SMBUS fail in ECC mode.
+#define LED_KB_PWM_Count					SD_uint_16(OEMRAMC + 0x34)  
 
 //Force system shutdown with 5S when RSOC drop to 0%.
 #define RSOC1PTO0PCount						SD_uchar_8(OEMRAMC + 0x36)  
@@ -2473,10 +2165,9 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 
 #define TmlCtrlFlag						SD_uchar_8(OEMRAMC + 0xF0)
 #define CpuTubo_on				BIT0
-//#define CpuTubo_off				BIT1
+
 #define CpuProcHot_on			BIT2
-//#define CpuProcHot_off			BIT3
-//#define throttle_on				BIT4
+
 #define throttle_off			BIT5
 #define CpuShutDown				BIT6
 
@@ -2487,121 +2178,22 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 #define CPU1tempn_2 					SD_uchar_8(OEMRAMC+0xF4)
 #define CPU1tempn_3 					SD_uchar_8(OEMRAMC+0xF5)
 #define CPU1tempn_4 					SD_uchar_8(OEMRAMC+0xF6)
-#define StorageNotify                   SD_uchar_8(OEMRAMC+0xF7)//BROOKEW039
+#define StorageNotify                   SD_uchar_8(OEMRAMC+0xF7)
 #define StorageNotify0    BIT0
 #define StorageNotify1    BIT1 
-#define StorageNotify2    BIT2  //REJERRY073:add.
+#define StorageNotify2    BIT2  
 
-#define USB_ID_DELAY                   SD_uchar_8(OEMRAMC+0xF8)//martin0625B add
-//#define DCIN_USB_LOWAgain    BIT7    //MARTINH015:remove
-#define USB_ID_N_Now                   SD_uchar_8(OEMRAMC+0xF9)  //MARTINH015:add
-#define USB_ID_N_Former                SD_uchar_8(OEMRAMC+0xFA)  //MARTINH015:add
-//JERRYCR048: Add read DGPU temperature function.
+#define USB_ID_DELAY                   SD_uchar_8(OEMRAMC+0xF8)
+
+#define USB_ID_N_Now                   SD_uchar_8(OEMRAMC+0xF9) 
+#define USB_ID_N_Former                SD_uchar_8(OEMRAMC+0xFA)  
+//Add read DGPU temperature function.
 #define sdAMDTH0					  SD_uchar_8(OEMRAMC+0xFC) 
 #define sdAMDTH1					  SD_uchar_8(OEMRAMC+0xFD) 
 #define sdAMDTH2					  SD_uchar_8(OEMRAMC+0xFE)
 #define sdAMDTH3					  SD_uchar_8(OEMRAMC+0xFF) 
-//JERRYCR048: Add read DGPU temperature function.
-#else
-#if 1
-#define PECICtrlRAM      OEMRAMC+0x40
+//
 
-#define PECIReadBuffer  						SD_Ptr_uchar_8(PECICtrlRAM+0x00)	// PECIReadBuffer[16]  0xC40~0xC4F
-#define PECIWriteBuffer 						SD_Ptr_uchar_8(PECICtrlRAM+0x10) 	// PECIWriteBuffer[16] 0xC50~0xC5F
-
-//#define PECI_CRC8           					SD_uchar_8(PECICtrlRAM+0x20)
-//#define PECI_CompletionCode 					SD_uchar_8(PECICtrlRAM+0x21)
-
-#define PECI_PCIConfigAddr 						SD_Ptr_uchar_8(PECICtrlRAM+0x22) 	// PECI_PCIConfigAddr[4] 0XC62~0XC65
-
-#define PECI_PowerCtrlStep  					SD_uchar_8(PECICtrlRAM+0x30)
-#define PECI_PowerUnit      					SD_uchar_8(PECICtrlRAM+0x31)
-#define PECI_EnergyUnit     					SD_uchar_8(PECICtrlRAM+0x32)
-#define PECI_TimeUnit       					SD_uchar_8(PECICtrlRAM+0x33)
-#define PECI_PL2Watts       					SD_uchar_8(PECICtrlRAM+0x34)
-#define PECI_MAXPL2         					SD_uchar_8(PECICtrlRAM+0x35)
-#define PECI_PL1TDP         					SD_uchar_8(PECICtrlRAM+0x36)
-#define PECI_PL1Time        					SD_uchar_8(PECICtrlRAM+0x37)
-#define PECI_Ctrl           					SD_uchar_8(PECICtrlRAM+0x38)
-
-#define SetPL2Request           BIT0
-
-#define PECI_AdaptorWatts   					SD_uchar_8(PECICtrlRAM+0x39)
-#define PECI_SystemWatts    					SD_uchar_8(PECICtrlRAM+0x3A)
-#define PECI_Algorithm_Delay    				SD_uchar_8(PECICtrlRAM+0x3B)
-
-#define PECI_ErrorCount         				SD_ulong_32(PECICtrlRAM+0x3C)	// 0xC7C~0xC7F
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#define PECI_StressToolBuf  					SD_Ptr_uchar_8(PECICtrlRAM+0x40)	// PECI_StressToolBuf[32]	//0xC80~0xC9F
-#define PSTB_RepeatCycle0           0
-#define PSTB_RepeatCycle1           1
-#define PSTB_RepeatCycle2           2
-#define PSTB_RepeatCycle3           3
-#define PSTB_RepeatInterval         4           // 10ms timer base
-#define PSTB_StopOnError            5
-#define PSTB_ClientAddress          6
-#define PSTB_WriteLength            7
-#define PSTB_ReadLength             8
-
-#define PSTB_CommandSpecificData    9
-#define PSTB_CmdCode                PSTB_CommandSpecificData
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-#define PSTB_Timer              				SD_uchar_8(PECICtrlRAM+0x60)
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#define PSTB_CmdStatus          				SD_uchar_8(PECICtrlRAM+0x61)
-#define ServivePECIStressTool   BIT0
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#define PSTB_RepeatIntervalCount    			SD_uchar_8(PECICtrlRAM+0x62) 
-
-#define PSTB_RepeatCycle        				SD_ulong_32(PECICtrlRAM+0x63)	//0xCA3~0xCA7
-
-#define	CPUTjmax			    				SD_uchar_8(PECICtrlRAM+0x67)
-#define	ReadCPUTjmaxCUNT        				SD_uchar_8(PECICtrlRAM+0x68)
-#define StressToolReadBufIndex  				SD_uchar_8(PECICtrlRAM+0x69)
-#endif
-
-
-
-
-
-//*******************************************************************************
-//Reserved offset 0xAA ~ 0xAF
-//===============================================================================
-// OEMRAM5 Offset 0xC0 ~ 0xCF   For OEM SPI function 
-#define SPI_Mouse 	OEMRAMC+0xC0
-
-#define SPI_Mouse_Buf        					SD_Ptr_uchar_8(SPI_Mouse+0x00)		// SPI_Mouse_Buf[3] 0xCC0~0xCC2
-#define SPI_Mouse_DeltaX        				SD_uchar_8(SPI_Mouse+0x03)
-#define SPI_Mouse_DeltaY        				SD_uchar_8(SPI_Mouse+0x04)
-#define SPI_Mouse_BYTE1         				SD_uchar_8(SPI_Mouse+0x05)
-#define SPI_Mouse_XMovement     				SD_uchar_8(SPI_Mouse+0x06)
-#define SPI_Mouse_YMovement     				SD_uchar_8(SPI_Mouse+0x07)
-#define SPI_Mouse_Buf_Index     				SD_uchar_8(SPI_Mouse+0x08)
-#define SPI_Mouse_Misc          				SD_uchar_8(SPI_Mouse+0x09)
-#define SPI_Mouse_ID            				SD_uchar_8(SPI_Mouse+0x0A)
-#define Fn_Delay								SD_uchar_8(SPI_Mouse+0x0B)
-//Reserved offset 0x0C ~ 0x0F
-//===============================================================================
-// OEMRAM5 Offset 0xD0 ~ 0xEF   For OEM SCI qevent function
-#define SCI_Qevent_Ctrl		OEMRAMC+0xD0
-
-#define SCI_Event_In_Index 						SD_uchar_8(SCI_Qevent_Ctrl+0x00)
-#define SCI_Event_Out_Index 					SD_uchar_8(SCI_Qevent_Ctrl+0x01)
-#define SCI_Event_Buffer 						SD_Ptr_uchar_8(SCI_Qevent_Ctrl+0x02) // SCI_Event_Buffer[EVENT_BUFFER_SIZE]  0XCD2~0XCDA
-#define PD_SCI_Event_In_Index 			    	SD_uchar_8(SCI_Qevent_Ctrl+0x10)
-#define PD_SCI_Event_Out_Index 					SD_uchar_8(SCI_Qevent_Ctrl+0x11) 
-#define PD_SCI_Event_Buffer 					SD_Ptr_uchar_8(SCI_Qevent_Ctrl+0x12) //PD_SCI_Event_Buffer[PENDING_BUFFER]  0XCE2~0XCE9
-
-//===============================================================================
-// OEMRAM5 Offset 0xF0 ~ 0xFF   For OEM HSPI function
-#define HSPI_Ctrl 	OEMRAMC+0xF0
-#define HSPI_SelfRamCode_Index              	SD_uchar_8(HSPI_Ctrl+0x00)
-#define HSPI_tempcmd                        	SD_uchar_8(HSPI_Ctrl+0x01)
-#define HSPI_FPT_timeout                    	SD_uchar_8(HSPI_Ctrl+0x02)
-#define HSPI_Misc1                          	SD_uchar_8(HSPI_Ctrl+0x03)
-#endif
 
 //*******************************************************************************
 //-------------------------------------------------------------------------------
@@ -2609,7 +2201,7 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 //-------------------------------------------------------------------------------
 //*******************************************************************************
 //Ramdebug1
-#define Rdbg_index 								SD_uchar_8(OEMRAMD+0xFF)//W121
+#define Rdbg_index 								SD_uchar_8(OEMRAMD+0xFF)
 
 
 //*******************************************************************************
@@ -2664,55 +2256,32 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 #define	BATH3								SD_ulong_32(OEMRAME+0x9C) // 0x0E9C ~ 0x0E9F
 #define	BATH4								SD_ulong_32(OEMRAME+0xA0) // 0x0EA0 ~ 0x0EA3
 
-//MARTINH072:add start
 #define  P80CMOS                            SD_Ptr_uchar_8(OEMRAME+0xB0)//from 0xB0-0xB6
 #define  P80Index                           SD_uchar_8(OEMRAME+0xB7)
 #define  P80CMOSSts                         SD_uchar_8(OEMRAME+0xC0)
 #define  P80CMOSDis                       BIT0
 
-#define PwrOnDly5Sec					    SD_uchar_8(OEMRAME+0xC1)	// 0x34  //MARTINH072:remove 
+#define PwrOnDly5Sec					    SD_uchar_8(OEMRAME+0xC1)	// 0x34   
 
 #define P80CMOS_backup                  SD_Ptr_uchar_8(OEMRAME+0xC2) //from 0xC2-0xC8 //COMMON0002: add
-#define P80Index_backup			    SD_uchar_8(OEMRAME+0xC9) ////COMMON0002: add
+#define P80Index_backup			    SD_uchar_8(OEMRAME+0xC9) //COMMON0002: add
 
-//MARTINH072:add end
+
 
 //*******************************************************************************
 //-------------------------------------------------------------------------------
 //  OEM RAM F  
 //-------------------------------------------------------------------------------
 //*******************************************************************************
-#define DiagECRAM		        OEMRAMF     //MARTINH072:add
-#define DiagNameSpace			OEMRAMF     //MARTINH072:add
-//MARTINH072:remove start
-/*
-//W115: start for save P80 code to setup. 
-#define  P80CMOS                            SD_Ptr_uchar_8(OEMRAMF+0x00)//from 0x90-0x96
-#define  P80Index                           SD_uchar_8 (OEMRAMF+0x6D)
-#define  P80CMOSSts                       SD_uchar_8(OEMRAMF+0x6E)
-#define  P80CMOSDis                       BIT0
-//W115: end for save P80 code to setup.
-//W114>>>
-#define EEPROMTestFlag						SD_uchar_8(OEMRAMF + 0x6F)
-#define EEPROMOffset						SD_uchar_8(OEMRAMF + 0x70)
-#define EEPROMDataRWCount					SD_uchar_8(OEMRAMF + 0x71)
+#define DiagECRAM		        OEMRAMF     
+#define DiagNameSpace			OEMRAMF     
 
-#define EEPROMReadByte						SD_Ptr_uchar_8(OEMRAMF + 0x72)
-#define EEPROMWriteByte						SD_Ptr_uchar_8(OEMRAMF + 0x73)
-#define EEPROMReadWord						SD_Ptr_uchar_8(OEMRAMF + 0x74)
-#define EEPROMWriteWord						SD_Ptr_uchar_8(OEMRAMF + 0x76)
 
-#define EEPROMDataBuf						SD_Ptr_uchar_8(OEMRAMF + 0x80)
-//W114<<<
-*/
-//MARTINH072:remove end
-//MARTINH073: add start
 #define  nDiagInterface_CMD             SD_uchar_8(OEMRAMF+0x00)  
 #define  nDiagInterface_DATA            SD_uchar_8(OEMRAMF+0x01)  
 #define  nDiagInterface_ECRegL          SD_uchar_8(OEMRAMF+0x02) //or used as EC Space offset
 #define  nDiagInterface_ECRegH          SD_uchar_8(OEMRAMF+0x03) 
-//MARTINH073: add end
-//MARTINH134:Add start
+
 #define	SMB_PRTC_Diag				SD_uchar_8 (OEMRAMF+0x60)// 0x60,
 #define	SMB_STS_Diag				SD_uchar_8 (OEMRAMF+0x61)// 0x61,
 #define	SMB_ADDR_Diag			    SD_uchar_8 (OEMRAMF+0x62)// 0x62,
@@ -2727,8 +2296,7 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 
 #define	SMB_EC_Chennel_Diag			SD_uchar_8 (OEMRAMF+0x88)// 0x88,
 
-//MARTINH134:Add end
-//[-start-150420-David-add]//
+
 #define	Srand_Data					SD_Ptr_uchar_8(OEMRAMF+0x90)//0xA8~0xAF
 
 #define EccTest5SecCont					    SD_uchar_8(OEMRAMF+0xC2)	// 0x34
@@ -2740,11 +2308,10 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 #define ECC_Ver_Fail                       BIT0
 #define EccVerSucCout1					    SD_ulong_32(OEMRAMF+0xCC) 
 #define EflashUnprotectByte         SD_uchar_8(OEMRAMF+0xD0)
-//[-end-150420-David-add]//       
+       
 #define EflashReadCounter1  SD_uchar_8(OEMRAMF+0xE0)
 #define EflashReadCounter2   SD_uchar_8(OEMRAMF+0xE1)
 
-//#define FANTimeCount   SD_uchar_8(OEMRAMF+0xE2)	//THOMASY022:add	//XITING0036:S remove 30% duty at first 20 seconds boot
 
 #endif 
 

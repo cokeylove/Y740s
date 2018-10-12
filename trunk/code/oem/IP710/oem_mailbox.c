@@ -329,13 +329,11 @@ void VPC_interface(void)
 				if( nVPC_DATA)
 				{
 					//printf("ssp");
-					SET_MASK(uVGATurboFun, uEnableGPS);
 					SET_MASK(EM7FUNCTION,LSPRUNNING);	// Enable Super performance mode.
 				}
 				else
 				{
 					//printf("dsp");
-					CLEAR_MASK(uVGATurboFun, uEnableGPS);
 					CLEAR_MASK(EM7FUNCTION,LSPRUNNING);	// Disable Super performance mode.
 				}
 				break;

@@ -21,7 +21,7 @@
 void DisableADCChannel(void)
 {
 	VCH0CTL=0x1F;   //NTC_V1(GPU) // NTC_V 
-	VCH1CTL=0x1F;   // NTC_V2(CPU)  // TURBO_V
+	VCH1CTL=0x1F;   // NTC_V2(CPU)  
 	VCH2CTL=0x1F;   // BATT_TEMP
 	VCH3CTL=0x1F;   // IMVP_IMON
 	VCH4CTL=0x00;	// Psys
@@ -141,7 +141,7 @@ void Init_ADC(void)
 	//T24 + S
 	
 	VCH0CTL=ADCChannel_0;   //VR_CPU_PWROK 
-	VCH1CTL=ADCChannel_1;   //NTC_V  //TURBO_V
+	VCH1CTL=ADCChannel_1;   //NTC_V  
 	VCH2CTL=ADCChannel_2;   // BATT_TEMP
 	VCH3CTL=ADCChannel_3;   // IMVP_IMON
 	VCH4CTL=0x90;    //Psys
@@ -250,7 +250,6 @@ void AdpID170WAmode(void)
 	ACModeSTPPEn = A170WACmodethrottling;
 	ACModeSTPPDis = A170WACmodethrottlingrecove;
 	Chk_Hybrid_STPP_min_BattGasgauge = 20;
-	Chk_Hybrid_STPP_Batt_Output_Power_Limit = 68; // 20W / 20 / IOUT /( 3/1024)
 
 	Chk_Trickle_Current_Now_Current = 700;//700mA
 	Chk_Trickle_Current_Chg_Current = 500;//500mA

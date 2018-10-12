@@ -415,7 +415,6 @@ void NOVOPressed(void)
 					BatSMbusFailCount = 0; //W100:end
 					uNovoVPCCount = 1;
 					// AIUU3_W17: Fixed 8s reset can power on again >>>>
-					//BatOnlyPWRON=SYSTEM_BATONLY;
 					//#if !EN_PwrSeqTest  //AIUU3_W34: support RTC wake and psw can wake during RTC wake enable in DC mode except ship mode enable
 					//return;//JERRYCR057: Remove error 
 					PWSeqStep = 1;
@@ -529,7 +528,6 @@ void NOVOOverrided(void)
 void LanWakeLow(void)
 {
 #if	Support_EC_LANWake
-	//	if (uReserve07.fbit.nPmeWakeEN==0) return;
 	RamDebug(0x99);
 	switch (SysPowState)
 	{
@@ -574,8 +572,6 @@ void LanWakeLow(void)
 void LanWakeHi(void)
 {
 #if	Support_EC_LANWake
-	//	if (uReserve07.fbit.nPmeWakeEN==0) return;
-
 	switch (SysPowState)
 	{
 		case SYSTEM_S4 :

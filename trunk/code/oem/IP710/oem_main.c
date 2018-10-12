@@ -535,7 +535,7 @@ void Hook_Timer1SecEventA(void)
   #endif
 //W118:battery FW update internal error and shutdown can't update continue.
 
-	//REJERRY083:s+Add workaround for hang BIOS in reboot.
+	//Add workaround for hang BIOS in reboot.
 	if(workaoundhangrebootflag == 1)
 	{
 		Test109++;
@@ -584,7 +584,7 @@ void Hook_Timer1SecEventA(void)
 		hangSSDcount = 0x00;
 	}
 	
-	//Y7JERRY091: s+Add workaround for hang S4/cold boot/reboot.
+	//Add workaround for hang S4/cold boot/reboot.
 	if(workaoundhangS5flag==1)
 	{
 		Test10A++;
@@ -599,8 +599,8 @@ void Hook_Timer1SecEventA(void)
 	{  
 		Test10A = 0x00;
 	}
-  //Y7JERRY091:e+ Add workaround for hang S4/cold boot/reboot.
-  	//REJERRY083:e+Add workaround for hang BIOS in reboot.
+  //Add workaround for hang S4/cold boot/reboot.
+  	//Add workaround for hang BIOS in reboot.
 }
 
 //------------------------------------------------------------

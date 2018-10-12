@@ -352,7 +352,7 @@
 #define PortI_Init		0x00         // PORT Data
 
 #define PortI0_Ctrl		INPUT       //A    	66 	NTC_V1(PROVENCE:GPU  temp. monitor)  //NTC_V
-#define PortI1_Ctrl		INPUT	    //A    	67 	NTC_V2(PROVENCE:CPU  temp. monitor)  //TURBO_V
+#define PortI1_Ctrl		INPUT	    //A    	67 	NTC_V2(PROVENCE:CPU  temp. monitor)  
 #define PortI2_Ctrl		INPUT		//A    	68 	BATT_TEMP (Battery DETECT)
 #define PortI3_Ctrl		INPUT	    //I    	69 	BATT_I (charge current monitor)
 #define PortI4_Ctrl		INPUT		//I  	70  Psys (monitor System Power)
