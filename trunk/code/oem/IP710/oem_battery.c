@@ -856,13 +856,6 @@ void ChkAvgCurrent()
 	}
 }
 
-void RST_ChgTimeOutCnt(void)
-{
-	TrickleChgTimeOutCnt = 0;
-	FastChgTimeOutCnt = 0;
-	CLEAR_MASK(nStopChgStat3L,ENSTOPCHG);
-	CLEAR_MASK(nStopChgStat3L,ENTRITIMEOUT);
-}
 
 void Battery100ms(void)
 {
@@ -902,7 +895,6 @@ void Battery1Sec(void)
 			else								// discharging
 			{
 				nBattTempCnt = 0;
-				RST_ChgTimeOutCnt();
 			}
 		}
 		else
@@ -1580,9 +1572,6 @@ void Chk_BatSMbusFailCount(void)
 
 	if (IS_MASK_CLEAR(SYS_STATUS,AC_ADP)||(IS_MASK_SET(SYS_STATUS,AC_ADP)&&IS_MASK_SET(ACOFF_SOURCE, BATTLEARN)))
 	{
-
-		RST_ChgTimeOutCnt();
-
 		if (nBattErrorCnt==30)
 		{
 
@@ -1619,48 +1608,13 @@ void Chk_BatSMbusFailCount(void)
 				}
 				if ((nBattErrorCnt >= 30))				// disable charge
 				{
-					RST_ChgTimeOutCnt();
-					SET_MASK(nStopChgStat3L,ENCOMMFAIL);	// Set bat communication fail and STOP charge.
-															//	charge inhibit
+					SET_MASK(nStopChgStat3L,ENCOMMFAIL);	// Set bat communication fail and STOP charge.															//	charge inhibit
 					SMbusFailCnt2++;
 				}
 		}
 	}
 }
 
-
-void Chk_CHG_TimeOut(void)			// every 1 min
-{
-       if (nBattTempCnt < 10)
-		return;
-	if (IS_MASK_SET(CHGIC_ReadCmd0x12L,ChargeInhibit))
-		return;
-											// nBattCharCurrent >= 0x01F4  (500mA)
-	if((nBattCharCurrentH > 1) || ((nBattCharCurrentH == 1) && (nBattCharCurrentL >= 0xF4)))
-	{
-		TrickleChgTimeOutCnt = 0;
-		FastChgTimeOutCnt++;
-		if (FastChgTimeOutCnt >= 720)		// 12hour
-		{
-			FastChgTimeOutCnt = 721;
-			SET_MASK(nStopChgStat3L,ENSTOPCHG);
-			RamDebug(0x12);
-			RamDebug(nBattCharCurrentH);
-		}
-	}
-	else									// nBattCharCurrent < 0x01F4  (500mA)
-	{
-		FastChgTimeOutCnt = 0;
-		TrickleChgTimeOutCnt++;
-		if (TrickleChgTimeOutCnt >= 360)		// 6hour
-		{
-			TrickleChgTimeOutCnt = 361;
-			SET_MASK(nStopChgStat3L,ENTRITIMEOUT);
-			RamDebug(0x06);
-			RamDebug(nBattCharCurrentL);
-		}
-	}
-}
 
 void ChkBattery_abnormal(void)
 {

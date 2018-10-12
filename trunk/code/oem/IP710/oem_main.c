@@ -375,7 +375,7 @@ void Hook_Timer500msEventB(void)
 #if !EN_PwrSeqTest
 	ThmIC_Temperature();  				//XITING0038:enable thermal IC ,get temp 
 	VGA_Temperature();    //MQJERRY002:Enable read GPU temperature function.
-	Clear_Batt_First_Used_Date();//REJERRY101£º Modify battery clear first user method.
+	Clear_Batt_First_Used_Date();//Modify battery clear first user method.
 
 #endif
 
@@ -746,9 +746,7 @@ void Hook_Timer1SecEventC(void)
 //------------------------------------------------------------
 void Hook_Timer1MinEvent(void)
 {
-#if !EN_PwrSeqTest
-	//Chk_CHG_TimeOut(); //REJERRY068:remove.
-#endif
+
 }
 
 //------------------------------------------------------------

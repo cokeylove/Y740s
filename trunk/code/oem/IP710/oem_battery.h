@@ -94,8 +94,8 @@
 #define C_LVMfgFun2   		0x3E	// LV Smart Battery
 #define C_Cell3            	0x3D 	// manufacture data
 #define C_Cell4            	0x3C 	// manufacture data
-#define FirstUsedDate       0x3F   // FirstUsedDate  
-#define C_Pmax              0x59   //add Pmax cmd.
+#define FirstUsedDate       0x3F    // FirstUsedDate  
+#define C_Pmax              0x59    //add Pmax cmd.
 
 #define	NONE_BAT			0x00
 #define	PWR_CHANGE			0x01
@@ -129,18 +129,6 @@ typedef struct RSmbusBStruct
 //-----------------------------------------------------------------
 // Charge and discharge charger rules
 //-------------------------------------------- --------------------
-#define ChangeChgBattery	0x82
-#define ChangeDischgBattery 0x20
-#define ABatteryLow			0x05
-
-#define ACriticalLow		0x02
-#define AOverVoltage		13400
-
-extern void vPollingBatteryData(void);
-extern void Charge_or_Discharge(void);
-extern void	AC_DC_EVENT(void);
-extern void	CheckAdapterInOut(void);
-
 extern void ChkBattery_Percl();
 extern void Calc_Bat_RCC(void);
 extern void Clear_Batt_First_Used_Date(void);//Modify battery clear first user method.
@@ -149,14 +137,6 @@ extern void ChkPsys(void);
 extern void DPTF_Power_Psys_Control(void);				
 extern void DPTF_GPU_Temp_Control(void);			
 
-
-//-----------------------------------------------------------------
-// PSID
-//-------------------------------------------- --------------------
-#define	PSID_FAIL		0
-#define	PSID_GOOD		1
-#define	ROM_SKIP		0xCC
-#define	MEM_READ		0xF0
 
 #define RSOC_Shut_Cnt		50 					//Force system shutdown with 5S when RSOC drop to 0%.
 
@@ -183,11 +163,9 @@ extern void Battery_Expresscharge(void); //Add express charge method.
 extern void WriteSmartChgIC(void);
 extern void ReadSmartChgIC(void);
 extern void Lenovo_Battery_EM80(void);
-extern void Lenovo_Battery_EM60(void);
 extern void FirstGetBatData(void);
 extern void Battery1Sec(void);
 extern void Chk_Shutdown_Volt(void);
-extern void Chk_CHG_TimeOut(void);
 extern void Chk_BatSMbusFailCount(void);
 extern void Unlock_ShipMode(void);
 extern void Lock_ShipMode(void);
@@ -196,7 +174,6 @@ extern void UpBatteryPState();
 extern void DownBatteryPState();
 extern void Battery100ms(void);
 extern void ChkBattery_abnormal(void);
-extern void LV_BAT_Authentication(void);
 extern void RSOC1Pto0P_ShutdownCheck(void);					//Force system shutdown with 5S when RSOC drop to 0%.
 
 

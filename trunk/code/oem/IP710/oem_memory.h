@@ -217,8 +217,6 @@ typedef enum
 
 #define	inhibit2sec 					SD_uchar_8(OEMRAM2+0x80)
 #define	Battdata_ready 				    SD_uchar_8(OEMRAM2+0x81)
-#define	TrickleChgTimeOutCnt			SD_uint_16(OEMRAM2+0x82)//0x82,0x83
-#define	FastChgTimeOutCnt				SD_uint_16(OEMRAM2+0x84)//0x84,0x85
 #define	RSMshutdownCnt					SD_uchar_8(OEMRAM2+0x86)
 typedef enum
 {
