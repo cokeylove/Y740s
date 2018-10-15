@@ -1264,7 +1264,7 @@ void OEM_PollingBatData_TASK(void)
 					else if( (BATTMANUFACTURE[0] == 'S' ) && (BATTMANUFACTURE[1] == 'M' ) )
 						nBatteryStatL |= 0x70;	// Simplo*/
 
-					InitChargerIC(); //REJERRY077:add.
+					InitChargerIC(); 
 				}
 			}
 			else
@@ -1960,7 +1960,7 @@ void ChkPsys(void)
 	}	
 
 #if DPTF_SUPPORT
-	DPTF_Power_Psys_Control();				//add DPTF control	(power and psys)
+	//DPTF_Power_Psys_Control();				//add DPTF control	(power and psys)
 #endif
 	
 }
