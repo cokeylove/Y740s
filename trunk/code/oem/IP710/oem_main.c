@@ -728,7 +728,8 @@ void Hook_Timer1SecEventC(void)
 
 //	DPTFControl();		
 
-	//XITING0068:S get PCH temp from BIOS every 5S
+	//S+ remove get PCH temp from BIOS every 5S
+	/*
 	if(SystemIsS0)
 	{
 		ReadPCHTempCount++;
@@ -738,7 +739,8 @@ void Hook_Timer1SecEventC(void)
 			DTS_ReadPCHTemp(); 
 		}
 	}
-	//XITING0068:E
+	*/
+	//E+
 }
 
 //------------------------------------------------------------

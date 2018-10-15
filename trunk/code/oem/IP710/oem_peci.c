@@ -938,16 +938,16 @@ void DTS_ReadCPUTemp(void)
 }
 //MARTINH116:E+Optimize read CPU temperature function.
 
-//XITING0068:S add DTS read PCH temp 
+//add DTS read PCH temp 
 void DTS_ReadPCHTemp(void)
 {
-	 ECQEvent(DTS_READ_PCH_TEMP);
+	ECQEvent(DTS_READ_PCH_TEMP);
 	PCH_TBuff3 = PCH_TBuff2;
 	PCH_TBuff2 = PCH_TBuff1;
 	PCH_TBuff1 = nPCH_Temp;
 	PCH_TBuff3 = (PCH_TBuff1+ PCH_TBuff2 + PCH_TBuff3)/3;	// PCH average temperature
 }
-//XITING0068:E
+//
 
 
 // ----------------------------------------------------------------------------
