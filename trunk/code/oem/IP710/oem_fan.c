@@ -1834,6 +1834,8 @@ void Thro_Turbo(BYTE BTurboRem, BYTE BTurboOff, BYTE BTType)
 
 	if ( BTType == TEMP_TYPE_VGA )
 	{
+	    //S+ remove PCH temp protect for Y740
+	    /*
 		//GPU temp and PCH temp control GPU D state by board ID
 		if(KeyBoardID == 0x01)										//add change fan table by board id 01 - Y530 ,02 - Y530P
 		{
@@ -1863,7 +1865,9 @@ void Thro_Turbo(BYTE BTurboRem, BYTE BTurboOff, BYTE BTType)
 					cGPUThermalThrottling = 2;
 				}
 			}
-		}			
+		}
+		*/
+		//E+
 	}
 	else
 	{	// Set Internal CPU.
