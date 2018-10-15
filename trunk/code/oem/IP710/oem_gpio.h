@@ -137,7 +137,7 @@
 #define PortC0_Ctrl		OUTPUT	        //O    113	 	BKOFF# (panel back light enable signal)
 #define PortC1_Ctrl		ALT			    //A    115		EC_SMB_CK1
 #define PortC2_Ctrl		ALT			    //A    116		EC_SMB_DA1
-#define PortC3_Ctrl		ALT+PULL_UP	    //A	   56		KSO16
+#define PortC3_Ctrl		INPUT+PULL_DW	//A	   56		KSO16    //FN key input
 #define PortC4_Ctrl		INPUT	        //I	   120		EC_PS1 (P-sensor) 
 #define PortC5_Ctrl		INPUT		    //I	   57		EC_PS2 (P-sensor)
 #define PortC6_Ctrl		OUTPUT		    //O    124		SUSP#
@@ -146,6 +146,8 @@
 #define BKOFF_OFF()				CLEAR_MASK(GPDRC,BIT(0))
 #define BKOFF_ON()				SET_MASK(GPDRC,BIT(0))
 #define Read_BKOFF()			IS_MASK_SET(GPDRC, BIT(0))
+
+#define Read_FN_KEY()			IS_MASK_SET(GPDRC,BIT(3)) 		//add fn key check
 
 #define Read_EC_PS1()			IS_MASK_SET(GPDRC,BIT(4))	
 
