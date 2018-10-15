@@ -206,18 +206,22 @@
 //-----------------------------------------------------------------
 #define PortE_Init		0x00            // PORT Data  
 
-#define PortE0_Ctrl		OUTPUT			//O	     19       CAPS_LED#
+#define PortE0_Ctrl		OUTPUT			//O	     19       CAPS_LED#  //SYSTEM_STATUS1
 #define PortE1_Ctrl		OUTPUT			//O      82       EC_MUTE#  
 #define PortE2_Ctrl		OUTPUT         	//O      83       EC_ON_3V (3VALW enable signal)
 #define PortE3_Ctrl		OUTPUT			//O      84   	  CHG_MOD3 
 #define PortE4_Ctrl		INPUT			//I      107  	  NOVO#
 #define PortE5_Ctrl		OUTPUT			//O 	 35       SYSON_VDDQ (VDDQ power enable)
 #define PortE6_Ctrl		INPUT           //O	     17       EC_TX
-#define PortE7_Ctrl		OUTPUT			//O	     20       NUM_LED#
+#define PortE7_Ctrl		OUTPUT			//O	     20       NUM_LED#   //SYSTEM_STATUS2
 
 
 //#define CAPLED_ON()			CLEAR_MASK(GPDRE,BIT(0))
 //#define CAPLED_OFF()		SET_MASK(GPDRE,BIT(0))
+
+#define SYSTEM_STATUS1_H()   SET_MASK(GPDRE,BIT(0))					//notify Anti_ghost_key chip states.
+#define SYSTEM_STATUS1_L()   CLEAR_MASK(GPDRE,BIT(0))				//notify Anti_ghost_key chip states.
+
 
 #define EC_MUTE_ACT()		CLEAR_MASK(GPDRE,BIT(1))
 #define EC_MUTE_INACT()		SET_MASK(GPDRE,BIT(1))
@@ -244,6 +248,10 @@
 
 //#define NUMLED_ON()			CLEAR_MASK(GPDRE,BIT(7))
 //#define NUMLED_OFF()		SET_MASK(GPDRE,BIT(7))
+
+#define SYSTEM_STATUS2_H()   SET_MASK(GPDRE,BIT(7))				//notify Anti_ghost_key chip states.
+#define SYSTEM_STATUS2_L()   CLEAR_MASK(GPDRE,BIT(7))			//notify Anti_ghost_key chip states.
+
 
 //-----------------------------------------------------------------
 // GPIO Port F Registers define

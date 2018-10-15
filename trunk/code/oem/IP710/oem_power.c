@@ -741,6 +741,11 @@ BYTE S5S0_Init_Status(void)
 	}
 
 	AOU_IFG_Debounce_Cnt = 0;				//Reset counter
+
+	//notify Anti-Ghost Key S0 state
+	SYSTEM_STATUS1_L();
+	SYSTEM_STATUS2_H();
+	//
 	
 	SysPowState = SYSTEM_S0;	// Set System S0 status.
 	return(0);
@@ -931,6 +936,11 @@ BYTE S0S5_Init_Status(void)
 			RamDebug(0x14);
 		}
 	}
+
+	//add notify Anti-Ghost Key S5 status
+	SYSTEM_STATUS1_L();
+	SYSTEM_STATUS2_L();
+	//
 	
 	SysPowState = SYSTEM_S5;
 	
@@ -1063,6 +1073,11 @@ BYTE S0S3_Init_Status(void)
 	{
 		USB_ON_HI();
 	}
+
+	//add notify Anti-Ghost kb S3 status
+	SYSTEM_STATUS1_H();
+	SYSTEM_STATUS2_L();
+	//
 
 	SysPowState = SYSTEM_S3;
 	return(0);
@@ -1239,6 +1254,11 @@ BYTE S3S0_Init_Status(void)
 	}
 
 	AOU_IFG_Debounce_Cnt = 0;			//Reset counter
+
+	//notify Anti-Ghost Key S0 status
+	SYSTEM_STATUS1_L();
+	SYSTEM_STATUS2_H();
+	//
 	
 	SysPowState = SYSTEM_S0;
 	return(0);
