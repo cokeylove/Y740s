@@ -143,6 +143,17 @@ void Battery_LED_Reset(void)
 
 void Lenovo_LED(void)
 {
+    //add A_COVER_LEN control
+	if (SystemIsS0)
+	{
+		PWR_A_COVER_LED_ON();
+	}
+	else
+	{
+		PWR_A_COVER_LED_OFF();
+	}
+	//
+	
     //Power LED
 	if ( SystemIsS5||SystemIsDSX|| (SysPowState==SYSTEM_DSX_S5) )
 	{ 
@@ -293,11 +304,13 @@ void MFG_LED(void)
 	if(IS_MASK_SET(cOsLedCtrl,cOL_PwrLed))
 	{
 		PWR_LED_ON();
+	    PWR_A_COVER_LED_ON();
 		//PWR_LED2_ON();//Add power LED2.
 	}
 	else
 	{
 		PWR_LED_OFF();
+		PWR_A_COVER_LED_OFF();
 		//PWR_LED2_OFF();//Add power LED2.
 	}
 
