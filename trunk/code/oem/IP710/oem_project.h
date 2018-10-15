@@ -74,7 +74,7 @@
  */
 #define KB_FnStickKey           0   /* 1 : for Fn stick key function */
 //#define KB_HW_KeyScan             /* To support hardward keyscan */
-#define _KEYBOARD_EXIST_                   TRUE
+#define _KEYBOARD_EXIST_                   FALSE
 /*
  * ****************************************************************************
  * uart debug
@@ -159,7 +159,6 @@
 #define Havekillswitch	 		FALSE	
 #define Lenovo_Brightness		FALSE
 #define FAN_TABLE_Already		TRUE    //Modify FAN control and fan table for SIV test.		
-#define Support_SLI_FAN			FALSE	// SLI FAN Table already.
 #define SW_ISCT					FALSE	// Support ISCT function.
 #define Support_TJ100			FALSE	// Support CPU TJ100.
 #define Support_TJ85			FALSE	// Support CPU TJ85.
