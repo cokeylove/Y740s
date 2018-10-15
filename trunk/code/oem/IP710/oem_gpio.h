@@ -119,8 +119,12 @@
 
 #define Read_EC_PWRBTN() 	IS_MASK_CLEAR(GPDRB,BIT(3))
 
-#define PCH_PWR_EN_HI()		SET_MASK(GPDRB,BIT(5))		
-#define PCH_PWR_EN_LOW()	CLEAR_MASK(GPDRB,BIT(5))	
+//#define PCH_PWR_EN_HI()		SET_MASK(GPDRB,BIT(5))		
+//#define PCH_PWR_EN_LOW()	CLEAR_MASK(GPDRB,BIT(5))	
+
+#define AGKB_PWR_EN_ON()		CLEAR_MASK(GPDRB,BIT(5))		//add anti-ghost usb KB enable
+#define AGKB_PWR_EN_OFF()		SET_MASK(GPDRB,BIT(5))			//add anti-ghost usb KB disable
+
 
 #define KBRST_ON()			CLEAR_MASK(GPDRB,BIT(6))
 #define KBRST_OFF()			SET_MASK(GPDRB,BIT(6))

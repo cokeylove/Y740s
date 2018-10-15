@@ -281,7 +281,7 @@ void SetS0GPIO(void)
     }
     */
 
-	PCH_PWR_EN_HI();	
+	//PCH_PWR_EN_HI();	
 }
 
 void SetS5GPIO(void)
@@ -299,7 +299,7 @@ void SetS5GPIO(void)
 	
 	AC_IN_INPUT;
 
-	PCH_PWR_EN_LOW();		
+	//PCH_PWR_EN_LOW();		
 }
 
 //============G3 -> S5==========================================================
@@ -523,6 +523,7 @@ BYTE S5S0_STEP1(void)
 	PM_PWRBTN_HI();
 	EC_ON_HI(); 
 	EC_ON_5V_ON(); 
+	AGKB_PWR_EN_ON();			//enable anti-ghost usb KB
 	return(0);  //modify return 1 to 0.
 }
 
