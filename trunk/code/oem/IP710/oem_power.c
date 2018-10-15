@@ -270,6 +270,7 @@ void SetS0GPIO(void)
 	PECIDelayCnt = 0x04;
 	Fan_Init();
 
+    /*
 	if ( IS_MASK_SET(SYS_MISC1, b1Num_LED) )
 	{ 
 	    NUMLED_ON(); 
@@ -278,6 +279,7 @@ void SetS0GPIO(void)
     { 
         NUMLED_OFF(); 
     }
+    */
 
 	PCH_PWR_EN_HI();	
 }
@@ -292,8 +294,8 @@ void SetS5GPIO(void)
 	FAN_SPEED_INDW;		// Set FAN Speed input+pull_dw.
 	FAN2_PWM_INDW;		// Set FAN_PWM input+pull_dw.
 	FAN2_SPEED_INDW;		// Set FAN Speed input+pull_dw.
-	CAPLED_OFF();		// Turn off Cap LED.
-	NUMLED_OFF();		// Turn off Num LED.
+	//CAPLED_OFF();		// Turn off Cap LED.
+	//NUMLED_OFF();		// Turn off Num LED.
 	
 	AC_IN_INPUT;
 

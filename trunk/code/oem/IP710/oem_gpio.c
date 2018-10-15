@@ -209,6 +209,8 @@ void Hook_KBRSTOFF(void)
 	KBRST_OFF();
 }
 
+//S+ remove NUMLED and CAPLED control
+/*
 //----------------------------------------------------------------------------
 // Hook function of NUM LED ON
 //----------------------------------------------------------------------------
@@ -252,3 +254,5 @@ void Hook_CAPLED_OFF(void)
 		CAPLED_OFF();
 	}
 }
+*/
+//E+

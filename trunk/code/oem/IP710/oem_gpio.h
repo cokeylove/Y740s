@@ -187,7 +187,7 @@
 //-----------------------------------------------------------------
 // GPIO Port E Registers define
 //-----------------------------------------------------------------
-#define PortE_Init		0x81            // PORT Data  
+#define PortE_Init		0x00            // PORT Data  
 
 #define PortE0_Ctrl		OUTPUT			//O	     19       CAPS_LED#
 #define PortE1_Ctrl		OUTPUT			//O      82       EC_MUTE#  
@@ -199,8 +199,8 @@
 #define PortE7_Ctrl		OUTPUT			//O	     20       NUM_LED#
 
 
-#define CAPLED_ON()			CLEAR_MASK(GPDRE,BIT(0))
-#define CAPLED_OFF()		SET_MASK(GPDRE,BIT(0))
+//#define CAPLED_ON()			CLEAR_MASK(GPDRE,BIT(0))
+//#define CAPLED_OFF()		SET_MASK(GPDRE,BIT(0))
 
 #define EC_MUTE_ACT()		CLEAR_MASK(GPDRE,BIT(1))
 #define EC_MUTE_INACT()		SET_MASK(GPDRE,BIT(1))
@@ -225,8 +225,8 @@
 #define EC_TX_OUTPUT		GPCRE6 = OUTPUT	    // Set EC_TX OUTPUT.
 #define EC_TX_INPUT			GPCRE6 = INPUT	    // Set EC_RX INPUT.
 
-#define NUMLED_ON()			CLEAR_MASK(GPDRE,BIT(7))
-#define NUMLED_OFF()		SET_MASK(GPDRE,BIT(7))
+//#define NUMLED_ON()			CLEAR_MASK(GPDRE,BIT(7))
+//#define NUMLED_OFF()		SET_MASK(GPDRE,BIT(7))
 
 //-----------------------------------------------------------------
 // GPIO Port F Registers define
@@ -414,10 +414,12 @@ extern void Hook_A20ON(void);
 extern void Hook_A20OFF(void);
 extern void Hook_KBRSTON(void);
 extern void Hook_KBRSTOFF(void);
+/*
 extern void Hook_NUMLED_ON(void);
 extern void Hook_NUMLED_OFF(void);
 extern void Hook_CAPLED_ON(void);
 extern void Hook_CAPLED_OFF(void);
+*/
 
 typedef struct InitGPIOReg
 {

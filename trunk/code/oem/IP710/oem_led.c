@@ -37,23 +37,23 @@ void OEM_Write_Leds(BYTE data_byte)
     Led_Data = data_byte;
     if ( data_byte & BIT1 )
     {
-	   	Hook_NUMLED_ON();
+	   	//Hook_NUMLED_ON();
 		SET_MASK(SYS_MISC1, b1Num_LED);
     }
     else
     {
-		Hook_NUMLED_OFF();
+		//Hook_NUMLED_OFF();
 		CLEAR_MASK(SYS_MISC1, b1Num_LED);
     }
 
     if ( data_byte & BIT2 )
     {
-		Hook_CAPLED_ON();
+		//Hook_CAPLED_ON();
 		SET_MASK(SYS_MISC1, b2Cap_LED);
     }
 	else
 	{
-		Hook_CAPLED_OFF();
+		//Hook_CAPLED_OFF();
 		CLEAR_MASK(SYS_MISC1, b2Cap_LED);
 	}
 }
@@ -319,6 +319,8 @@ void MFG_LED(void)
 		BAT_LOW_LED_OFF();
 	}
 
+    //S+ remove MFG NUMLED and CAPLED control
+    /*
 	if( IS_MASK_SET(cOsLedCtrl,cOL_NumlockLed) )
 	{
 		NUMLED_ON();
@@ -336,6 +338,8 @@ void MFG_LED(void)
 	{
 		CAPLED_OFF();
 	}
+	*/
+	//E+
 
 	if( IS_MASK_SET(cOsLed1Ctrl,cOL1_KBBacklight) )
 	{
