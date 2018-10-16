@@ -43,6 +43,9 @@ void Hook_62Port(BYTE pPM1Cmd)
 		case 0x47:
 			Cmd_47(0x62,PM1Data);
 			break;
+		case 0x48:
+		    Cmd_48(0x62,PM1Data);
+		    break;
 		case 0x49:
 			break;
 		case 0x4B:
@@ -220,6 +223,9 @@ void Hook_66Port(BYTE pPM1Cmd)
 		case 0x47:
 			PM1Step=0x01;
 			break;
+        case 0x48:
+            PM1Step=0x01;
+            break;
 		case 0x49:
 		        break;
 		case 0x4B:

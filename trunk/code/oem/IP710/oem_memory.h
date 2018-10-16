@@ -1185,6 +1185,10 @@ byte 6,7: Data version (0 if this is not supported or the firmware is corrupted.
 #define    CMOS_TEST					SD_uchar_8(OEMRAM5+0x03)	
 #define    b0_CMOS_FunctionKey     BIT0 
 #define    b1_CMOS_delay1flag      BIT1
+#define    b2_need_clearcmos       BIT2
+#define    b3_CMOS_delay2flag      BIT3
+#define    b4_CMOS_Clear           BIT4 
+
 
 
 #define QEVENT_DEBUG					 SD_uchar_8(OEMRAM5+0x05)  

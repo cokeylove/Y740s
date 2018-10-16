@@ -34,6 +34,8 @@ extern void Cmd_44(BYTE nPort);
 extern void Cmd_45(BYTE nPort, BYTE sCount);
 extern void Cmd_46(BYTE nPort,BYTE nData);
 extern void Cmd_47(BYTE nPort, BYTE nData);
+extern void Cmd_48(BYTE nPort, BYTE nData);
+
 extern void Cmd_4E(BYTE nPort, BYTE nOffSet);
 extern void Cmd_51(BYTE nPort);
 extern void Cmd_52_A0(BYTE nPort);

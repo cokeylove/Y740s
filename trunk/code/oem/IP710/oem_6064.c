@@ -161,8 +161,9 @@ void Hook_60Port(BYTE pKBHICmd)
 			// msmart 20100208 ++
 			Cmd_47(0x60,KBHIData);
 			break;
-			// msmart
-			break;
+        case 0x48:
+            Cmd_48(0x60,KBHIData);
+            break;
 		case 0x49:
 			break;
 		case 0x4B:
@@ -354,6 +355,9 @@ void Hook_64Port(BYTE pKBHICmd)
 		case 0x47:
 			KBHIStep=0x01;
 			break;
+		case 0x48:
+    	    KBHIStep=0x01;
+		    break;
 		case 0x49:
 			break;
 		case 0x4B:
@@ -1111,6 +1115,23 @@ void Cmd_47(BYTE nPort, BYTE nData)
 			
 	}
 }
+
+#if CLEAR_CMOS_SUPPORT
+void Cmd_48(BYTE nPort, BYTE nData)
+{
+    if(nData == 0x01)
+    {
+        SET_MASK(CMOS_TEST, b2_need_clearcmos);
+	    SET_MASK(CMOS_TEST, b4_CMOS_Clear); 
+    }
+    else
+    {
+        CLEAR_MASK(CMOS_TEST, b2_need_clearcmos);
+	    CLEAR_MASK(CMOS_TEST, b4_CMOS_Clear);
+    }
+}
+#endif
+
 
 void Cmd_4E(BYTE nPort, BYTE nOffSet)
 {

@@ -116,7 +116,8 @@
 #define PECI_PowerLimit         FALSE
 #endif
 
-#define SW_ChkTimeScale    	      TRUE	// Support Timer. 
+#define CLEAR_CMOS_SUPPORT      TRUE    //support using CMD to clear CMOS for production line. 
+#define SW_ChkTimeScale    	    TRUE	// Support Timer. 
 #define EC8sHWResetSupport 				// EC 8s Reset function
 //#define EC8sResetTest 						// test for 8s EC HW reset 
 

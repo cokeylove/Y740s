@@ -98,9 +98,11 @@ void Hook_6CPort(BYTE p_PM2Cmd)
 			case 0x47:
 				PM2DataCount=0x01;
 				break;
+            case 0x48:
+                PM2DataCount=0x01;
+                break;
 			case 0x49:
-				
-					break;
+				break;
 			case 0x4B:
 				PM2DataCount=0x04;
 				break;
@@ -348,8 +350,10 @@ void Hook_68Port(BYTE p_PM2Data)
 			case 0x47:
 				Cmd_47(0x68,PM2Data);
 				break;
+            case 0x48:
+                Cmd_48(0x68,PM2Data);
+                break;
 			case 0x49:
-				
 				break;
 			case 0x4B:
 				if (PM2DataCount == 0x04)

@@ -165,7 +165,9 @@ void Hook_Timer10msEventB(void)
 		}
 	}
 	*/
+#if CLEAR_CMOS_SUPPORT
 	Deal_CLEAR_CMOS(); 
+#endif
 } 
 
 void Hook_Timer50msEventA(void)
@@ -1263,43 +1265,57 @@ void Deal_CLEAR_CMOS(void)
 {
 	if (IS_MASK_SET(CMOS_TEST,b0_CMOS_FunctionKey))
 	{
-		if(SystemIsS5||SystemIsDSX)
+		if(SystemIsS5||SystemIsDSX||SysPowState == SYSTEM_S5_DSX)
 		{
 			if(IS_MASK_CLEAR(CMOS_TEST,b1_CMOS_delay1flag))
 			{ 
 				cmosdelay++;
-				RSMRST_LOW();
-				if(cmosdelay==0x02)
+				if((cmosdelay==0x02)&&(Read_AC_IN()))
 				{
-					PM_PWRBTN_LOW();
-					AC_PRESENT_LOW();
+		    		PWSeqStep = 1;
+		            PowSeqDelay = 0x00;
+			        SysPowState = SYSTEM_S5_DSX; 
 				}
+				
+				if((cmosdelay==0x04)&&(Read_AC_IN()))
+				{   		
+                    AC_PRESENT_LOW();
+				}
+
 				if(cmosdelay==22)
 				{   		
-					RTCRST_ON_HI();
-					cmosdelay=0;
-					RamDebug(0x23);
+			    	RTCRST_ON_HI();
+		        	cmosdelay=0;
+		        	RamDebug(0x23);
 					SET_MASK(CMOS_TEST,b1_CMOS_delay1flag);
 					cmosdelay1 = 0x00;
-				}	
+				}
 			}
-			else if(cmosdelay1>=35) //3.5S
+			else if(cmosdelay1>=40) //3.5S
 			{
 				cmosdelay++;
 				RTCRST_ON_LOW();
-				SET_MASK(CMOS_TEST,BIT3);
-				if(cmosdelay==10)
+				SET_MASK(CMOS_TEST,b3_CMOS_delay2flag);
+				RamDebug(0x4F);
+				if((cmosdelay==10)&&(Read_AC_IN()))
 				{
-					PM_PWRBTN_HI();
+		    	    PWSeqStep = 1;
+		            PowSeqDelay = 0x00;
+			        SysPowState = SYSTEM_DSX_S5; 
 				}
-				if(cmosdelay==14)
+				
+				if(cmosdelay==15)
 				{
 					RSMRST_HI();
 					CLEAR_MASK(CMOS_TEST,b1_CMOS_delay1flag);
 					CLEAR_MASK(CMOS_TEST,b0_CMOS_FunctionKey);
-					CLEAR_MASK(CMOS_TEST,BIT3);
+					CLEAR_MASK(CMOS_TEST,b3_CMOS_delay2flag);
 					cmosdelay1=0;
-					AC_PRESENT_HI();	
+					if(Read_AC_IN())
+					{
+					    AC_PRESENT_HI();
+					}
+					AutoTimer=0x88; //if clear cmos,need auto power on in DC mode.
 					RamDebug(0x4A);
 				}
 			}
@@ -1313,24 +1329,43 @@ void Deal_CLEAR_CMOS(void)
 
 void checkclearcmos(void)
 {
-	if (IS_MASK_SET(CMOS_TEST,BIT2))
+	if (IS_MASK_SET(CMOS_TEST,b2_need_clearcmos)&&IS_MASK_SET(CMOS_TEST,b4_CMOS_Clear))
 	{
-		if((!Read_SLPS3())&&(!Read_SLPS4()))
+        cmosshutdelay++;
+		RamDebug(0x4B);
+        if(cmosshutdelay==3)
+		{
+		     CLEAR_MASK(CMOS_TEST,b2_need_clearcmos);
+		     CLEAR_MASK(CMOS_TEST,b4_CMOS_Clear);
+			 SET_MASK(CMOS_TEST,b0_CMOS_FunctionKey); 
+			 cmosshutdelay = 0x00;	
+			 cmosdelay1=0x00;
+		}
+	}
+	else if(IS_MASK_SET(CMOS_TEST,b2_need_clearcmos)&& IS_MASK_CLEAR(CMOS_TEST,b4_CMOS_Clear)) //POWER BUTTON abnormal
+	{
+        if((!Read_SLPS3())&&(!Read_SLPS4()))
 		{
 			cmosshutdelay++;
-			RamDebug(0x4B);
+			RamDebug(0x4C);
 		}
 		else
 		{
-			cmosshutdelay=0;
-			CLEAR_MASK(CMOS_TEST,BIT2);
+			cmosshutdelay = 0;
+			cmosdelay1 = 0x00;
+			CLEAR_MASK(CMOS_TEST,b2_need_clearcmos);
 		}
-		if(cmosshutdelay==5)
+		
+		if(cmosshutdelay == 12)
 		{
-			SysPowState=SYSTEM_S5;  
-			SET_MASK(CMOS_TEST,BIT0);
-			CLEAR_MASK(CMOS_TEST,BIT2);
-			cmosshutdelay = 0x00;		 
+			SysPowState = SYSTEM_S5;  
+			SET_MASK(CMOS_TEST,b0_CMOS_FunctionKey);
+			CLEAR_MASK(CMOS_TEST,b2_need_clearcmos);
+			cmosdelay1 = 0x00;		 
 		}
+	}
+	else
+	{
+	    cmosshutdelay = 0x00;
 	}
 }	

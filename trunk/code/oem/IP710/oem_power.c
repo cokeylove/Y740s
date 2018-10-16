@@ -163,7 +163,11 @@ void Oem_SysPowerContrl(void)
 
 		case SYSTEM_DSX:
 			CheckAutoPowerOn(); 
+#if CLEAR_CMOS_SUPPORT
+            if((Read_AC_IN()&&IS_MASK_CLEAR(CMOS_TEST,b0_CMOS_FunctionKey))||(LOWBATT_3TIMES != 0))
+#else            
 			if((Read_AC_IN())||(LOWBATT_3TIMES!=0))
+#endif
 			{  
 				PWSeqStep = 1;
 				PowSeqDelay = 0x00;
@@ -548,6 +552,7 @@ BYTE S5S0_RSMRST_EN(void)
 BYTE S5S0_PM_PWER_BTN2(void)
 {
 	PM_PWRBTN_LOW();
+	SET_MASK(CMOS_TEST,b2_need_clearcmos);
 	return(0);
 }
 
