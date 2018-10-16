@@ -935,7 +935,7 @@ const sRSmbusBStruct  ABatCommandTable [] =
 	{ C_RSOC,	 	&BAT1PERCL  			,0x00},				//Batpollstep1 = 25 	WORD  
 	{ C_Pmax,       &nbatteryPmaxL         	,0X00},             //Batpollstep1 = 26 	WORD //add read Pmax.
 //	{ C_D_FET,		&SHIPMODE_L				,0x00}, 			//Batpollstep1 = 15 	WORD
-
+    { C_SmartCharge,&BatSmartChargeL  		,0x00},				//Batpollstep1 = 27 	WORD  //Add smart charge cmd.
 };
 
 //-----------------------------------------------------------------------------
@@ -1317,30 +1317,41 @@ void OEM_PollingBatData_TASK(void)
 void Battery_Expresscharge(void)
 {
 	//check battery quick charge support.
-	if(IS_MASK_CLEAR(EC_C_modeL,b4QuickChargeMode))
+	if(IS_MASK_CLEAR(BatSmartChargeL,b0QuickChargeSupport))
 	{
 		return;
 	}
 
 	if (IS_MASK_SET(OKOStatusBit,Expresschargemode))
 	{ 
-		if(IS_MASK_CLEAR(Bat0x3ETempH,Expresscharge_mode))
+		if(IS_MASK_CLEAR(BatSmartChargeL,b1QuickChargeEnable))
 		{
-			SET_MASK(Bat0x3ETempH,Expresscharge_mode);
-			if(bRWSMBus(SMbusChB,SMbusWW,SmBat_Addr,C_LVMfgFun2,&Bat0x3ETempL,SMBus_NeedPEC))
+		    //only S5 support quick charge
+		    if(SystemIsS5)
+			{
+				SET_MASK(BatSmartChargeL,b1QuickChargeEnable);
+			}
+			else
+			{
+				CLEAR_MASK(BatSmartChargeL,b1QuickChargeEnable);
+			}
+
+			if(bRWSMBus(SMbusChB,SMbusWW,SmBat_Addr,C_LVMfgFun2,&BatSmartChargeL,SMBus_NeedPEC))
 			{
 				RamDebug(0xD1);
+				RamDebug(BatSmartChargeL);
 			}
 		}
 	}
 	else
 	{
-		if(IS_MASK_SET(Bat0x3ETempH,Expresscharge_mode))
+		if(IS_MASK_SET(BatSmartChargeL,b1QuickChargeEnable))
 		{
-			CLEAR_MASK(Bat0x3ETempH,Expresscharge_mode);
-			if(bRWSMBus(SMbusChB,SMbusWW,SmBat_Addr,C_LVMfgFun2,&Bat0x3ETempL,SMBus_NeedPEC))
+			CLEAR_MASK(BatSmartChargeL,b1QuickChargeEnable);
+			if(bRWSMBus(SMbusChB,SMbusWW,SmBat_Addr,C_LVMfgFun2,&BatSmartChargeL,SMBus_NeedPEC))
 			{
 				RamDebug(0xD2);
+				RamDebug(BatSmartChargeL);
 			}
 		}
 	}
@@ -1753,7 +1764,7 @@ void Lenovo_Battery_EM80(void)
 			CLEAR_MASK(LENOVOBATT,BAD_BATT); 
 		}
 
-		if (IS_MASK_SET(Bat0x3ETempH,BIT1))			// 0x3E  bit9
+		if (IS_MASK_SET(Bat0x3ETempH,BIT4))			// 0x3E  bit9 //change to bit12
 		{ 
 			SET_MASK(LENOVOBATT,BATTERY_NORMAL);
 		}	// Battery poor  (Exhaustion)

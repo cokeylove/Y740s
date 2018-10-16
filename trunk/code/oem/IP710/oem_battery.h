@@ -77,6 +77,7 @@
 #define C_Dname            	0x21  	// device name
 #define C_Dchem            	0x22  	// device chemistry
 #define C_Mdata            	0x23 	// manufacture data
+#define C_SmartCharge       0x26    // smart charge
 
 
 #define BATCmd_SHA1W 				0x27    // sending 20 bytes challenge from host EC to battery BMU

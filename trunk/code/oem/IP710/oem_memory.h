@@ -128,7 +128,6 @@
 #define	CHGIC_ReadCmd0x3FH				SD_uchar_8(OEMRAM2+0x29)
 #define BATTEMP							SD_uint_16(OEMRAM2+0x2A)
 #define EC_C_modeL						SD_uchar_8(OEMRAM2+0x2C)
-	#define b4QuickChargeMode	BIT4 
 #define	EC_C_modeH						SD_uchar_8(OEMRAM2+0x2D)
 #define	ManualFanPRM					SD_uchar_8(OEMRAM2+0x2E)
 #define	AdapterID						SD_uchar_8(OEMRAM2+0x2F)
@@ -191,7 +190,6 @@ typedef enum
 
 #define    Bat0x3ETempL					SD_uchar_8(OEMRAM2+0x58)
 #define    Bat0x3ETempH					SD_uchar_8(OEMRAM2+0x59)
-	#define Expresscharge_mode	BIT4 
 #define	EC_BatteryStatusL				SD_uchar_8(OEMRAM2+0x5A)
 #define	EC_BatteryStatusH				SD_uchar_8(OEMRAM2+0x5B)
 #define	BatteryOTPRelease				SD_uchar_8(OEMRAM2+0x5D)
@@ -368,7 +366,13 @@ typedef enum
 #define	OverVolCount_normal_AC			SD_uchar_8(OEMRAM3+0x04)		
 #define	VolCount						SD_uchar_8(OEMRAM3+0x05)		
 
-#define	GPU_GO_TO_D5					SD_uchar_8(OEMRAM3+0x06)		
+#define	GPU_GO_TO_D5					SD_uchar_8(OEMRAM3+0x06)	
+
+#define	BatSmartChargeL		        SD_uchar_8(OEMRAM3+0x07)
+	#define  b0QuickChargeSupport       BIT0       
+	#define  b1QuickChargeEnable    	BIT1
+#define	BatSmartChargeH		        SD_uchar_8(OEMRAM3+0x08)
+
 
 
 #define	pOneKeyAPPStatus		SD_uchar_8(OEMRAM3+0x0B)	// Lenovo_VGATurbo
