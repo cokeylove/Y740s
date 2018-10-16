@@ -1179,6 +1179,21 @@ void control_effect(BYTE state, BYTE event)
     	//}
     }
 
+	// Modify the core code to response "REPEAT_EVENT" and generate duplicate key scancodes when the "shift" key is pressing.
+    if(event == REPEAT_EVENT)
+    {
+    	if(state & LShift)
+    	{
+			simple_code(0x12, event);
+		}
+		else if(state & RShift)
+		{
+			simple_code(0x59, event);
+		}
+	}
+    //
+
+
     /* Then update scanner state. */
     if(event == MAKE_EVENT)
     {
